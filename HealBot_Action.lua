@@ -1673,13 +1673,14 @@ function HealBot_Action_ClearHealsIn(Member_Name)
 	end
 	HealBot_UnitName["target"]=nil
   end
-  if HealBot_Enabled[Member_Name] then
+  if HealBot_ClassColR[Member_Name] then
     HealBot_Enabled[Member_Name]=nil
     HealBot_ClassColR[Member_Name]=nil
     HealBot_ClassColG[Member_Name]=nil
     HealBot_ClassColB[Member_Name]=nil
     HealBot_UnitBuff[Member_Name]=nil
     HealBot_UnitDebuff[Member_Name]=nil
+	HealBot_UnitSpec[Member_Name]=nil
     if HealBot_AggroBar4[Member_Name] then
       HealBot_AggroBar4[Member_Name]=nil
     end

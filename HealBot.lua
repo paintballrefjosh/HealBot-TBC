@@ -1895,7 +1895,7 @@ function HealBot_GetTalentInfo(uName)
     _,uClass=UnitClass("target")
   end
   
-  if x+y+z>0 then
+  if x+y+z>0 and uClass then
 	uClass=strsub(uClass,1,4)
 	if ((x > y) and (x > z)) then
 		w = 1

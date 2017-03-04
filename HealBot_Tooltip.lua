@@ -163,7 +163,8 @@ function HealBot_Action_RefreshTooltip(unit)
 		  NotifyInspect("target")
 		end
 	    r,g,b=HealBot_Action_RetHealBot_ClassCol(Member_Name)
-        HealBot_Tooltip_SetLineLeft(Member_Name.." (Level "..UnitLevel(unit)..HealBot_UnitSpec[Member_Name]..UnitClass(unit)..")",r,g,b,linenum,1)   
+		text = HealBot_UnitSpec[Member_Name] or " "
+        HealBot_Tooltip_SetLineLeft(Member_Name.." (Level "..UnitLevel(unit)..text..UnitClass(unit)..")",r,g,b,linenum,1)   
       else 
         HealBot_Tooltip_SetLineLeft(Member_Name,1,1,1,linenum,1)   
       end      
@@ -645,7 +646,8 @@ function HealBot_Tooltip_RefreshDisabledTooltip(unit)
 	  r,g,b=HealBot_Action_RetHealBot_ClassCol(Member_Name)
       HealBot_Tooltip_SetLineLeft(Member_Name,r,g,b,linenum,1)
       if UnitClass(unit) then
-        HealBot_Tooltip_SetLineRight(" Level "..UnitLevel(unit)..HealBot_UnitSpec[Member_Name]..UnitClass(unit),r,g,b,linenum,1);
+	    text = HealBot_UnitSpec[Member_Name] or " "
+        HealBot_Tooltip_SetLineRight(" Level "..UnitLevel(unit)..text..UnitClass(unit),r,g,b,linenum,1);
       end
       if zone and not strfind(zone,"Level") then
         linenum=linenum+1
@@ -811,7 +813,8 @@ function HealBot_Action_RefreshTargetTooltip(Member_Name, unit)
   r,g,b=HealBot_Action_RetHealBot_ClassCol(Member_Name)
   HealBot_Tooltip_SetLineLeft(Member_Name,r,g,b,linenum,1)
   if UnitClass(unit) then
-    HealBot_Tooltip_SetLineRight(" Level "..UnitLevel(unit)..HealBot_UnitSpec[Member_Name]..UnitClass(unit),r,g,b,linenum,1);
+    text = HealBot_UnitSpec[Member_Name] or " "
+    HealBot_Tooltip_SetLineRight(" Level "..UnitLevel(unit)..text..UnitClass(unit),r,g,b,linenum,1);
   end
   linenum=linenum+1
   HealBot_Tooltip_SetLineLeft(HEALBOT_TOOLTIP_TARGETBAR,1,1,0.5,linenum,1);
