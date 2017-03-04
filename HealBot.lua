@@ -7,7 +7,7 @@
 local HealBot_CalcEquipBonus=false;
 local HealBot_HasDivineSpirit=2;
 local HealBot_CheckForDivineSpirit=false;
-local HealBot_NeedEquipUpdate=0;
+local HealBot_NeedEquipUpdate=false
 local HealBot_CastingSpell  = nil;
 local HealBot_HealValue = 0;
 local HealBot_IamRessing = nil;
@@ -21,7 +21,7 @@ local HealBot_Watch_HoT={};
 local HealBot_HoT_Mending=0;
 local HealBot_HoT_MendingWith="niL";
 local HealBot_Lifebloom_Count={};
-local HealBot_CheckZoneFlag=0
+local HealBot_CheckZoneFlag=false
 local HealBot_InCombatUpdate=false
 local HealBot_SmartCast_Spells={};
 local HealBot_AddonMsgType=3;
@@ -203,6 +203,7 @@ local scsspell=nil
 local Notify=nil
 local chanid=nil
 local addIcon=true
+local HealBot_xLocal=nil
 local button=nil
 local bar=nil
 local iconName=nil
@@ -415,7 +416,7 @@ function HealBot_Reset()
 	HealBot_Action_SetAllBars()
 	HealBot_Action_SetAllAttribs()
 	HealBot_OnEvent_PlayerEnteringWorld()
-	HealBot_NeedEquipUpdate=1
+	HealBot_Loaded=1
 end
 
 function HealBot_GetSpellName(id)
@@ -662,12 +663,13 @@ function HealBot_OnUpdate(this,arg1)
           HealBot_RecalcParty();
 		  HealBot_InCombatUpdCnt=0
         end
-      elseif HealBot_CheckZoneFlag>0 then
-        HealBot_CheckZoneFlag=HealBot_CheckZoneFlag+1;
-        if HealBot_CheckZoneFlag>4 then
-          HealBot_CheckZoneFlag=0; 
+      elseif HealBot_CheckZoneFlag then
+          HealBot_CheckZoneFlag=false
           HealBot_CheckZone();
-        end          
+      elseif HealBot_NeedEquipUpdate then
+          HealBot_CalcEquipBonus=true;
+          HealBot_NeedEquipUpdate=false
+          HealBot_RecalcSpells();
       elseif HealBot_CheckForDivineSpirit then
         HealBot_CheckForDivineSpirit=false
         Tcnt=0;
@@ -686,16 +688,10 @@ function HealBot_OnUpdate(this,arg1)
         end
         if Tcnt~=HealBot_HasDivineSpirit then
           HealBot_HasDivineSpirit=Tcnt;
-          HealBot_NeedEquipUpdate=3;
+          HealBot_RecalcSpells()
         end
-      elseif HealBot_NeedEquipUpdate>0 then
-        HealBot_NeedEquipUpdate=HealBot_NeedEquipUpdate+1;
-        if HealBot_NeedEquipUpdate>3 then
-          HealBot_CalcEquipBonus=true;
-          HealBot_NeedEquipUpdate=0; 
-          HealBot_RecalcSpells();
-        end          
-      elseif HealBot_Config.TooltipUpdate==1 and HealBot_Action_TooltipUnit then
+      end
+	  if HealBot_Config.TooltipUpdate==1 and HealBot_Action_TooltipUnit then
         HealBot_Action_RefreshTooltip(HealBot_Action_TooltipUnit);
       elseif HealBot_Config.TooltipUpdate==1 and HealBot_Action_DisableTooltipUnit then
         HealBot_Tooltip_RefreshDisabledTooltip(HealBot_Action_DisableTooltipUnit);
@@ -925,6 +921,9 @@ function HealBot_OnEvent_VariablesLoaded(this)
 	  HealBot_Watch_HoT[HEALBOT_MENDPET]="C"
 	end
     HealBot_CheckForDivineSpirit=true;
+    if GetLocale() == "deDE" then
+	  HealBot_xLocal=true
+	end
 	QuickHealth.RegisterCallback(this, "HealthUpdated", function(event, GUID, newHealth)
 	    HealBot_OnEvent(this, "HealthUpdated", GUID, newHealth)
 	end);
@@ -1096,8 +1095,12 @@ function HealBot_OnEvent_AddonMsg(this,addon_id,msg,distribution,sender_id,inter
     HealBotAddonSummary[addon_id]=HealBotAddonSummary[addon_id]+1
   end
   if addon_id==HEALBOT_ADDON_ID or addon_id=="VisualHeal" or addon_id=="HealComm" or addon_id=="CastCommLib" or addon_id=="X-PerlHeal" then
-    if sender_id==HealBot_PlayerName and not internal then return end
-	if HealBot_Vers[sender_id] and addon_id~=HEALBOT_ADDON_ID then return end
+    if HealBot_xLocal then
+	  if addon_id==HEALBOT_ADDON_ID then return end
+	else
+	  if sender_id==HealBot_PlayerName and not internal then return end
+	  if HealBot_Vers[sender_id] and addon_id~=HEALBOT_ADDON_ID then return end
+	end
     if HealBot_Healers[sender_id] then
 	  if HealBot_Comms_Blacklist[sender_id]==addon_id then
         _,_,heal_val,unitname = string.find(HealBot_Healers[sender_id], ">> (.%d+) <<=>> (.+)$" )
@@ -1335,7 +1338,7 @@ function HealBot_OnEvent_ModifierStateChange(this,arg1,arg2)
 end
 
 function HealBot_OnEvent_ZoneChanged(this)
-  HealBot_CheckZoneFlag=2
+  HealBot_CheckZoneFlag=true
   HealBot_Action_ResetUnitStatus(HealBot_UnitID[HealBot_PlayerName])
 end
 
@@ -1347,7 +1350,6 @@ function HealBot_CheckZone()
     HealBot_InBG=false;
   end
   HealBot_SetAddonComms()
-  Delay_RecalcParty=1
 end
 
 function HealBot_OnEvent_UnitAura(this,unit)
@@ -1430,7 +1432,7 @@ function HealBot_HasMyBuffs(unit,unitName)
 		    HealBot_Player_HoT[unitName][x]=30
 		  end
           HealBot_HoT_Update(unitName, x)
-        elseif HealBot_Player_HoT[unitName] and HealBot_Player_HoT[unitName][x] then
+        elseif HealBot_Player_HoT_Icons[unitName] and HealBot_Player_HoT_Icons[unitName][x] and HealBot_Player_HoT_Icons[unitName][x]>0 then
 		  HealBot_Player_HoT[unitName][x]=-1
           HealBot_HoT_Update(unitName, x)
 		end
@@ -1446,7 +1448,7 @@ function HealBot_HasMyBuffs(unit,unitName)
 		    HealBot_Player_HoT[unitName][x]=30
 		  end
 		  HealBot_HoT_Update(unitName, x)
-        elseif HealBot_Player_HoT[unitName] and HealBot_Player_HoT[unitName][x] then
+        elseif HealBot_Player_HoT_Icons[unitName] and HealBot_Player_HoT_Icons[unitName][x] and HealBot_Player_HoT_Icons[unitName][x]>0 then
 		  if x==HEALBOT_POWER_WORD_SHIELD and HealBot_TrackWS[unitName] then return end
 		  HealBot_Player_HoT[unitName][x]=-1
           HealBot_HoT_Update(unitName, x)
@@ -1460,7 +1462,7 @@ function HealBot_HasMyBuffs(unit,unitName)
 		end	
         HealBot_Player_HoT[unitName][x]=floor(timeLeft)
         HealBot_HoT_Update(unitName, x)
-	  elseif HealBot_Player_HoT_Icons[unitName][x]>0 and HealBot_Player_HoT_Icons[unitName][x]<40 then
+	  elseif HealBot_Player_HoT_Icons[unitName][x]>0 then
         HealBot_Player_HoT[unitName][x]=-1
         HealBot_HoT_Update(unitName, x)
 	  end
@@ -1863,15 +1865,14 @@ function HealBot_IC_PartyMembersChanged()
 	HealBot_InCombatUpdCnt=HealBot_InCombatUpdCnt+1
   else
 	HealBot_InCombatUpdate=false
-	if Delay_RecalcParty<3 then Delay_RecalcParty=3 end
+	Delay_RecalcParty=3
 	HealBot_InCombatUpdCnt=0
   end
 end
 
 function HealBot_OnEvent_PartyMembersChanged(this)
   if HealBot_IsFighting then HealBot_InCombatUpdate=true end
-  Delay_RecalcParty=2
-  if HealBot_CheckZoneFlag==0 then HealBot_CheckZoneFlag=1 end
+  Delay_RecalcParty=3
 end
 
 function HealBot_OnEvent_PlayerTargetChanged(this)
@@ -1950,7 +1951,7 @@ function HealBot_OnEvent_SystemMsg(this,msg)
     end
     if msg==HB_YOULEAVETHEGROUP or msg==HB_YOULEAVETHERAID or msg==HB_YOUJOINTHERAID or msg==HB_YOUJOINTHEGROUP then
         Delay_RecalcParty=3;
-		HealBot_CheckZoneFlag=2
+		HealBot_CheckZoneFlag=true
 --    else
       -- find other messges
     end
@@ -1972,7 +1973,7 @@ end
 
 function HealBot_OnEvent_PlayerEquipmentChanged(this,unit)
   if UnitName(unit)==HealBot_PlayerName then
-    HealBot_NeedEquipUpdate=1;
+    HealBot_NeedEquipUpdate=true
   end
 end
 
@@ -2006,7 +2007,7 @@ function HealBot_OnEvent_PlayerEnteringWorld(this)
     HealBot_Options_DisableTargetFrame()
   end
   HealBot_Register_Events()
-  HealBot_CheckZoneFlag=3
+  HealBot_CheckZoneFlag=true
 end
 
 function HealBot_OnEvent_PlayerLeavingWorld(this)
@@ -2253,6 +2254,7 @@ function HealBot_HoT_Update(unitName, spellName)
   else
     i=0
 	for _,k in pairs(huHoTtime) do if k<40 then i=i+1 end end
+	if i==0 then i=1 end
 	huHoTicon[spellName]=i
 	HealBot_HoT_ChangeIcon(HealBot_Unit_Button[huUnit], i, HealBot_HoT_AlphaValue(secLeft), HealBot_HoT_Texture[spellName] , secLeft, HoTtxt2)
 	HealBot_HoT_Active_Button[unitName]=HealBot_Unit_Button[huUnit]
@@ -2328,6 +2330,9 @@ function HealBot_HoT_ChangeIcon(button, index, a, Texture, txt1, txt2)
   if not button then return; end;
   bar = HealBot_Action_HealthBar(button);
   iconName = getglobal(bar:GetName().."Icon"..index);
+  if not iconName then
+    HealBot_AddDebug("Nil iconName@HealBot_HoT_ChangeIcon  index="..index)
+  end
   iconName:SetTexture(Texture);
   iconName:SetAlpha(a);
   hbiconcount = getglobal(bar:GetName().."Count"..index);
@@ -2485,7 +2490,7 @@ function HealBot_InitSpells()
   HealBot_AddDebug("Initiated HealBot_CurrentSpells with ".. z .." Spells");
   HealBot_Options_CheckCombos();
   HealBot_Init_SmartCast();
-  HealBot_NeedEquipUpdate=3
+  HealBot_NeedEquipUpdate=true
 end
 
 function HealBot_InitNewChar(PlayerClassEN)
@@ -2755,7 +2760,7 @@ function HealBot_UnitIsOffline(unit) -- added by Diacono of Ursin
 			justDisconnected = true;
 		end
 	end
-	if not UnitIsConnected(unit) or justDisconnected then
+  if not UnitIsConnected(unit) or justDisconnected then
   	if not HealBot_UnitOffline[unit] then
   		HealBot_UnitOffline[unit] = time();
   	end

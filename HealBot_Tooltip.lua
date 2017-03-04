@@ -670,6 +670,7 @@ function HealBot_Tooltip_RefreshDisabledTooltip(unit)
 	    if UnitOffline then -- added by Diacono
           HealBot_Tooltip_SetLineRight(HB_TOOLTIP_OFFLINE..": "..UnitOffline,1,1,1,linenum,1)
     	else
+          if zone==HB_TOOLTIP_OFFLINE then HealBot_UnitOffline[unit]=time() end		  
           HealBot_Tooltip_SetLineRight(zone,1,1,1,linenum,1);
 		end
       end
