@@ -838,6 +838,7 @@ function HealBot_OnUpdate(this,arg1)
 	      end
         end
 		HealBot_CheckFrame()
+		HealBot_Comms_SendAddonMsg("CTRA", "SR", 2, HealBot_PlayerName)
 	    HealBot_Loaded=true
         HealBot_AddDebug(HEALBOT_ADDON .. HEALBOT_LOADED);
 	  end
@@ -1020,7 +1021,7 @@ function HealBot_Register_Events()
 	HealBot:RegisterEvent("INSPECT_TALENT_READY");
 --    HealBot:RegisterEvent("PARTY_MEMBER_DISABLE");
 --    HealBot:RegisterEvent("PARTY_MEMBER_ENABLE");
-    HealBot_Comms_SendAddonMsg("CTRA", "SR", HealBot_AddonMsgType, HealBot_PlayerName)
+    if HealBot_Loaded then HealBot_Comms_SendAddonMsg("CTRA", "SR", 2, HealBot_PlayerName) end
   end
   HealBot:RegisterEvent("UNIT_SPELLCAST_SENT");
   HealBot:RegisterEvent("CHAT_MSG_ADDON");
@@ -2324,7 +2325,7 @@ function HealBot_HoT_Update(unitName, spellName)
   if huHoTicon[spellName]>0 then
     if secLeft<0 then
 	  HealBot_HoT_UpdateIcon(HealBot_Unit_Button[huUnit], huHoTicon[spellName], 0)
-      huHoTtime[spellName]=nil
+      huHoTtime[spellName]=97
 	  i=huHoTicon[spellName]
   	  huHoTicon[spellName]=0
 	  HealBot_HoT_RefreshIcons(unitName,HealBot_Unit_Button[huUnit])

@@ -1,4 +1,4 @@
-HEALBOT_VERSION = "2.4.3.15";
+HEALBOT_VERSION = "2.4.3.16";
 
 -------------
 -- ENGLISH --
@@ -43,6 +43,7 @@ HEALBOT_REGROWTH            = "Regrowth";
 HEALBOT_RENEW               = "Renew";
 HEALBOT_REJUVENATION        = "Rejuvenation";
 HEALBOT_LIFEBLOOM           = "Lifebloom";
+HEALBOT_SWIFTMEND           = "Swiftmend";
 HEALBOT_PRAYER_OF_HEALING   = "Prayer of Healing";
 HEALBOT_CHAIN_HEAL          = "Chain Heal";
 
