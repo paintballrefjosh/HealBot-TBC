@@ -1,4 +1,4 @@
-HEALBOT_VERSION = "2.4.3.5";
+HEALBOT_VERSION = "2.4.3.6";
 
 -------------
 -- ENGLISH --
@@ -483,3 +483,30 @@ HEALBOT_TOOLTIP_TARGETBAR     = "Target Bar"
 HEALBOT_OPTIONS_MYTARGET      = "My Targets"
 
 HEALBOT_DISCONNECTED_TEXT			= "<DC>"
+HEALBOT_OPTIONS_SHOWUNITBUFFTIME = "Show my buffs";
+HEALBOT_OPTIONS_TOOLTIPUPDATE = "Constantly update";
+
+HEALBOT_BALANCE       = "Balance"
+HEALBOT_FERAL         = "Feral"
+HEALBOT_RESTORATION   = "Restoration"
+HEALBOT_ARCANE        = "Arcane"
+HEALBOT_FIRE          = "Fire"
+HEALBOT_FROST         = "Frost"
+HEALBOT_DISCIPLINE    = "Discipline"
+HEALBOT_HOLY          = "Holy"
+HEALBOT_SHADOW        = "Shadow"
+HEALBOT_ASSASSINATION = "Assassination"
+HEALBOT_COMBAT        = "Combat"
+HEALBOT_SUBTLETY      = "Subtlety"
+HEALBOT_ARMS          = "Arms"
+HEALBOT_FURY          = "Fury"
+HEALBOT_PROTECTION    = "Protection"
+HEALBOT_BEASTMASTERY  = "Beast Mastery"
+HEALBOT_MARKSMANSHIP  = "Marksmanship"
+HEALBOT_SURVIVAL      = "Survival"
+HEALBOT_RETRIBUTION   = "Retribution"
+HEALBOT_ELEMENTAL     = "Elemental"
+HEALBOT_ENHANCEMENT   = "Enhancement"
+HEALBOT_AFFLICTION    = "Affliction"
+HEALBOT_DEMONOLOGY    = "Demonology"
+HEALBOT_DESTRUCTION   = "Destruction"

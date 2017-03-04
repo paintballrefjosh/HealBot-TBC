@@ -1276,10 +1276,13 @@ function lib:Initialise()
     InRaidOrParty = (GetNumRaidMembers() > 0) or (GetNumPartyMembers() > 0);
 
     -- Announce and request version in group and in guild
-    commSend("999" .. tostring(MINOR_VERSION));
-    if (IsInGuild()) then
-        commSend("999" .. tostring(MINOR_VERSION), "GUILD");
-    end
+--    commSend("999" .. tostring(MINOR_VERSION));
+--    if (IsInGuild()) then
+--        commSend("999" .. tostring(MINOR_VERSION), "GUILD");
+--    end
+
+-- Above taken out by HealBot author - after getting a pm that HealBot was spamming the guild chan with "HI I was just wondering if there was a way to get HealBot: Continued 2.4.3.5 to stop spamming "HealComm99972222" in guild chat. "
+
 end
 
 lib:Initialise();

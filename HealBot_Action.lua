@@ -24,6 +24,7 @@ local HealBot_UnitRangeitb={}
 local HealBot_UnitRangeotr={}
 local HealBot_UnitRangeotg={}
 local HealBot_UnitRangeotb={}
+local HealBot_UnitRangeota={}
 local HealBot_curUnitHealth={}
 local HealBot_UnitBarUpdate={}
 local HealBot_TrackBars={}
@@ -143,6 +144,7 @@ local hcr=nil
 local hcg=nil
 local hcb=nil
 local hca=nil
+local hcta=nil
 local hcpct=nil
 local hrpct=100
 function HealBot_HealthColor(unit,hlth,maxhlth,tooltipcol,Member_Name,UnitDead,Member_Buff,Member_Debuff,healin)
@@ -182,10 +184,12 @@ function HealBot_HealthColor(unit,hlth,maxhlth,tooltipcol,Member_Name,UnitDead,M
   end
 
   hcr,hcg,hcb = 1.0, 1.0, 0.0;
-  if hcpct>HealBot_Config.AlertLevel then
-    hca=HealBot_Config.bardisa[HealBot_Config.Current_Skin]
-  else
+  if hcpct<=HealBot_Config.AlertLevel or HealBot_Aggro[Member_Name] then
     hca=HealBot_Config.bareora[HealBot_Config.Current_Skin]
+	hcta=HealBot_Config.btextenabledcola[HealBot_Config.Current_Skin]
+  else
+    hca=HealBot_Config.bardisa[HealBot_Config.Current_Skin]
+	hcta=HealBot_Config.btextdisbledcola[HealBot_Config.Current_Skin]
   end
 
   if hcpct>=0.98 then hcr = 0.0;
@@ -198,7 +202,7 @@ function HealBot_HealthColor(unit,hlth,maxhlth,tooltipcol,Member_Name,UnitDead,M
   	hcr,hcg,hcb = HealBot_Action_ClassColour(unit);
   end
   
-  return hcr,hcg,hcb,hca,hrpct
+  return hcr,hcg,hcb,hca,hrpct,hcta
 end
 
 local barName=nil
@@ -351,21 +355,6 @@ function HealBot_Action_EnableButton(button, ebuName)
   ebuhlth,ebumaxhlth=HealBot_UnitHealth(ebUnit)
   HealBot_UnitRangeSpell[ebUnit]=HealBot_hSpell
 
-  if HealBot_Config.SetClassColourText==1 and HealBot_ClassColB[ebuName] then
-    ebusr,ebusg,ebusb = HealBot_ClassColR[ebuName],HealBot_ClassColG[ebuName],HealBot_ClassColB[ebuName];
-    ebusa = HealBot_Config.btextenabledcola[HealBot_Config.Current_Skin];
-  elseif ebuHealBot_UnitDebuff then
-    ebusr=HealBot_Config.btextcursecolr[HealBot_Config.Current_Skin];
-    ebusg=HealBot_Config.btextcursecolg[HealBot_Config.Current_Skin];
-    ebusb=HealBot_Config.btextcursecolb[HealBot_Config.Current_Skin];
-    ebusa=HealBot_Config.btextcursecola[HealBot_Config.Current_Skin];
-  else
-    ebusr=HealBot_Config.btextenabledcolr[HealBot_Config.Current_Skin] or 0;
-    ebusg=HealBot_Config.btextenabledcolg[HealBot_Config.Current_Skin] or 0;
-    ebusb=HealBot_Config.btextenabledcolb[HealBot_Config.Current_Skin] or 0;
-    ebusa=HealBot_Config.btextenabledcola[HealBot_Config.Current_Skin] or 0;
-  end
-
   if ebuName~=HEALBOT_WORDS_UNKNOWN then
   
     ebuHealBot_UnitDebuff=HealBot_UnitDebuff[ebuName]
@@ -410,7 +399,19 @@ function HealBot_Action_EnableButton(button, ebuName)
       ebubar2:SetValue(0)
     end	
     
-	ebur,ebug,ebub,ebua,ebpct = HealBot_HealthColor(ebUnit,ebuhlth,ebumaxhlth,false,ebuName,ebuUnitDead,ebuHealBot_UnitBuff,ebuHealBot_UnitDebuff,ebuhealin)
+	ebur,ebug,ebub,ebua,ebpct,ebusa = HealBot_HealthColor(ebUnit,ebuhlth,ebumaxhlth,false,ebuName,ebuUnitDead,ebuHealBot_UnitBuff,ebuHealBot_UnitDebuff,ebuhealin)
+
+    if HealBot_Config.SetClassColourText==1 and HealBot_ClassColB[ebuName] then
+      ebusr,ebusg,ebusb = HealBot_ClassColR[ebuName],HealBot_ClassColG[ebuName],HealBot_ClassColB[ebuName];
+    elseif ebuHealBot_UnitDebuff then
+      ebusr=HealBot_Config.btextcursecolr[HealBot_Config.Current_Skin];
+      ebusg=HealBot_Config.btextcursecolg[HealBot_Config.Current_Skin];
+      ebusb=HealBot_Config.btextcursecolb[HealBot_Config.Current_Skin];
+    else
+      ebusr=HealBot_Config.btextenabledcolr[HealBot_Config.Current_Skin] or 0;
+      ebusg=HealBot_Config.btextenabledcolg[HealBot_Config.Current_Skin] or 0;
+      ebusb=HealBot_Config.btextenabledcolb[HealBot_Config.Current_Skin] or 0;
+    end
 	
     if HealBot_UnitInRange(HealBot_bSpell, ebUnit)==1 then
     	ebuUnit_BuffRange=true
@@ -462,6 +463,7 @@ function HealBot_Action_EnableButton(button, ebuName)
 	  end
 	end
     if ebufastenable then
+      ebusa = HealBot_Config.btextenabledcola[HealBot_Config.Current_Skin];
 	  HealBot_Enabled[ebuName]=true
       ebubar:SetStatusBarColor(ebur,ebug,ebub,HealBot_Config.Barcola[HealBot_Config.Current_Skin]);
       ebubar2:SetStatusBarColor(ebur,ebug,ebub,HealBot_Config.BarcolaInHeal[HealBot_Config.Current_Skin]);
@@ -480,7 +482,6 @@ function HealBot_Action_EnableButton(button, ebuName)
       end
 	else
 	  HealBot_Enabled[ebuName]=false
-	  ebusa=HealBot_Config.btextdisbledcola[HealBot_Config.Current_Skin]
 	  if HealBot_Config.SetClassColourText==0 then
         ebusr=HealBot_Config.btextdisbledcolr[HealBot_Config.Current_Skin]
         ebusg=HealBot_Config.btextdisbledcolg[HealBot_Config.Current_Skin]
@@ -548,6 +549,7 @@ function HealBot_Action_EnableButton(button, ebuName)
 	      HealBot_Tooltip_RefreshDisabledTooltip(ebUnit)
         end
 	  end
+	  HealBot_UnitRangeota[ebUnit]=ebusa
     end
     HealBot_UnitRanger[ebUnit]=ebur
     HealBot_UnitRangeg[ebUnit]=ebug
@@ -866,7 +868,7 @@ function HealBot_Action_CheckRange(unit, button)
 	  else
 	    --ebubar:SetStatusBarColor(HealBot_UnitRanger[unit],HealBot_UnitRangeg[unit],HealBot_UnitRangeb[unit],HealBot_Config.bardisa[HealBot_Config.Current_Skin])
 			ebubar:SetStatusBarColor(HealBot_UnitRanger[unit],HealBot_UnitRangeg[unit],HealBot_UnitRangeb[unit],HealBot_UnitRangea[unit])
-			ebubar.txt:SetTextColor(HealBot_UnitRangeotr[unit],HealBot_UnitRangeotg[unit],HealBot_UnitRangeotb[unit],HealBot_Config.btextdisbledcola[HealBot_Config.Current_Skin]);
+			ebubar.txt:SetTextColor(HealBot_UnitRangeotr[unit],HealBot_UnitRangeotg[unit],HealBot_UnitRangeotb[unit],HealBot_UnitRangeota[unit]);
       end
     end
   end
@@ -916,6 +918,9 @@ function HealBot_Action_SetHealButton(index,unit,Member_Name,isTarget)
         HealBot_ClassColR[Member_Name],HealBot_ClassColG[Member_Name],HealBot_ClassColB[Member_Name] = HealBot_Action_ClassColour(unit);
 	    HealBot_UnitID[Member_Name]="init"
 		HealBot_Unit_Button[unit]="init"
+		if not HealBot_UnitSpec[Member_Name] then
+		  HealBot_UnitSpec[Member_Name] = " "
+		end
       end
 	  if HealBot_UnitID[Member_Name]~=unit then
         HealBot_CheckAllBuffs(unit)
@@ -959,6 +964,9 @@ function HealBot_Action_SetTargetHealButton(unit,Member_Name)
     if not HealBot_ClassColR[Member_Name] then
       HealBot_ClassColR[Member_Name],HealBot_ClassColG[Member_Name],HealBot_ClassColB[Member_Name] = HealBot_Action_ClassColour(unit);
 	  HealBot_Unit_Button[unit]="init"
+	  if not HealBot_UnitSpec[Member_Name] then
+		HealBot_UnitSpec[Member_Name] = " "
+      end
     end
     if HealBot_Unit_Button[unit]~=shb then
 	  shb.unit=unit

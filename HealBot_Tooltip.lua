@@ -58,10 +58,24 @@ local zone=nil;
 local Instant_check=false
 local top = nil
 local x, y = nil,nil
-local HealBot_TooltipLines=40;
 local format=format
 local strsub=strsub
 local strlen=strlen
+local HealBot_CheckBuffs = {}
+local d=nil
+local HealBot_Tooltip_DirtyLines={}
+
+function HealBot_Tooltip_Clear_CheckBuffs()
+  for x,_ in pairs(HealBot_CheckBuffs) do
+    HealBot_CheckBuffs[x]=nil;
+  end
+end
+
+function HealBot_Tooltip_CheckBuffs(buff)
+  HealBot_CheckBuffs[buff]=buff;
+  d=HealBot_AltBuffNames(buff)
+  if d then HealBot_CheckBuffs[d]=buff; end
+end
   
 function HealBot_Action_RefreshTooltip(unit)
   if HealBot_Config.ShowTooltip==0 then return end
@@ -145,8 +159,11 @@ function HealBot_Action_RefreshTooltip(unit)
   if HealBot_Config.Tooltip_ShowTarget==1 then
     if Member_Name then
       if UnitClass(unit) then
+	    if UnitName("target") and UnitName("target")==Member_Name and HealBot_UnitSpec[Member_Name]==" " and UnitInRange("target") == 1 then
+		  NotifyInspect("target")
+		end
 	    r,g,b=HealBot_Action_RetHealBot_ClassCol(Member_Name)
-        HealBot_Tooltip_SetLineLeft(Member_Name.." (Level "..UnitLevel(unit).." "..UnitClass(unit)..")",r,g,b,linenum,1)   
+        HealBot_Tooltip_SetLineLeft(Member_Name.." (Level "..UnitLevel(unit)..HealBot_UnitSpec[Member_Name]..UnitClass(unit)..")",r,g,b,linenum,1)   
       else 
         HealBot_Tooltip_SetLineLeft(Member_Name,1,1,1,linenum,1)   
       end      
@@ -161,13 +178,36 @@ function HealBot_Action_RefreshTooltip(unit)
                                            HealBot_Config.CDCBarColour[DebuffType].G+0.2,
                                            HealBot_Config.CDCBarColour[DebuffType].B+0.2,
                                            linenum,1)
+		HealBot_Tooltip_SetLineRight(" ",0,0,0,linenum,0)
       end
       if Member_Buff then
         linenum=linenum+1
 		br,bg,bb=HealBot_Options_RetBuffRGB(Member_Buff)
         HealBot_Tooltip_SetLineLeft(Member_Name.." is missing buff "..Member_Buff,br,bg,bb,linenum,1)
+		HealBot_Tooltip_SetLineRight(" ",0,0,0,linenum,0)
       end
-      linenum=linenum+1;
+	  linenum=linenum+1
+	  if not HealBot_IsFighting and HealBot_Config.Tooltip_ShowTarget==1 and HealBot_Config.Tooltip_ShowMyBuffs==1 then
+	    d=false
+        for x,y in pairs(HealBot_CheckBuffs) do
+		  ri,text=HealBot_HasMyBuff(x, unit)
+          if ri then
+		    d=true
+            linenum=linenum+1
+		    br,bg,bb=HealBot_Options_RetBuffRGB(y)
+			if text>=60 then 
+			  text=ceil(text/60)
+              HealBot_Tooltip_SetLineLeft("  "..x.."  "..text.." mins",br,bg,bb,linenum,1)
+			  HealBot_Tooltip_SetLineRight(" ",0,0,0,linenum,0)
+			else
+			  text=ceil(text)
+			  HealBot_Tooltip_SetLineLeft("  "..x.."  "..text.." secs",br,bg,bb,linenum,1)
+			  HealBot_Tooltip_SetLineRight(" ",0,0,0,linenum,0)
+			end
+		  end
+        end
+	  end
+      if d then linenum=linenum+1 end
       if HealBot_Config.ProtectPvP==1 and UnitIsPVP(unit) and not UnitIsPVP("player") then 
         HealBot_Tooltip_SetLineLeft("    ----- PVP -----",1,0.5,0.5,linenum,1);
         HealBot_Tooltip_SetLineRight("----- PVP -----    ",1,0.5,0.5,linenum,1);
@@ -176,6 +216,7 @@ function HealBot_Action_RefreshTooltip(unit)
     end
   else
     HealBot_Tooltip_SetLineLeft(HEALBOT_OPTIONS_TAB_SPELLS,1,1,1,linenum,1)
+	HealBot_Tooltip_SetLineRight(" ",0,0,0,linenum,0)
   end
   
   spellLeftRecInstant=false;
@@ -428,10 +469,10 @@ function HealBot_Tooltip_CheckForInstant(unit,spell)
 end
 
 function HealBot_Tooltip_SetQuickTipsColours(healval,hlthdelta,unit,spell)
-  r,g,b,a,ri=1,1,1,1,false;
+  r,g,b,a,ri=0.5,0.5,1,1,false;
   ri=HealBot_Tooltip_CheckForInstant(unit,spell)
   if healval==-1 then
-    r, g, b=0.58,0.58,1;
+--    r, g, b=0.58,0.58,1;
   elseif healval>0 then
     if healval>hlthdelta then
       tmpnum=(healval-hlthdelta);
@@ -440,7 +481,7 @@ function HealBot_Tooltip_SetQuickTipsColours(healval,hlthdelta,unit,spell)
       a=((healval)/(hlthdelta+1))*1.35;
     end
   elseif healval==0 then
-    r, g, b=0.8,1,0.2;
+--    r, g, b=0.8,1,0.2;
   else
     healval=0-healval;
     if (healval*.72)>hlthdelta then
@@ -598,10 +639,13 @@ function HealBot_Tooltip_RefreshDisabledTooltip(unit)
       end
     end
     if Member_Name then
+	  if UnitName("target") and UnitName("target")==Member_Name and HealBot_UnitSpec[Member_Name]==" " and UnitInRange("target") == 1 then
+		NotifyInspect("target")
+      end
 	  r,g,b=HealBot_Action_RetHealBot_ClassCol(Member_Name)
       HealBot_Tooltip_SetLineLeft(Member_Name,r,g,b,linenum,1)
       if UnitClass(unit) then
-        HealBot_Tooltip_SetLineRight(" Level "..UnitLevel(unit).." "..UnitClass(unit),r,g,b,linenum,1);
+        HealBot_Tooltip_SetLineRight(" Level "..UnitLevel(unit)..HealBot_UnitSpec[Member_Name]..UnitClass(unit),r,g,b,linenum,1);
       end
       if zone and not strfind(zone,"Level") then
         linenum=linenum+1
@@ -620,14 +664,37 @@ function HealBot_Tooltip_RefreshDisabledTooltip(unit)
                                            HealBot_Config.CDCBarColour[DebuffType].G+0.2,
                                            HealBot_Config.CDCBarColour[DebuffType].B+0.2,
                                            linenum,1)
+		HealBot_Tooltip_SetLineRight(" ",0,0,0,linenum,0)
       end
       Member_Buff=HealBot_UnitBuff[Member_Name];
       if Member_Buff then
         linenum=linenum+1
 		br,bg,bb=HealBot_Options_RetBuffRGB(Member_Buff);
         HealBot_Tooltip_SetLineLeft(Member_Name.." is missing buff "..Member_Buff,br,bg,bb,linenum,1)
+		HealBot_Tooltip_SetLineRight(" ",0,0,0,linenum,0)
       end
-      linenum=linenum+1
+	  linenum=linenum+1
+	  if not HealBot_IsFighting and HealBot_Config.Tooltip_ShowTarget==1 and HealBot_Config.Tooltip_ShowMyBuffs==1 then
+	    d=false
+        for x,y in pairs(HealBot_CheckBuffs) do
+		  ri,text=HealBot_HasMyBuff(x, unit)
+          if ri then
+		    d=true
+            linenum=linenum+1
+		    br,bg,bb=HealBot_Options_RetBuffRGB(y)
+			if text>=60 then 
+			  text=ceil(text/60)
+              HealBot_Tooltip_SetLineLeft("  "..x.."  "..text.." mins",br,bg,bb,linenum,1)
+			  HealBot_Tooltip_SetLineRight(" ",0,0,0,linenum,0)
+			else
+ 			  text=ceil(text)
+			  HealBot_Tooltip_SetLineLeft("  "..x.."  "..text.." secs",br,bg,bb,linenum,1)
+			  HealBot_Tooltip_SetLineRight(" ",0,0,0,linenum,0)
+			end
+		  end
+        end
+	  end
+      if d then linenum=linenum+1 end
     end
   else
     HealBot_Tooltip_SetLineLeft(HEALBOT_OPTIONS_TAB_SPELLS,1,1,1,linenum,1)
@@ -744,7 +811,7 @@ function HealBot_Action_RefreshTargetTooltip(Member_Name, unit)
   r,g,b=HealBot_Action_RetHealBot_ClassCol(Member_Name)
   HealBot_Tooltip_SetLineLeft(Member_Name,r,g,b,linenum,1)
   if UnitClass(unit) then
-    HealBot_Tooltip_SetLineRight(" Level "..UnitLevel(unit).." "..UnitClass(unit),r,g,b,linenum,1);
+    HealBot_Tooltip_SetLineRight(" Level "..UnitLevel(unit)..HealBot_UnitSpec[Member_Name]..UnitClass(unit),r,g,b,linenum,1);
   end
   linenum=linenum+1
   HealBot_Tooltip_SetLineLeft(HEALBOT_TOOLTIP_TARGETBAR,1,1,0.5,linenum,1);
@@ -836,6 +903,7 @@ function HealBot_Tooltip_SetLineLeft(Text,R,G,B,linenum,a)
   txtL:SetTextColor(R,G,B,a)
   txtL:SetText(Text)
   txtL:Show()
+  HealBot_Tooltip_DirtyLines[linenum]=true
 end
 
 function HealBot_Tooltip_SetLineRight(Text,R,G,B,linenum,a)
@@ -844,13 +912,15 @@ function HealBot_Tooltip_SetLineRight(Text,R,G,B,linenum,a)
   txtR:SetTextColor(R,G,B,a)
   txtR:SetText(Text)
   txtR:Show()
+  HealBot_Tooltip_DirtyLines[linenum]=true
 end
 
 function HealBot_Tooltip_ClearLines()
-  for j=1,HealBot_TooltipLines do
-    txtL = getglobal("HealBot_TooltipTextL" .. j)
+  for j,_ in pairs(HealBot_Tooltip_DirtyLines) do
     txtR = getglobal("HealBot_TooltipTextR" .. j)
-    txtL:SetText(" ")
     txtR:SetText(" ")
+    txtL = getglobal("HealBot_TooltipTextL" .. j)
+    txtL:SetText(" ")
+	HealBot_Tooltip_DirtyLines[j]=nil
   end
 end

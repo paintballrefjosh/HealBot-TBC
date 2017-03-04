@@ -592,6 +592,11 @@ function HealBot_Options_ShowClassOnBarWithName_OnClick(this)
   HealBot_Action_Refresh_Flag=true;
 end
 
+function HealBot_Options_ShowTooltipMyBuffs_OnClick(this)
+  HealBot_Config.Tooltip_ShowMyBuffs = this:GetChecked() or 0;
+end
+
+
 function HealBot_BarHealthIncHeal_OnClick(this)
   HealBot_Config.BarHealthIncHeals = this:GetChecked() or 0;
   HealBot_Action_Refresh_Flag=true;
@@ -886,6 +891,10 @@ end
 
 function HealBot_Options_ShowTooltip_OnClick(this)
   HealBot_Config.ShowTooltip = this:GetChecked() or 0;
+end
+
+function HealBot_Options_ShowTooltipUpdate_OnClick(this)
+  HealBot_Config.TooltipUpdate = this:GetChecked() or 0;
 end
 
 function HealBot_Options_ShowTooltipTarget_OnClick(this)
@@ -3032,7 +3041,7 @@ function HealBot_Options_Buff_Reset()
   for x,_ in pairs(HealBot_BuffWatchPvP) do
     HealBot_BuffWatchPvP[x]=nil;
   end
-  
+  HealBot_Tooltip_Clear_CheckBuffs()
 	
   for k=1,9 do
     if BuffDropDownClass[k] and BuffDropDownClass[k]>1 then
@@ -3048,6 +3057,7 @@ function HealBot_Options_Buff_Reset()
         end
 
         HealBot_BuffWatchTargetSpell=HealBot_BuffWatchTarget[spell];
+		HealBot_Tooltip_CheckBuffs(spell)
 
         if BuffDropDownClass[k]==2 then
           HealBot_BuffWatchTargetSpell["Self"]=true;
@@ -3714,10 +3724,12 @@ function HealBot_Options_Init(tabNo)
  elseif tabNo==6 and DoInitTab6 then
     HealBot_Options_BarButtonShowHoT:SetChecked(HealBot_Config.ShowHoTicons)
 	HealBot_Options_ShowTooltip:SetChecked(HealBot_Config.ShowTooltip)
+	HealBot_Options_ShowTooltipUpdate:SetChecked(HealBot_Config.TooltipUpdate)
     HealBot_Options_ShowClassOnBar:SetChecked(HealBot_Config.ShowClassOnBar)
     HealBot_Options_ShowHealthOnBar:SetChecked(HealBot_Config.ShowHealthOnBar)
     HealBot_BarHealthIncHeal:SetChecked(HealBot_Config.BarHealthIncHeals)
     HealBot_Options_ShowTooltipTarget:SetChecked(HealBot_Config.Tooltip_ShowTarget)
+    HealBot_Options_ShowTooltipMyBuffs:SetChecked(HealBot_Config.Tooltip_ShowMyBuffs)
     HealBot_Options_ShowTooltipSpellDetail:SetChecked(HealBot_Config.Tooltip_ShowSpellDetail)
     HealBot_Options_ShowTooltipInstant:SetChecked(HealBot_Config.Tooltip_Recommend)
 	HealBot_Options_ShowTooltipPreDefined:SetChecked(HealBot_Config.Tooltip_PreDefined)

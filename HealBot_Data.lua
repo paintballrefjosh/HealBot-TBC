@@ -15,8 +15,10 @@ HealBot_ConfigDefaults = {
   CastNotifyResOnly = 0,
   HideOptions = 0,
   ShowTooltip = 1,
+  TooltipUpdate = 0,
   Tooltip_ShowSpellDetail = 0,
   Tooltip_ShowTarget = 1,
+  Tooltip_ShowMyBuffs = 1,
   Tooltip_Recommend = 0,
   Tooltip_PreDefined=1,
   TooltipPos = 3,  
@@ -193,6 +195,7 @@ HealBot_PlayerClass=nil;
 HealBot_PlayerClassEN=nil;
 HealBot_PlayerRace=nil;
 HealBot_PlayerRaceEN=nil;
+HealBot_UnitSpec = {};
 HealBot_UnitName = {};
 HealBot_UnitID = {};
 HealBot_PlayerName=nil;
@@ -206,3 +209,16 @@ HealBot_BuffWatch={}
 HealBot_DebuffWatchTarget={}
 HealBot_DebuffWatchPvP={}
 HealBot_BuffWatchPvP={}
+
+
+HEALBOT_SPEC = {
+	["DRUI"] = { [1] = HEALBOT_BALANCE,       [2] = HEALBOT_FERAL,        [3] = HEALBOT_RESTORATION, },
+	["MAGE"] = { [1] = HEALBOT_ARCANE,        [2] = HEALBOT_FIRE,         [3] = HEALBOT_FROST,       },
+	["PRIE"] = { [1] = HEALBOT_DISCIPLINE,    [2] = HEALBOT_HOLY,         [3] = HEALBOT_SHADOW,      },
+	["ROGU"] = { [1] = HEALBOT_ASSASSINATION, [2] = HEALBOT_COMBAT,       [3] = HEALBOT_SUBTLETY,    },
+	["WARR"] = { [1] = HEALBOT_ARMS,          [2] = HEALBOT_FURY,         [3] = HEALBOT_PROTECTION,  },
+	["HUNT"] = { [1] = HEALBOT_BEASTMASTERY,  [2] = HEALBOT_MARKSMANSHIP, [3] = HEALBOT_SURVIVAL,    },
+	["PALA"] = { [1] = HEALBOT_HOLY,          [2] = HEALBOT_PROTECTION,   [3] = HEALBOT_RETRIBUTION, },
+	["SHAM"] = { [1] = HEALBOT_ELEMENTAL,     [2] = HEALBOT_ENHANCEMENT,  [3] = HEALBOT_RESTORATION, },
+	["WARL"] = { [1] = HEALBOT_AFFLICTION,    [2] = HEALBOT_DEMONOLOGY,   [3] = HEALBOT_DESTRUCTION, },
+	}

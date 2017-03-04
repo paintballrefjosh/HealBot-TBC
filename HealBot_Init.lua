@@ -581,7 +581,30 @@ HealBot_Spells = {
    CastTime = 2.5, Cast = 2.5, Mana = 435, HealsMin = 605, HealsMax = 691, Level = 61 },
   [HEALBOT_CHAIN_HEAL .. HEALBOT_RANK_5] = {
    CastTime = 2.5, Cast = 2.5, Mana = 540, HealsMin = 826, HealsMax = 942, Level = 68 },
-    
+
+--  Hunter
+
+  [HEALBOT_MENDPET .. HEALBOT_RANK_1] = {
+    CastTime = 0, Cast = 0, Duration = 15, Mana =  40, HealsMin = 0, HealsMax = 0, HealsExt =   125, Level =  12, Buff = HEALBOT_MENDPET }, 
+  [HEALBOT_MENDPET .. HEALBOT_RANK_2] = {
+    CastTime = 0, Cast = 0, Duration = 15, Mana =  70, HealsMin = 0, HealsMax = 0, HealsExt =   250, Level =  20, Buff = HEALBOT_MENDPET }, 
+  [HEALBOT_MENDPET .. HEALBOT_RANK_3] = {
+    CastTime = 0, Cast = 0, Duration = 15, Mana =  100, HealsMin = 0, HealsMax = 0, HealsExt =   450, Level =  28, Buff = HEALBOT_MENDPET }, 
+  [HEALBOT_MENDPET .. HEALBOT_RANK_4] = {
+    CastTime = 0, Cast = 0, Duration = 15, Mana =  130, HealsMin = 0, HealsMax = 0, HealsExt =   700, Level =  36, Buff = HEALBOT_MENDPET }, 
+  [HEALBOT_MENDPET .. HEALBOT_RANK_5] = {
+    CastTime = 0, Cast = 0, Duration = 15, Mana =  165, HealsMin = 0, HealsMax = 0, HealsExt =   1000, Level =  44, Buff = HEALBOT_MENDPET }, 
+  [HEALBOT_MENDPET .. HEALBOT_RANK_6] = {
+    CastTime = 0, Cast = 0, Duration = 15, Mana =  200, HealsMin = 0, HealsMax = 0, HealsExt =   1400, Level =  52, Buff = HEALBOT_MENDPET }, 
+  [HEALBOT_MENDPET .. HEALBOT_RANK_7] = {
+    CastTime = 0, Cast = 0, Duration = 15, Mana =  250, HealsMin = 0, HealsMax = 0, HealsExt =   1825, Level =  60, Buff = HEALBOT_MENDPET }, 
+  [HEALBOT_MENDPET .. HEALBOT_RANK_8] = {
+    CastTime = 0, Cast = 0, Duration = 15, Mana =  300, HealsMin = 0, HealsMax = 0, HealsExt =   2375, Level =  68, Buff = HEALBOT_MENDPET }, 
+  [HEALBOT_MENDPET .. HEALBOT_RANK_9] = {
+    CastTime = 0, Cast = 0, Duration = 15, Mana =  610, HealsMin = 0, HealsMax = 0, HealsExt =   4250, Level =  74, Buff = HEALBOT_MENDPET }, 
+  [HEALBOT_MENDPET .. HEALBOT_RANK_10] = {
+    CastTime = 0, Cast = 0, Duration = 15, Mana =  750, HealsMin = 0, HealsMax = 0, HealsExt =   5250, Level =  80, Buff = HEALBOT_MENDPET }, 
+	
 };
 
 --end

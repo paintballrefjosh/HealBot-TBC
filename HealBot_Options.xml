@@ -1055,7 +1055,7 @@
 							</Anchor>
 						</Anchors>
 						<Scripts>
-							<OnLoad>HealBot_Options_val2_OnLoad(this,HEALBOT_OPTIONS_RANGECHECKFREQ,0.5,5,0.5)</OnLoad>
+							<OnLoad>HealBot_Options_val2_OnLoad(this,HEALBOT_OPTIONS_RANGECHECKFREQ,0.5,2.5,0.5)</OnLoad>
 							<OnValueChanged>HealBot_Options_RangeCheckFreq_OnValueChanged(this)</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2842,6 +2842,19 @@
 									<OnClick>HealBot_Options_ShowTooltip_OnClick(this)</OnClick>
 								</Scripts>
 							</CheckButton>
+							<CheckButton name="HealBot_Options_ShowTooltipUpdate" inherits="SendMailRadioButtonTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="HealBot_Options_ShowTooltip" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="158" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>HealBot_Options_SetText(this,HEALBOT_OPTIONS_TOOLTIPUPDATE)</OnLoad>
+									<OnClick>HealBot_Options_ShowTooltipUpdate_OnClick(this)</OnClick>
+								</Scripts>
+							</CheckButton>
 							<CheckButton name="HealBot_Options_ShowTooltipTarget" inherits="OptionsCheckButtonTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="HealBot_Options_ShowTooltip" relativePoint="TOPLEFT">
@@ -2853,6 +2866,19 @@
 								<Scripts>
 									<OnLoad>HealBot_Options_SetText(this,HEALBOT_OPTIONS_SHOWUNITTOOLTIP)</OnLoad>
 									<OnClick>HealBot_Options_ShowTooltipTarget_OnClick(this)</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="HealBot_Options_ShowTooltipMyBuffs" inherits="SendMailRadioButtonTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="HealBot_Options_ShowTooltipTarget" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="158" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>HealBot_Options_SetText(this,HEALBOT_OPTIONS_SHOWUNITBUFFTIME)</OnLoad>
+									<OnClick>HealBot_Options_ShowTooltipMyBuffs_OnClick(this)</OnClick>
 								</Scripts>
 							</CheckButton>
 							<CheckButton name="HealBot_Options_ShowTooltipSpellDetail" inherits="OptionsCheckButtonTemplate">
