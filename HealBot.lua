@@ -171,7 +171,7 @@ local ghid=nil
 local ghspell=nil
 local usable=nil
 local noMana=nil
-local HealBot_Timer1,HealBot_Timer2,HealBot_Timer3 = 0,0,0;
+local HealBot_Timer1,HealBot_Timer2,HealBot_Timer3 = 0,0,0.24;
 local HealBot_StopCastTimer=0
 local Ti=nil
 local Tcnt=nil
@@ -467,6 +467,7 @@ end
 
 function HealBot_ClearIncHeal()
     if HealBot_HealValue > 0 then
+	  HealBot_OnEvent_AddonMsg(nil,HEALBOT_ADDON_ID, ">> "..0-HealBot_HealValue.." <<=>> "..HealBot_IamHealing, nil, HealBot_PlayerName, true)
       HealBot_Comms_SendAddonMsg(HEALBOT_ADDON_ID, ">> "..0-HealBot_HealValue.." <<=>> "..HealBot_IamHealing, HealBot_AddonMsgType, HealBot_PlayerName)
 	  HealBot_IamHealing=nil
       HealBot_HealValue=0;
@@ -1098,7 +1099,7 @@ end
 
 local HealBotAddonSummary={}
 local HealBotAddonIncHeals={}
-function HealBot_OnEvent_AddonMsg(this,addon_id,msg,distribution,sender_id)
+function HealBot_OnEvent_AddonMsg(this,addon_id,msg,distribution,sender_id,internal)
 --  inc_msg = gsub(msg, "%$", "s");
 --  inc_msg = gsub(inc_msg, "§", "S");
   inc_msg=msg
@@ -1110,6 +1111,8 @@ function HealBot_OnEvent_AddonMsg(this,addon_id,msg,distribution,sender_id)
     HealBotAddonSummary[addon_id]=HealBotAddonSummary[addon_id]+1
   end
   if addon_id==HEALBOT_ADDON_ID or addon_id=="VisualHeal" or addon_id=="HealComm" or addon_id=="CastCommLib" or addon_id=="X-PerlHeal" then
+    if sender_id==HealBot_PlayerName and not internal then return end
+	if HealBot_Vers[sender_id] and addon_id~=HEALBOT_ADDON_ID then return end
     if HealBot_Healers[sender_id] then
 	  if HealBot_Comms_Blacklist[sender_id]==addon_id then
         _,_,heal_val,unitname = string.find(HealBot_Healers[sender_id], ">> (.%d+) <<=>> (.+)$" )
@@ -2080,6 +2083,7 @@ function HealBot_OnEvent_UnitSpellcastSent(this,caster,spellname,rank,target)
         elseif target then
           HealBot_AddIamHealingList(target)
         end
+		HealBot_OnEvent_AddonMsg(nil,HEALBOT_ADDON_ID, ">> "..HealBot_HealValue.." <<=>> "..HealBot_IamHealing, nil, HealBot_PlayerName, true)
 		HealBot_Comms_SendAddonMsg(HEALBOT_ADDON_ID, ">> "..HealBot_HealValue.." <<=>> "..HealBot_IamHealing, HealBot_AddonMsgType, HealBot_PlayerName)
 		HealBot_Timer3=0
 		HealBot_StopCastTimer=2
