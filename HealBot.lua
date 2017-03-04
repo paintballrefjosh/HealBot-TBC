@@ -616,9 +616,6 @@ function HealBot_OnLoad(this)
     SlashCmdList["HEALBOT"] = function(msg)
       HealBot_SlashCmd(msg);
     end
-	QuickHealth.RegisterCallback(this, "HealthUpdated", function(event, GUID, newHealth)
-	    HealBot_OnEvent(this, "HealthUpdated", GUID, newHealth)
-	end);
 end
 
 local ouName=nil
@@ -830,15 +827,16 @@ function HealBot_OnUpdate(this,arg1)
       end
     end
 	
-	if HealBot_InCombatUpdate then
-		HealBot_IC_PartyMembersChanged()
-    end
   elseif HealBot_Timer3>=0.4 then
     HealBot_Timer3=0
     if HealBot_StopCastTimer>0 then
 	  HealBot_StopCastTimer=HealBot_StopCastTimer-1
 	end
     HealBot_ThrottleCnt=0
+	
+	if HealBot_InCombatUpdate then
+		HealBot_IC_PartyMembersChanged()
+    end
   end
 end
 
@@ -2683,13 +2681,13 @@ function HealBot_SmartCast(unit,hdelta)
 end
 
 function HealBot_UnitInRange(spell, unit) -- added by Diacono of Ursin
-   local inRange = 0
+   x=0
    if IsSpellInRange(spell, unit) ~= nil then
-      inRange = IsSpellInRange(spell, unit)
+      x = IsSpellInRange(spell, unit)
    elseif IsItemInRange(spell, unit) ~= nil then
-      inRange = IsItemInRange(spell, unit)
+      x = IsItemInRange(spell, unit)
    elseif UnitInRange(unit) == 1 then
-      inRange = 1
+      x = 1
    end
-   return inRange
+   return x
 end

@@ -8,6 +8,7 @@
   <Script file="Locale\HealBot_Localization.kr.lua" />
   <Script file="Locale\HealBot_Localization.cn.lua" />
   <Script file="Locale\HealBot_Localization.tw.lua" />
+  <Script file="Locale\HealBot_Localization.ru.lua" />
   <Script file="Libs\LibQuickHealth-1.0\LibStub.lua" />
   <Script file="Libs\LibQuickHealth-1.0\CallbackHandler-1.0.lua" />
   <Script file="Libs\LibQuickHealth-1.0\LibQuickHealth-1.0.lua" />
@@ -16,7 +17,6 @@
   <Script file="HealBot_Comms.lua" />
   <Script file="HealBot_Init.lua" />
   <Script file="HealBot.lua" />
-  
     
   <StatusBar name="HealBot_StatusBar" virtual="true" frameStrata="MEDIUM" hidden="false">
 	<Size>

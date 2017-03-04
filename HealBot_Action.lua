@@ -494,7 +494,7 @@ function HealBot_Action_EnableButton(button, ebuName)
           ebusa=1
         else
           HealBot_UnsetHealBot_Ressing(ebuName)
-				end
+		end
         HealBot_UnitRangeitr[ebUnit]=0.2
         HealBot_UnitRangeitg[ebUnit]=1
         HealBot_UnitRangeitb[ebUnit]=0.2
@@ -503,13 +503,13 @@ function HealBot_Action_EnableButton(button, ebuName)
         HealBot_UnitRangeotb[ebUnit]=0.2
       elseif ebuUnitDead and ebuName~=HealBot_PlayerName then
         if HealBot_rSpell then
-		  		HealBot_UnitRangeSpell[ebUnit]=HealBot_rSpell
+		  HealBot_UnitRangeSpell[ebUnit]=HealBot_rSpell
           if ebuUnit_BuffRange and not UnitIsGhost(ebUnit) then
             ebusr=0;
             ebusg=0;
             ebusb=0;
             ebusa=1;
-		  		else
+          else
             ebusr=0.7;
             ebusg=0.7;
             ebusb=0.7;
@@ -527,7 +527,7 @@ function HealBot_Action_EnableButton(button, ebuName)
           HealBot_UnitRangeotr[ebUnit]=0.7
           HealBot_UnitRangeotg[ebUnit]=0.7
           HealBot_UnitRangeotb[ebUnit]=0.7
-			end
+		end
       else
         HealBot_UnitRangeitr[ebUnit]=ebusr
         HealBot_UnitRangeitg[ebUnit]=ebusg
@@ -554,7 +554,7 @@ function HealBot_Action_EnableButton(button, ebuName)
     HealBot_UnitRangeb[ebUnit]=ebub
     HealBot_UnitRangea[ebUnit]=ebua
   elseif Delay_RecalcParty==0 then
-    Delay_RecalcParty=1
+    Delay_RecalcParty=3
   end
   
   ebubar.txt = getglobal(ebubar:GetName().."_text");
@@ -827,14 +827,13 @@ local b,bar,bar2,bar3,bar4,icon1,icon2,icon3,icon1t,icon2t,icon3t,barScale,h,hwi
     HealBot_SetSkinColours()
   end
 end
-local rbb=nil
+
 local rName=nil
 local rbsir=0
 
 function HealBot_Action_RefreshButtons(unit)
   if unit then
-    rbb=HealBot_Unit_Button[unit]
-    HealBot_Action_RefreshButton(rbb, UnitName(unit))
+    HealBot_Action_RefreshButton(HealBot_Unit_Button[unit], UnitName(unit))
   else
     if HealBot_ButtonArray==1 then
       for unit,button in pairs(HealBot_ButtonArray1) do
