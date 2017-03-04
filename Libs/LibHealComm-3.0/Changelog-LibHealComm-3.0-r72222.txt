@@ -1,0 +1,56 @@
+------------------------------------------------------------------------
+r72222 | xbeeps | 2008-04-30 17:10:11 -0400 (Wed, 30 Apr 2008) | 2 lines
+Changed paths:
+   M /trunk/LibHealComm-3.0/LibHealComm-3.0.lua
+
+LibHealComm-3.0:
+- Make the library initialise properly when loaded on-demand (if embedded in an addon that is load-on-demand).
+------------------------------------------------------------------------
+r71750 | xbeeps | 2008-04-27 07:08:34 -0400 (Sun, 27 Apr 2008) | 2 lines
+Changed paths:
+   M /trunk/LibHealComm-3.0/LibHealComm-3.0.toc
+   M /trunk/LibHealComm-3.0/lib.xml
+
+LibHealComm-3.0:
+- Revert 71749 after reviewing some forum threads.
+------------------------------------------------------------------------
+r71749 | xbeeps | 2008-04-27 06:37:51 -0400 (Sun, 27 Apr 2008) | 2 lines
+Changed paths:
+   M /trunk/LibHealComm-3.0/LibHealComm-3.0.toc
+   M /trunk/LibHealComm-3.0/lib.xml
+
+LibHealComm-3.0:
+- Load CallbackHandler-1.0 from the lib.xml file, so addons don't need to include it to use LibHealComm-3.0.
+------------------------------------------------------------------------
+r71196 | xbeeps | 2008-04-24 02:47:58 -0400 (Thu, 24 Apr 2008) | 3 lines
+Changed paths:
+   M /trunk/LibHealComm-3.0/LibHealComm-3.0.lua
+
+LibHealComm-3.0:
+- Removed Carrion Swarm from target debuffs (it is a source debuff).
+- Added Aura of Desire (Essence of Souls) healing "debuff".
+------------------------------------------------------------------------
+r70844 | xbeeps | 2008-04-22 02:29:28 -0400 (Tue, 22 Apr 2008) | 2 lines
+Changed paths:
+   M /trunk/LibHealComm-3.0/LibHealComm-3.0.lua
+
+LibHealComm-3.0:
+- Added Carrion Swarm (Anetheron - Mount Hyjal) healing debuff.
+------------------------------------------------------------------------
+r67157 | xbeeps | 2008-03-30 17:11:31 -0400 (Sun, 30 Mar 2008) | 5 lines
+Changed paths:
+   M /trunk/LibHealComm-3.0/LibHealComm-3.0.lua
+
+LibHealComm-3.0:
+- Complete rewrite of buff/debuff detection using the new GetSpellInfo() API function, matching localized aura names instead of texture names (which was locale neutral, but texture names are not unique). The following healing affecting auras are currently supported: Fel Armor, Focused Will, Mortal Wound (Temporus - The Black Morass), Dark Touched (Grand Warlock Alythess - Sunwell Plateau), Nether Portal - Dominance (Netherspite - Karazhan), Wound Poison, Aimed Shot, Hex of Weakness, Mortal Strike, Arcing Smash (Gurtogg Bloodboil), Blood Fury (Orc Racial), Brood Affliction: Green (Chromaggus), Curse of the Bleeding Hollow (Hellfire Peninsula), Curse of the Deadwood (Deadwood Furbolgs - Felwood), Deathblow, Demolish (Negatron - Netherstorm), Ebon Poison (Black Morass), Filet (Spectral Chef - Karazhan), Gehennas' Curse (Gehennas - Molten Core), Magma-Thrower's Curse (Sulfuron Magma-Thrower - The Arcatraz), Mortal Cleave (High Priestess Thekal - Zul'Gurub), Mortal Cleave (High Priestess Thekal - Zul'Gurub), Mortal Cleave (High Priestess Thekal - Zul'Gurub), Necrotic Poison (Maexxna - Naxxramas), Solar Strike (The Mechanar), Soul Strike (Ethereal Crypt Raiders - Mana-Tombs), Veil of Shadow (Nefarian - Blackwing Lair), Bane of Infinity (CoT: Escape from Durholde), Curse of Infinity (CoT: Escape from Durholde), Aura of Suffering (Essence of Souls - Black Temple), Enfeeble (Prince Malchezaar - Karazhan).
+- Added support for Libram of Souls Redeemed.
+- Added support for Libram of the Lightbringer.
+- Minor correction to down-ranking calculation of Binding Heal and Prayer of Healing.
+------------------------------------------------------------------------
+r67070 | xbeeps | 2008-03-30 08:49:57 -0400 (Sun, 30 Mar 2008) | 2 lines
+Changed paths:
+   M /trunk/LibHealComm-3.0/LibHealComm-3.0.lua
+
+LibHealComm-3.0:
+- Fix wrong endTime passed in HealComm_DirectHealStart events relating to heal start events from other clients (i.e. first argument != player).
+------------------------------------------------------------------------

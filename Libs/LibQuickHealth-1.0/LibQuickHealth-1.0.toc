@@ -1,0 +1,9 @@
+## Interface: 20400
+## Title: Lib: QuickHealth-1.0
+## Author: Cncfanatics
+## X-Donate: PayPal: diego.duclos@gmail.com
+## X-Email: diego.duclos@gmail.com
+## X-Category: Library
+## X-License: MIT
+
+LibQuickHealth-1.0.xml

@@ -1,0 +1,9 @@
+## Interface: 20400
+## Title: HealBot
+## Author: StrifeCUK
+## Notes: Adds a panel with skinable bars for healing, decursive, buffing, ressing, range checking and aggro tracking
+## SavedVariablesPerCharacter:  HealBot_Config
+HealBot.xml
+HealBot_Error.xml
+HealBot_Action.xml
+HealBot_Options.xml

@@ -1,0 +1,441 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    
+  <Script file="HealBot_Errors.lua" />
+
+
+  <Frame name="HealBot_Error" toplevel="true" parent="UIParent"
+      movable="true" enableMouse="true" enableKeyboard="false" hidden="true">
+    <Size>
+      <AbsDimension x="750" y="580"/>
+    </Size>
+    <Anchors>
+      <Anchor point="TOPLEFT">
+        <Offset>
+          <AbsDimension x="250" y="-80"/>
+        </Offset>
+      </Anchor>
+    </Anchors>
+      <Layers>
+		<Layer level="OVERLAY">
+		  <FontString name="HealBot_Error_Header" inherits="GameFontNormalLarge" text="HealBot">
+			<Anchors>
+			  <Anchor point="TOP" relativePoint="TOP">
+				<Offset>
+				  <AbsDimension x="0" y="-15"/>
+                </Offset>
+			  </Anchor>
+		    </Anchors>
+		  </FontString>
+		  <FontString name="HealBot_Error_Header2" inherits="GameFontNormal" text="http://healbot.alturl.com">
+			<Anchors>
+              <Anchor point="TOP" relativePoint="TOP">
+				<Offset>
+				  <AbsDimension x="0" y="-40"/>
+				</Offset>
+			  </Anchor>
+			</Anchors>
+		  </FontString>
+		  
+								<FontString name="HealBot_Error1" inherits="ChatFontNormal" text=" ">
+									<Anchors>
+										<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="22" y="-60"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="HealBot_Error2" inherits="ChatFontNormal" text=" ">
+									<Anchors>
+										<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="22" y="-75"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="HealBot_Error3" inherits="ChatFontNormal" text=" ">
+									<Anchors>
+										<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="22" y="-90"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="HBIncHealsHeader" inherits="ChatFontNormal" text="     ==== Incoming Healing Information ====">
+									<Anchors>
+										<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="25" y="-125"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="HBIncHealsColHeader1" inherits="ChatFontNormal" text="Healer">
+									<Anchors>
+										<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="22" y="-145"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="HBIncHealsColHeader2" inherits="ChatFontNormal" text="Version">
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="HBIncHealsColHeader1" relativePoint="RIGHT">
+											<Offset>
+												<AbsDimension x="105" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="HBIncHealsColHeader3" inherits="ChatFontNormal" text="HealsIn">
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="HBIncHealsColHeader2" relativePoint="RIGHT">
+											<Offset>
+												<AbsDimension x="45" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								
+ <FontString name="HBIncH1Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncHealsColHeader1" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH1Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncHealsColHeader2" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH1Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncHealsColHeader3" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBIncH2Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH1Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH2Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH1Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH2Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH1Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>			
+ <FontString name="HBIncH3Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH2Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH3Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH2Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH3Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH2Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>		
+ <FontString name="HBIncH4Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH3Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH4Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH3Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH4Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH3Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH5Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH4Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH5Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH4Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH5Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH4Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH6Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH5Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH6Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH5Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH6Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH5Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH7Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH6Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH7Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH6Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH7Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH6Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH8Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH7Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH8Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH7Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH8Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH7Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH9Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH8Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH9Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH8Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH9Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH8Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH10Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH9Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH10Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH9Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH10Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH9Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH11Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH10Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH11Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH10Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH11Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH10Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH12Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH11Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH12Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH11Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH12Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH11Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH13Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH12Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH13Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH12Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH13Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH12Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH14Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH13Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH14Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH13Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH14Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH13Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH15Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH14Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH15Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH14Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH15Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH14Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH16Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH15Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH16Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH15Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH16Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH15Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH17Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH16Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH17Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH16Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH17Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH16Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH18Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH17Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH18Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH17Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH18Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH17Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH19Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH18Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH19Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH18Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH19Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH18Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBIncH20Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH19Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH20Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH19Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH20Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH19Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	 
+ <FontString name="HBIncH21Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH20Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH21Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH20Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH21Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH20Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	 
+ <FontString name="HBIncH21Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH21Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH22Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH21Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH22Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH21Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	 
+ <FontString name="HBIncH23Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH22Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH23Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH22Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH23Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH22Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	 
+ <FontString name="HBIncH24Healer" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH23Healer" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH24Ver" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBIncH23Ver" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBIncH24Cnt" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBIncH23Cnt" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	 
+ 
+ 								<FontString name="HBAddonHeader" inherits="ChatFontNormal" text="  ====   Addon Usage sorted by CPU in Seconds   ====">
+									<Anchors>
+										<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="380" y="-75"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="HBAddonColHeader1" inherits="ChatFontNormal" text="Addon">
+									<Anchors>
+										<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="370" y="-95"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="HBAddonColHeader2" inherits="ChatFontNormal" text="CPU Secs">
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="HBAddonColHeader1" relativePoint="RIGHT">
+											<Offset>
+												<AbsDimension x="70" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="HBAddonColHeader3" inherits="ChatFontNormal" text="Memory KB">
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="HBAddonColHeader2" relativePoint="RIGHT">
+											<Offset>
+												<AbsDimension x="18" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="HBAddonColHeader4" inherits="ChatFontNormal" text="AddonComms">
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="HBAddonColHeader3" relativePoint="RIGHT">
+											<Offset>
+												<AbsDimension x="18" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								
+ <FontString name="HBMod1Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBAddonColHeader1" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod1CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBAddonColHeader2" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod1Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBAddonColHeader3" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod1Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBAddonColHeader4" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod2Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod1Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod2CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod1CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod2Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod1Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod2Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod1Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod3Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod2Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod3CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod2CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod3Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod2Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod3Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod2Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod4Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod3Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod4CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod3CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod4Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod3Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod4Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod3Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod5Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod4Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod5CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod4CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod5Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod4Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod5Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod4Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod6Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod5Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod6CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod5CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod6Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod5Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod6Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod5Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod7Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod6Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod7CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod6CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod7Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod6Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod7Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod6Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod8Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod7Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod8CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod7CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod8Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod7Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod8Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod7Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod9Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod8Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod9CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod8CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod9Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod8Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod9Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod8Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod10Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod9Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod10CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod9CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod10Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod9Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod10Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod9Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod11Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod10Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod11CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod10CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod11Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod10Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod11Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod10Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod12Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod11Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod12CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod11CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod12Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod11Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod12Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod11Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod13Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod12Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod13CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod12CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod13Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod12Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod13Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod12Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod14Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod13Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod14CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod13CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod14Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod13Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod14Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod13Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod15Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod14Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod15CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod14CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod15Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod14Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod15Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod14Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod16Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod15Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod16CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod15CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod16Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod15Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod16Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod15Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod17Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod16Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod17CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod16CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod17Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod16Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod17Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod16Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod18Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod17Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod18CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod17CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod18Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod17Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod18Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod17Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod19Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod18Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod19CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod18CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod19Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod18Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod19Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod18Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod20Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod19Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod20CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod19CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod20Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod19Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod20Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod19Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod21Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod20Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod21CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod20CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod21Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod20Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod21Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod20Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod22Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod21Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod22CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod21CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod22Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod21Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod22Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod21Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod23Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod22Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod23CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod22CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod23Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod22Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod23Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod22Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod24Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod23Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod24CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod23CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod24Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod23Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod24Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod23Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod25Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod24Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod25CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod24CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod25Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod24Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod25Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod24Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod26Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod25Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod26CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod25CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod26Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod25Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod26Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod25Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod27Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod26Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod27CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod26CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod27Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod26Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod27Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod26Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod28Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod27Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod28CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod27CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod28Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod27Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod28Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod27Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod29Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod28Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod29CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod28CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod29Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod28Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod29Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod28Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod30Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod29Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod30CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod29CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod30Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod29Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod30Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod29Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod31Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod30Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod31CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod30CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod31Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod30Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod31Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod30Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	 
+ <FontString name="HBMod32Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod31Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod32CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod31CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod32Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod31Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod32Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod31Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod33Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod32Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod33CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod32CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod33Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod32Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod33Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod32Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ <FontString name="HBMod34Name" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPLEFT" relativeTo="HBMod33Name" relativePoint="BOTTOMLEFT"/></Anchors></FontString>
+ <FontString name="HBMod34CPU" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod33CPU" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod34Mem" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod33Mem" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>
+ <FontString name="HBMod34Comm" inherits="GameFontNormalSmall"><Anchors><Anchor point="TOPRIGHT" relativeTo="HBMod33Comm" relativePoint="BOTTOMRIGHT"/></Anchors></FontString>	
+ 
+                                <FontString name="HealBot_Error_Clientx" inherits="GameFontNormalSmall" text="Alert Message Color">
+									<Anchors>
+										<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
+											<Offset>
+												<AbsDimension x="-20" y="65"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>                
+								<FontString name="HealBot_Error_Versionx" inherits="GameFontNormalSmall" text="Alert Message Color">
+									<Anchors>
+										<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
+											<Offset>
+												<AbsDimension x="-20" y="50"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>                
+								<FontString name="HealBot_Error_Classx" inherits="GameFontNormalSmall" text="Alert Message Color">
+									<Anchors>
+										<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
+											<Offset>
+												<AbsDimension x="-20" y="35"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>                
+		</Layer>
+      </Layers>
+    <Backdrop tile="true"
+      bgFile="Interface\Tooltips\UI-Tooltip-Background"
+      edgeFile="Interface\Tooltips\UI-Tooltip-Border">
+      <EdgeSize>
+        <AbsValue val="16"/>
+      </EdgeSize>
+      <TileSize>
+        <AbsValue val="16"/>
+      </TileSize>
+      <BackgroundInsets>
+        <AbsInset left="5" right="5" top="5" bottom="5"/>
+      </BackgroundInsets>
+    </Backdrop>
+    <Frames>
+
+
+			<Button name="HealBot_Error_CloseButton" inherits="UIPanelButtonTemplate" text="CLOSE">
+				<Size>
+					<AbsDimension x="80" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="15"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						HideUIPanel(this:GetParent());
+					</OnClick>
+				</Scripts>
+			</Button>
+
+
+    </Frames>
+    <Scripts>
+      <OnShow>
+        HealBot_Errors_OnShow(this);
+      </OnShow>
+      <OnHide>
+        HealBot_Errors_OnHide(this);
+      </OnHide>
+      <OnDragStart>
+        HealBot_Errors_OnDragStart(this,arg1);
+      </OnDragStart>
+      <OnDragStop>
+        HealBot_Errors_OnDragStop(this);
+      </OnDragStop>
+   </Scripts>
+  </Frame>
+</Ui>

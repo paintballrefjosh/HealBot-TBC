@@ -1,0 +1,81 @@
+------------------------------------------------------------------------
+r79565 | cncfanatics | 2008-07-31 10:03:13 -0400 (Thu, 31 Jul 2008) | 1 line
+Changed paths:
+   M /trunk/LibQuickHealth-1.0/LibQuickHealth-1.0.lua
+
+LibQuickHealth-1.0: Add some usage docs at the top of the file
+------------------------------------------------------------------------
+r79314 | cncfanatics | 2008-07-28 00:35:36 -0400 (Mon, 28 Jul 2008) | 1 line
+Changed paths:
+   M /trunk/LibQuickHealth-1.0/LibQuickHealth-1.0.lua
+
+LibQuickHealth-1.0: stop firing our HealthUpdated callback on UNIT_HEALTH, the goal is to provide updates complementary to UNIT_HEALTH, thus firing on that event is pointless.
+------------------------------------------------------------------------
+r79285 | kilrogg | 2008-07-27 16:33:00 -0400 (Sun, 27 Jul 2008) | 3 lines
+Changed paths:
+   M /trunk/LibQuickHealth-1.0/LibQuickHealth-1.0.lua
+
+LibQuickHealth-1.0: fixed errors with overheal causing health to be > maxHealth
+improved performance
+collect garbage on init
+------------------------------------------------------------------------
+r79244 | cncfanatics | 2008-07-27 06:31:54 -0400 (Sun, 27 Jul 2008) | 1 line
+Changed paths:
+   M /trunk/LibQuickHealth-1.0/LibQuickHealth-1.0.lua
+
+LibQuickHealth-1.0: Remove some debug code
+------------------------------------------------------------------------
+r79225 | cncfanatics | 2008-07-26 19:08:28 -0400 (Sat, 26 Jul 2008) | 1 line
+Changed paths:
+   M /trunk/LibQuickHealth-1.0/LibQuickHealth-1.0.lua
+
+LibQuickHealth-1.0: Reuse the old eventFrame if there is one and only register our events and actualy do something when an addon starts listening to our callbacks.
+------------------------------------------------------------------------
+r79196 | cncfanatics | 2008-07-26 10:49:25 -0400 (Sat, 26 Jul 2008) | 1 line
+Changed paths:
+   M /trunk/LibQuickHealth-1.0/LibQuickHealth-1.0.lua
+
+LibQuickHealth-1.0: (supposedly) fix a bug where health wouldn't update correctly when using the spirit rezzer or when releasing out of TK instances. (needs testing) 
+------------------------------------------------------------------------
+r79187 | profalbert | 2008-07-26 07:45:10 -0400 (Sat, 26 Jul 2008) | 3 lines
+Changed paths:
+   M /trunk/LibQuickHealth-1.0/LibQuickHealth-1.0.toc
+
+LibQuickHealth-1.0: remove LibStub and Callbackhandler from X-Embeds and 
+OptDeps
+
+------------------------------------------------------------------------
+r79174 | cncfanatics | 2008-07-26 04:16:38 -0400 (Sat, 26 Jul 2008) | 1 line
+Changed paths:
+   M /trunk/LibQuickHealth-1.0/LibQuickHealth-1.0.toc
+
+LibQuickHealth-1.0: Add X-License and X-Category fields
+------------------------------------------------------------------------
+r79172 | cncfanatics | 2008-07-26 04:06:29 -0400 (Sat, 26 Jul 2008) | 1 line
+Changed paths:
+   A /trunk/LibQuickHealth-1.0/LibQuickHealth-1.0.toc
+
+LibQuickHealth-1.0: Add a TOC file
+------------------------------------------------------------------------
+r79153 | cncfanatics | 2008-07-25 22:11:57 -0400 (Fri, 25 Jul 2008) | 1 line
+Changed paths:
+   M /trunk/LibQuickHealth-1.0/LibQuickHealth-1.0.lua
+
+LibQuickHealth-1.0: Remove an empty line
+------------------------------------------------------------------------
+r79150 | cncfanatics | 2008-07-25 21:43:47 -0400 (Fri, 25 Jul 2008) | 1 line
+Changed paths:
+   M /trunk/LibQuickHealth-1.0/LibQuickHealth-1.0.xml
+
+LibQuickHealth-1.0: Fix a typo that prevented callbackhandler from loading.
+------------------------------------------------------------------------
+r79141 | cncfanatics | 2008-07-25 20:15:24 -0400 (Fri, 25 Jul 2008) | 1 line
+Changed paths:
+   A /trunk/LibQuickHealth-1.0
+   A /trunk/LibQuickHealth-1.0/CallbackHandler-1.0.lua
+   A /trunk/LibQuickHealth-1.0/LibQuickHealth-1.0.lua
+   A /trunk/LibQuickHealth-1.0/LibQuickHealth-1.0.xml
+   A /trunk/LibQuickHealth-1.0/LibStub.lua
+
+LibQuickHealth-1.0: Initial commit, this library tries to get around the healthbar update throttle of 0.3 seconds by parsing the combatlog for more accurate values.
+------------------------------------------------------------------------
