@@ -198,6 +198,7 @@ HealBot_PlayerRaceEN=nil;
 HealBot_UnitSpec = {};
 HealBot_UnitName = {};
 HealBot_UnitID = {};
+HealBot_UnitOffline = {};
 HealBot_PlayerName=nil;
 HealBot_CastingTarget = nil;
 HealBot_InnerFocus=false;

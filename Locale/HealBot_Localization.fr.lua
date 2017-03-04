@@ -11,23 +11,6 @@
 -- � = \195\187
 -- espace avant ':' (?) = \194\160
 
-------------
--- FRENCH --
-------------
-
--- é: \195\169
--- ê: \195\170
--- à: \195\160
--- î: \195\174
--- è: \195\168
--- ë: \195\171
--- ô: \195\180
--- û: \195\187
--- â: \195\162
--- ç: \185\167
--- ù: \195\185
-
-
 if (GetLocale() == "frFR") then
 
 -------------------
@@ -269,8 +252,9 @@ HEALBOT_OPTIONS_TAB_TIPS      = "Affich.";
 HEALBOT_OPTIONS_TAB_BUFFS     = "Buffs"
 
 HEALBOT_OPTIONS_PANEL_TEXT    = "Options de soins"
-HEALBOT_OPTIONS_BARALPHA      = "opacit\195\169 barre";
-HEALBOT_OPTIONS_BARALPHAINHEAL= "Opacit\195\169 des sorts en cours";
+HEALBOT_OPTIONS_BARALPHA      = "OPACITE : Barres";
+HEALBOT_OPTIONS_BARALPHAINHEAL= "Sorts en cours";
+HEALBOT_OPTIONS_BARALPHAEOR   = "Joueurs hors d\'atteinte";
 HEALBOT_OPTIONS_ACTIONLOCKED  = "Verr. la position";
 HEALBOT_OPTIONS_AUTOSHOW      = "Fermer automatiquement";
 HEALBOT_OPTIONS_PANELSOUNDS   = "Son \195\160 l\'ouverture";
@@ -283,8 +267,8 @@ HEALBOT_SKINS_STD             = "Standard"
 HEALBOT_OPTIONS_SKINTEXTURE   = "Texture"
 HEALBOT_OPTIONS_SKINHEIGHT    = "Hauteur"
 HEALBOT_OPTIONS_SKINWIDTH     = "Largeur"
-HEALBOT_OPTIONS_SKINNUMCOLS   = "No. colonne"
-HEALBOT_OPTIONS_SKINNUMHCOLS  = "No. en-t\195\170tes par colonne"
+HEALBOT_OPTIONS_SKINNUMCOLS   = "Nb de colonnes"
+HEALBOT_OPTIONS_SKINNUMHCOLS  = "Nb d\'en-t\195\170tes par col."
 HEALBOT_OPTIONS_SKINBRSPACE   = "Espacement rang\195\169es"
 HEALBOT_OPTIONS_SKINBCSPACE   = "Espacement col."
 HEALBOT_OPTIONS_EXTRASORT     = "Trier barres suppl. par"
@@ -292,18 +276,19 @@ HEALBOT_SORTBY_NAME           = "Nom"
 HEALBOT_SORTBY_CLASS          = "Classe"
 HEALBOT_SORTBY_GROUP          = "Groupe"
 HEALBOT_SORTBY_MAXHEALTH      = "Vie max."
+HEALBOT_OPTIONS_NEWDEBUFFTEXT = "Nveau debuff"
 HEALBOT_OPTIONS_DELSKIN       = "Supprimer"
 HEALBOT_OPTIONS_NEWSKINTEXT   = "Nouveau skin"
 HEALBOT_OPTIONS_SAVESKIN      = "Sauver"
 HEALBOT_OPTIONS_SKINBARS      = "Options des barres"
 HEALBOT_OPTIONS_SKINPANEL     = "Couleurs du panneau"
 HEALBOT_SKIN_ENTEXT           = "Activ\195\169"
-HEALBOT_SKIN_DISTEXT          = "D\195\169sactiv\195\169"
+HEALBOT_SKIN_DISTEXT          = "Hors combat"
 HEALBOT_SKIN_DEBTEXT          = "Debuff"
 HEALBOT_SKIN_BACKTEXT         = "Arri\195\168re plan"
 HEALBOT_SKIN_BORDERTEXT       = "Bordure"
 HEALBOT_OPTIONS_SKINFHEIGHT   = "Taille Caract\195\168res"
-HEALBOT_OPTIONS_BARALPHADIS   = "Opacit\195\169 des joueurs d\195\169sactiv\195\169s"
+HEALBOT_OPTIONS_BARALPHADIS   = "Hors combat"
 HEALBOT_OPTIONS_SHOWHEADERS   = "Montrer titres"
 
 HEALBOT_OPTIONS_ITEMS  = "Objets";
@@ -396,8 +381,8 @@ HEALBOT_OPTIONS_TIPTEXT         = "Bulle d\'info";
 HEALBOT_OPTIONS_BARINFOTEXT     = "Barre d\'info";
 HEALBOT_OPTIONS_POSTOOLTIP      = "Position";
 HEALBOT_OPTIONS_SHOWCLASSNAME   = "Inclure le nom";
-HEALBOT_OPTIONS_BARCLASSCOLOUR	= "Color bar by class";
-HEALBOT_OPTIONS_BARTEXTCLASSCOLOUR1 = "Affiche une couleur par classe"
+HEALBOT_OPTIONS_BARCLASSCOLOUR	= "Colorer les barres par classe";
+HEALBOT_OPTIONS_BARTEXTCLASSCOLOUR1 = "Colorer les noms par classe"
 HEALBOT_OPTIONS_BARTEXTCLASSCOLOUR2 = "Param. de 'Skin' remplac\195\169s par ceux de debuff et 'en combat'"
 HEALBOT_OPTIONS_EMERGFILTERGROUPS   = "Inclure groupes";
 
@@ -419,7 +404,7 @@ HEALBOT_SKIN_HEADERBARCOL      = "Couleur des barres";
 HEALBOT_SKIN_HEADERTEXTCOL     = "Couleur du texte";
 HEALBOT_OPTIONS_BUFFSTEXT1      = "Type de buff";
 HEALBOT_OPTIONS_BUFFSTEXT2      = "V\195\169rifier membres";
-HEALBOT_OPTIONS_BUFFSTEXT3      = "Couleur des barres";
+HEALBOT_OPTIONS_BUFFSTEXT3      = "Couleur";
 HEALBOT_OPTIONS_BUFF           = "Buff ";
 HEALBOT_OPTIONS_BUFFSELF       = "sur soi";
 HEALBOT_OPTIONS_BUFFPARTY      = "sur le groupe";
@@ -501,5 +486,35 @@ HEALBOT_OPTIONS_TTALPHA       = "Opacit\195\169"
 HEALBOT_TOOLTIP_TARGETBAR     = "Barre de cible"
 HEALBOT_OPTIONS_MYTARGET      = "Mes cibles"
 
+HEALBOT_DISCONNECTED_TEXT			= "<DC>"
+HEALBOT_OPTIONS_SHOWUNITBUFFTIME = "Montrer mes buffs";
+HEALBOT_OPTIONS_TOOLTIPUPDATE = "M\195\160J permanente";
+
+HEALBOT_BALANCE       = "Equilibre"
+HEALBOT_FERAL         = "Feral"
+HEALBOT_RESTORATION   = "Restauration"
+HEALBOT_ARCANE        = "Arcane"
+HEALBOT_FIRE          = "Feu"
+HEALBOT_FROST         = "Givre"
+HEALBOT_DISCIPLINE    = "Discipline"
+HEALBOT_HOLY          = "Sacr\195\169"
+HEALBOT_SHADOW        = "Ombre"
+HEALBOT_ASSASSINATION = "Assassinat"
+HEALBOT_COMBAT        = "Combat"
+HEALBOT_SUBTLETY      = "Finesse"
+HEALBOT_ARMS          = "Armes"
+HEALBOT_FURY          = "Fureur"
+HEALBOT_PROTECTION    = "Protection"
+HEALBOT_BEASTMASTERY  = "Ma\195\174trise des b\195\170tes"
+HEALBOT_MARKSMANSHIP  = "Pr�cision"
+HEALBOT_SURVIVAL      = "Survie"
+HEALBOT_RETRIBUTION   = "Restauration"
+HEALBOT_ELEMENTAL     = "El\195\169mentaire"
+HEALBOT_ENHANCEMENT   = "Am\195\169lioration"
+HEALBOT_AFFLICTION    = "Affliction"
+HEALBOT_DEMONOLOGY    = "D\195\169monologie"
+HEALBOT_DESTRUCTION   = "Destruction"
+
 end
+
 

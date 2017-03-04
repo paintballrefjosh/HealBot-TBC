@@ -103,6 +103,7 @@ function HealBot_Action_RefreshTooltip(unit)
     maxhlth=HealBot_CorrectPetHealth(unit,hlth,maxhlth,Member_Name)
   end
   
+  UnitOffline=HealBot_Action_GetTimeOffline(unit); --added by Diacono
   Member_Buff=HealBot_UnitBuff[Member_Name]
   DebuffType=HealBot_UnitDebuff[Member_Name];
 
@@ -180,6 +181,10 @@ function HealBot_Action_RefreshTooltip(unit)
         r,g,b,a=HealBot_HealthColor(unit,hlth,maxhlth,true,Member_Name,false,Member_Buff,DebuffType,HealBot_RetHealsIn(ebuName));
         HealBot_Tooltip_SetLineRight(hlth.."/"..maxhlth.." (-"..maxhlth-hlth..")",r,g,b,linenum,1) 
       end
+      if UnitOffline then -- added by Diacono
+    		linenum=linenum+1
+    		HealBot_Tooltip_SetLineLeft(HB_TOOLTIP_OFFLINE..": "..UnitOffline,1,1,1,linenum,1)
+    	end
       if DebuffType then
         linenum=linenum+1
         HealBot_Tooltip_SetLineLeft(Member_Name.." suffers from "..HealBot_UnitDebuff[Member_Name.."_debuff_name"],
@@ -932,4 +937,38 @@ function HealBot_Tooltip_ClearLines()
     txtL:SetText(" ")
 	HealBot_Tooltip_DirtyLines[j]=nil
   end
+end
+
+function HealBot_Action_GetTimeOffline(unit)
+  local timeOffline = nil
+  if HealBot_UnitOffline[unit] then
+  	local hours, minutes, seconds
+  	timeOffline = time() - HealBot_UnitOffline[unit];
+  	seconds = timeOffline % 60;
+		minutes = math.floor(timeOffline / 60) % 60
+		hours = math.floor(timeOffline / 3600)
+		timeOffline = "";
+		if hours > 0 then
+			if hours == 1 then
+				timeOffline = hours.." hour ";
+			else
+				timeOffline = hours.." hours ";
+			end
+		end
+		if minutes > 0 then
+			if minutes == 1 then
+				timeOffline = timeOffline..minutes.." min ";
+			else
+				timeOffline = timeOffline..minutes.." mins ";
+			end
+		end
+		if seconds > 0 then
+			if seconds == 1 then
+				timeOffline = timeOffline..seconds.." sec";
+			else
+				timeOffline = timeOffline..seconds.." secs";
+			end
+		end						
+	end  	
+  return timeOffline;
 end

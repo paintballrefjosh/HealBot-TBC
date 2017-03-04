@@ -1,4 +1,4 @@
-HEALBOT_VERSION = "2.4.3.8";
+HEALBOT_VERSION = "2.4.3.9";
 
 -------------
 -- ENGLISH --
@@ -214,6 +214,7 @@ HB_TOOLTIP_RANGE                   = "(%d+) yd range";
 HB_TOOLTIP_INSTANT_CAST            = "Instant cast";
 HB_TOOLTIP_CAST_TIME               = "(%d+.?%d*) sec cast";
 HB_TOOLTIP_CHANNELED               = "Channeled";
+HB_TOOLTIP_OFFLINE                 = "Offline";
 HB_OFFLINE                			   = "offline"; -- has gone offline msg
 HB_ONLINE                				   = "online"; -- has come online msg
 HB_HASLEFTRAID                     = "^([^%s]+) has left the raid group$";

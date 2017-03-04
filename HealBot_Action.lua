@@ -384,6 +384,17 @@ function HealBot_Action_EnableButton(button, ebuName)
 	  HealBot_Action_ResetActiveUnitStatus()
 	  HealBot_PlayerDead=false
     end
+	
+    if HealBot_UnitInRange(HealBot_bSpell, ebUnit)==1 then
+    	ebuUnit_BuffRange=true
+		ebuUnit_HealRange=true
+    elseif HealBot_UnitInRange(HealBot_hSpell, ebUnit)==1 then
+    	ebuUnit_BuffRange=false
+		ebuUnit_HealRange=true
+	else
+    	ebuUnit_BuffRange=false
+		ebuUnit_HealRange=false
+    end
 
     if ebuhealin>0 then
       ebipct = ebuhlth+ebuhealin
@@ -394,7 +405,7 @@ function HealBot_Action_EnableButton(button, ebuName)
 	  end
       ebipct=floor(ebipct*100)
       ebubar2:SetValue(ebipct);
-	  HealBot_UnitRange[ebUnit]=-1
+--	  HealBot_UnitRange[ebUnit]=-1
     elseif ebubar2:GetValue()>0 then
       ebubar2:SetValue(0)
     end	
@@ -411,17 +422,6 @@ function HealBot_Action_EnableButton(button, ebuName)
       ebusr=HealBot_Config.btextenabledcolr[HealBot_Config.Current_Skin] or 0;
       ebusg=HealBot_Config.btextenabledcolg[HealBot_Config.Current_Skin] or 0;
       ebusb=HealBot_Config.btextenabledcolb[HealBot_Config.Current_Skin] or 0;
-    end
-	
-    if HealBot_UnitInRange(HealBot_bSpell, ebUnit)==1 then
-    	ebuUnit_BuffRange=true
-		ebuUnit_HealRange=true
-    elseif HealBot_UnitInRange(HealBot_hSpell, ebUnit)==1 then
-    	ebuUnit_BuffRange=false
-		ebuUnit_HealRange=true
-	else
-    	ebuUnit_BuffRange=false
-		ebuUnit_HealRange=false
     end
 
     if ebumaxhlth<1 then ebuhlth=1 end
@@ -482,7 +482,6 @@ function HealBot_Action_EnableButton(button, ebuName)
 	    HealBot_Action_RefreshTooltip(ebUnit)
       end
 	else
-	  HealBot_UnitRange[ebUnit]=0
 	  HealBot_Enabled[ebuName]=false
 	  if HealBot_Config.SetClassColourText==0 then
         ebusr=HealBot_Config.btextdisbledcolr[HealBot_Config.Current_Skin]
@@ -531,7 +530,6 @@ function HealBot_Action_EnableButton(button, ebuName)
           HealBot_UnitRangeotg[ebUnit]=0.7
           HealBot_UnitRangeotb[ebUnit]=0.7
 		end
-		HealBot_UnitRange[ebUnit]=HealBot_UnitInRange(HealBot_UnitRangeSpell[ebUnit], ebUnit) or 0
       else
         HealBot_UnitRangeitr[ebUnit]=ebusr
         HealBot_UnitRangeitg[ebUnit]=ebusg
@@ -552,6 +550,7 @@ function HealBot_Action_EnableButton(button, ebuName)
 	      HealBot_Tooltip_RefreshDisabledTooltip(ebUnit)
         end
 	  end
+	  HealBot_UnitRange[ebUnit]=HealBot_UnitInRange(HealBot_UnitRangeSpell[ebUnit], ebUnit) or 0
     end
     HealBot_UnitRanger[ebUnit]=ebur
     HealBot_UnitRangeg[ebUnit]=ebug
@@ -604,9 +603,9 @@ function HealBot_Action_HBText(hlth,maxhlth,Member_Name,unit,healin)
       end
     end
   end
-  if not UnitIsConnected(unit) then
-  	btname=HEALBOT_DISCONNECTED_TEXT.." "..btname
-  end -- added by Diacono of Ursin
+	if HealBot_UnitIsOffline(unit) then
+  	btname=HEALBOT_DISCONNECTED_TEXT.." "..btname;
+  end	-- added by Diacono of Ursin
   if HealBot_Aggro[Member_Name] and HealBot_Config.ShowAggroText==1 then
     btname=">> "..btname.." <<"
   end
@@ -857,7 +856,7 @@ function HealBot_Action_CheckRange(unit, button)
 	  ebubar = HealBot_Unit_Bar1[unit]
 	  ebubar.txt=getglobal(ebubar:GetName().."_text");
       HealBot_UnitRange[unit]=rbsir
-	  if rbsir==1 then
+	  if rbsir==1 and not HealBot_PlayerDead then
       ebubar:SetStatusBarColor(HealBot_UnitRanger[unit],HealBot_UnitRangeg[unit],HealBot_UnitRangeb[unit],HealBot_Config.Barcola[HealBot_Config.Current_Skin])
 			ebubar.txt:SetTextColor(HealBot_UnitRangeitr[unit],HealBot_UnitRangeitg[unit],HealBot_UnitRangeitb[unit],HealBot_Config.btextenabledcola[HealBot_Config.Current_Skin]);
 	  else

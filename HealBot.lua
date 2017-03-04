@@ -542,8 +542,6 @@ end
 
 function HealBot_GetHealSpell(unit,pattern)
   uName=UnitName(unit);
-  
-  if HealBot_PlayerDead then return nil end;
  
   if not HealBot_Spells[pattern] then
     ghid = HealBot_GetSpellId(pattern);
@@ -791,6 +789,8 @@ function HealBot_OnUpdate(this,arg1)
     HealBot_ThrottleCnt=0
     if not HealBot_IsFighting then
 	  if HealBot_Loaded==1 then
+        HealBot_InitSpells()
+        HealBot_Options_Init(8)
         HealBot_Action_ResetSkin()
         HealBot_Buff_Spells_List=HealBot_Options_InitBuffList()
         HealBot_Options_EmergencyFilter_Reset()
@@ -937,11 +937,8 @@ function HealBot_OnEvent_VariablesLoaded(this)
     HealBot_Class_En[HEALBOT_SHAMAN]="SHAM"
     HealBot_Class_En[HEALBOT_WARLOCK]="WARL"
     HealBot_Class_En[HEALBOT_WARRIOR]="WARR"
-    HealBot_InitSpells()
-    HealBot_Options_Init(8)
     if strsub(HealBot_PlayerClassEN,1,4)=="PRIE" then HealBot_HasInnerFocus(); end
     HealBot_CheckForDivineSpirit=true;
-	HealBot_OnEvent_PlayerEnteringWorld(nil);
 	QuickHealth.RegisterCallback(this, "HealthUpdated", function(event, GUID, newHealth)
 	    HealBot_OnEvent(this, "HealthUpdated", GUID, newHealth)
 	end);
@@ -1897,7 +1894,7 @@ function HealBot_GetTalentInfo(uName)
     _,uClass=UnitClass("target")
   end
   
-  if x+y+z>0 and uClass then
+  if x+y+z>0 and uClass and (UnitInParty(uName) or UnitInRaid(uName)) then
 	uClass=strsub(uClass,1,4)
 	if ((x > y) and (x > z)) then
 		w = 1
@@ -1949,10 +1946,16 @@ function HealBot_OnEvent_SystemMsg(this,msg)
       -- find other messges
     end
     if (string.find(msg, HB_ONLINE)) or (string.find(msg, HB_OFFLINE)) then
-			msg = string.gsub(msg, "|Hplayer:(%a+)|h(.+)|h", "%1")
-			uName = msg:match("(%a+)")
+			msg = string.gsub(msg, "|Hplayer:([^%c^%d^%s^%p]+)|h(.+)|h", "%1")
+			uName = msg:match("([^%c^%d^%s^%p]+)")
 			if UnitInParty(uName) or UnitInRaid(uName) then
-				HealBot_Action_RefreshButtons(HealBot_RaidUnit("unknown",uName));
+				local unit = HealBot_RaidUnit("unknown",uName);
+				if (string.find(msg, HB_ONLINE)) then
+					HealBot_UnitOffline[unit] = -1;
+				else
+					HealBot_UnitOffline[unit] = time();
+				end
+				HealBot_Action_RefreshButtons(unit);
 			end
 		end
   end
@@ -2721,4 +2724,25 @@ function HealBot_UnitInRange(spell, unit) -- added by Diacono of Ursin
       x = 1
    end
    return x
+end
+
+function HealBot_UnitIsOffline(unit) -- added by Diacono of Ursin
+	local justDisconnected = nil;
+	if HealBot_UnitOffline[unit] then
+		local timeOffline = time() - HealBot_UnitOffline[unit];		
+		if timeOffline <= 2 then
+			justDisconnected = true;
+		end
+	end
+	if not UnitIsConnected(unit) or justDisconnected then
+  	if not HealBot_UnitOffline[unit] then
+  		HealBot_UnitOffline[unit] = time();
+  	end
+  	if HealBot_UnitOffline[unit] == -1 then
+  		HealBot_UnitOffline[unit] = nil;
+  	end
+  else
+  	HealBot_UnitOffline[unit] = nil;
+  end
+	return HealBot_UnitOffline[unit]
 end
