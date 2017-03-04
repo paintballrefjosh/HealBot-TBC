@@ -910,7 +910,7 @@ function HealBot_OnEvent_VariablesLoaded(this)
       HealBot_HoT_Texture[HEALBOT_POWER_WORD_SHIELD] = "Interface\\Icons\\Spell_Holy_PowerWordShield";
       HealBot_HoT_Texture[HEALBOT_PRAYER_OF_MENDING] = "Interface\\Icons\\Spell_Holy_PrayerOfMendingtga.jpg";
 	  HealBot_Watch_HoT[HEALBOT_RENEW]="C"
-	  HealBot_Watch_HoT[HEALBOT_POWER_WORD_SHIELD]="C"
+	  HealBot_Watch_HoT[HEALBOT_POWER_WORD_SHIELD]="A"
 	  HealBot_Watch_HoT[HEALBOT_PRAYER_OF_MENDING]="A"
 	  HealBot_HasInnerFocus();
 	elseif strsub(HealBot_PlayerClassEN,1,4)==HealBot_Class_En[HEALBOT_DRUID] then
@@ -920,16 +920,6 @@ function HealBot_OnEvent_VariablesLoaded(this)
 	  HealBot_Watch_HoT[HEALBOT_REJUVENATION]="C"
 	  HealBot_Watch_HoT[HEALBOT_REGROWTH]="C"
 	  HealBot_Watch_HoT[HEALBOT_LIFEBLOOM]="C"
-	elseif strsub(HealBot_PlayerClassEN,1,4)==HealBot_Class_En[HEALBOT_PALADIN] then
-      HealBot_ShortBuffs[HEALBOT_BLESSING_OF_MIGHT]=true
-	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_WISDOM]=true
-	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_SALVATION]=true
-	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_SANCTUARY]=true
-	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_LIGHT]=true
-	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_PROTECTION]=true
-	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_FREEDOM]=true
-	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_SACRIFICE]=true
-	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_KINGS]=true
 	elseif strsub(HealBot_PlayerClassEN,1,4)==HealBot_Class_En[HEALBOT_HUNTER] then
 	  HealBot_HoT_Texture[HEALBOT_MENDPET]           = "Interface\\Icons\\Ability_Hunter_MendPet.jpg";
 	  HealBot_Watch_HoT[HEALBOT_MENDPET]="C"
@@ -1440,7 +1430,24 @@ function HealBot_HasMyBuffs(unit,unitName)
 		    HealBot_Player_HoT[unitName][x]=30
 		  end
           HealBot_HoT_Update(unitName, x)
-        elseif HealBot_Player_HoT[unitName] and HealBot_Player_HoT_Icons[unitName] and HealBot_Player_HoT[unitName][x] and HealBot_Player_HoT_Icons[unitName][x]>0 then
+        elseif HealBot_Player_HoT[unitName] and HealBot_Player_HoT[unitName][x] then
+		  HealBot_Player_HoT[unitName][x]=-1
+          HealBot_HoT_Update(unitName, x)
+		end
+	  else
+	    HoTActive, bCount, timeLeft=HealBot_HasBuff(x, unit)
+		if HoTActive then
+		  if not HealBot_Player_HoT[unitName] then HealBot_Player_HoT[unitName]={} end
+          if not HealBot_Player_HoT_Icons[unitName] then HealBot_Player_HoT_Icons[unitName]={} end
+          if not HealBot_Player_HoT_Icons[unitName][x] then HealBot_Player_HoT_Icons[unitName][x]=0 end
+	      if timeLeft then
+			HealBot_Player_HoT[unitName][x]=floor(timeLeft)
+		  elseif not HealBot_Player_HoT[unitName][x] then
+		    HealBot_Player_HoT[unitName][x]=30
+		  end
+		  HealBot_HoT_Update(unitName, x)
+        elseif HealBot_Player_HoT[unitName] and HealBot_Player_HoT[unitName][x] then
+		  if x==HEALBOT_POWER_WORD_SHIELD and HealBot_TrackWS[unitName] then return end
 		  HealBot_Player_HoT[unitName][x]=-1
           HealBot_HoT_Update(unitName, x)
 		end
@@ -1454,7 +1461,6 @@ function HealBot_HasMyBuffs(unit,unitName)
         HealBot_Player_HoT[unitName][x]=floor(timeLeft)
         HealBot_HoT_Update(unitName, x)
 	  elseif HealBot_Player_HoT_Icons[unitName][x]>0 and HealBot_Player_HoT_Icons[unitName][x]<40 then
-	    if x==HEALBOT_POWER_WORD_SHIELD and HealBot_TrackWS[unitName] then return end
         HealBot_Player_HoT[unitName][x]=-1
         HealBot_HoT_Update(unitName, x)
 	  end
