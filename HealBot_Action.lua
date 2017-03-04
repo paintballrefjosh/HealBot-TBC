@@ -463,6 +463,7 @@ function HealBot_Action_EnableButton(button, ebuName)
 	  end
 	end
     if ebufastenable then
+	  HealBot_UnitRange[ebUnit]=1
       ebusa = HealBot_Config.btextenabledcola[HealBot_Config.Current_Skin];
 	  HealBot_Enabled[ebuName]=true
       ebubar:SetStatusBarColor(ebur,ebug,ebub,HealBot_Config.Barcola[HealBot_Config.Current_Skin]);
@@ -481,6 +482,7 @@ function HealBot_Action_EnableButton(button, ebuName)
 	    HealBot_Action_RefreshTooltip(ebUnit)
       end
 	else
+	  HealBot_UnitRange[ebUnit]=0
 	  HealBot_Enabled[ebuName]=false
 	  if HealBot_Config.SetClassColourText==0 then
         ebusr=HealBot_Config.btextdisbledcolr[HealBot_Config.Current_Skin]
@@ -529,6 +531,7 @@ function HealBot_Action_EnableButton(button, ebuName)
           HealBot_UnitRangeotg[ebUnit]=0.7
           HealBot_UnitRangeotb[ebUnit]=0.7
 		end
+		HealBot_UnitRange[ebUnit]=HealBot_UnitInRange(HealBot_UnitRangeSpell[ebUnit], ebUnit) or 0
       else
         HealBot_UnitRangeitr[ebUnit]=ebusr
         HealBot_UnitRangeitg[ebUnit]=ebusg
@@ -549,12 +552,12 @@ function HealBot_Action_EnableButton(button, ebuName)
 	      HealBot_Tooltip_RefreshDisabledTooltip(ebUnit)
         end
 	  end
-	  HealBot_UnitRangeota[ebUnit]=ebusa
     end
     HealBot_UnitRanger[ebUnit]=ebur
     HealBot_UnitRangeg[ebUnit]=ebug
     HealBot_UnitRangeb[ebUnit]=ebub
     HealBot_UnitRangea[ebUnit]=ebua
+	HealBot_UnitRangeota[ebUnit]=ebusa
   elseif Delay_RecalcParty==0 then
     Delay_RecalcParty=3
   end
@@ -564,9 +567,6 @@ function HealBot_Action_EnableButton(button, ebuName)
   ebubar.txt:SetText(ebtext);
   ebubar.txt:SetTextColor(ebusr,ebusg,ebusb,ebusa);
 
-  if not HealBot_UnitRange[ebUnit] then
-  	HealBot_UnitRange[ebUnit]=HealBot_UnitInRange(HealBot_UnitRangeSpell[ebUnit], ebUnit) or 0
-  end
 end
 
 function HealBot_Action_HBText(hlth,maxhlth,Member_Name,unit,healin)
@@ -618,10 +618,6 @@ function HealBot_Action_HBText(hlth,maxhlth,Member_Name,unit,healin)
     btHBbarText = btname..btHBbarText;
   end
   return btHBbarText;
-end
-
-function HealBot_Action_GetUnitRange()
-  return HealBot_UnitRange["player"] or 0
 end
 
 function HealBot_Action_RefreshButton(button, uName)
@@ -856,7 +852,6 @@ function HealBot_Action_CheckRange(unit, button)
   if HealBot_UnitStatus[unit]>0 then
     rbsir=HealBot_UnitInRange(HealBot_UnitRangeSpell[unit], unit) or 0
     if HealBot_UnitRange[unit]==-1 then
-      HealBot_UnitRange[unit]=rbsir
 	  HealBot_Action_RefreshButton(button, UnitName(unit))
 	elseif rbsir~=HealBot_UnitRange[unit] then
 	  ebubar = HealBot_Unit_Bar1[unit]
@@ -889,9 +884,7 @@ end
 
 function HealBot_Action_ResetActiveUnitStatus()
   for unit,_ in pairs(HealBot_Unit_Button) do
-    if HealBot_UnitStatus[unit]>0 and HealBot_Enabled[UnitName(unit)] then
-      HealBot_UnitRange[unit]=-1
-	elseif UnitHealth(unit)<2 then
+    if HealBot_UnitStatus[unit]>0 or UnitHealth(unit)<2 then
 	  HealBot_UnitRange[unit]=-1
 	end
   end

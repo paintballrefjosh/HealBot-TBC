@@ -185,7 +185,7 @@ HEALBOT_ADDON_ID="HealBot_Heals"
 HealBot_OtherSpells = {};
 HealBot_Spells = {};
 HealBot_DebuffSpell = {};
-HealBot_IsFighting = false;
+HealBot_IsFighting = nil;
 
 HealBot_Action_TooltipUnit=nil;
 Delay_RecalcParty=0;

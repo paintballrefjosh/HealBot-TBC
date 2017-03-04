@@ -1,5 +1,5 @@
-local MAJOR_VERSION = "LibHealComm-3.0";
-local MINOR_VERSION = tonumber(("$Revision: 72222 $"):match("%d+")); 
+﻿local MAJOR_VERSION = "LibHealComm-3.0";
+local MINOR_VERSION = tonumber(("$Revision: 80690 $"):match("%d+")); 
  
 local lib = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION);
 if not lib then return end
@@ -175,7 +175,7 @@ local function getBaseHealSize(name)
             lib.Tooltip:SetSpell(i, BOOKTYPE_SPELL);
     
             -- Determine healing
-            local HealMin, HealMax = select(3, string.find(lib.TooltipTextLeft4:GetText() or lib.TooltipTextLeft3:GetText() or "", "(%d+) ?[\195\160tobisa到~]+ ?(%d+)"));
+            local HealMin, HealMax = select(3, string.find(lib.TooltipTextLeft4:GetText() or lib.TooltipTextLeft3:GetText() or "", "(%d+) ?[\195\160tobisa到~\-]+ ?(%d+)"));
             HealMin, HealMax = tonumber(HealMin) or 0, tonumber(HealMax) or 0;
             local Heal = (HealMin + HealMax) / 2;
 
@@ -1108,6 +1108,13 @@ function lib:CHAT_MSG_ADDON(prefix, msg, distribution, sender)
     if (prefix ~= "HealComm") then return end
     if (sender == playerName) then return end
 
+    -- Workaround: Sometimes in battlegrounds the sender argument is not a 
+    -- fully qualified name (the realm is missing), even though the sender is 
+    -- from a different realm.
+    if (distribution == "BATTLEGROUND") then
+        sender = unitFullName(sender) or sender;       
+    end
+
     -- Get message type
     local msgtype = tonumber(msg:sub(1, 3));
     if (not msgtype) then return end
@@ -1281,8 +1288,7 @@ function lib:Initialise()
 --        commSend("999" .. tostring(MINOR_VERSION), "GUILD");
 --    end
 
--- Above taken out by HealBot author - after getting a pm that HealBot was spamming the guild chan with "HI I was just wondering if there was a way to get HealBot: Continued 2.4.3.5 to stop spamming "HealComm99972222" in guild chat. "
-
+-- Above taken out by HealBot author - after getting a pm on Cursed with "HI I was just wondering if there was a way to get HealBot: Continued 2.4.3.5 to stop spamming "HealComm99972222" in guild chat. "
 end
 
 lib:Initialise();

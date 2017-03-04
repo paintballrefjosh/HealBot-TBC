@@ -416,13 +416,13 @@ end
 
 function HealBot_Reset()
 	HB_Timer2=2000
-	HealBot_NeedEquipUpdate=5
     HealBot_UnRegister_Events()
 	HealBot_Panel_ClearBlackList()
 	HealBot_Panel_ClearHealTarget()
 	HealBot_Action_SetAllBars()
 	HealBot_Action_SetAllAttribs()
 	HealBot_OnEvent_PlayerEnteringWorld()
+	HealBot_NeedEquipUpdate=1
 end
 
 function HealBot_GetSpellName(id)
@@ -658,51 +658,7 @@ function HealBot_OnUpdate(this,arg1)
     end
   elseif HealBot_Timer1>=HB_Timer1 then
     HealBot_Timer1 = 0;
-	Ti=0;
-	if HealBot_Loaded==1 then
-      HealBot_Action_ResetSkin()
-      HealBot_Buff_Spells_List=HealBot_Options_InitBuffList()
-      HealBot_Options_EmergencyFilter_Reset()
-	  HealBot_Options_Debuff_Reset()
-	  HealBot_Options_Buff_Reset()
-      HealBot_Options_SetSkins();
-      HealBot_Options_CheckCombos()
-      if HealBot_Config.AutoClose==0 then HealBot_Config.ActionVisible=1; end
-      if HealBot_Config.DisableHealBot==0 and HealBot_Config.ActionVisible==1 then HealBot_Action:Show() end
-      HealBot_RecalcParty();
-      HealBot_Comms_SendAddonMsg("HealBot", ">> SendVersion <<=>> "..HealBot_PlayerName.." <<=>> Version="..HEALBOT_VERSION, HealBot_AddonMsgType, HealBot_PlayerName)	   
-      HealBot_Comms_SendAddonMsg("HealBot", ">> RequestVersion <<=>> "..HealBot_PlayerName.." <<=>> nil <<", HealBot_AddonMsgType, HealBot_PlayerName)
-      if HealBot_UnitSpec[HealBot_PlayerName] then
-        if HealBot_UnitSpec[HealBot_PlayerName] == " " then
-          HealBot_GetTalentInfo(HealBot_PlayerName)
-	    end
-      end
-	  HealBot_Loaded=true
-      HealBot_AddDebug(HEALBOT_ADDON .. HEALBOT_LOADED);
-	end
     if not HealBot_IsFighting then
-      for unit,_ in pairs(HealBot_DelayDebuffCheck) do
-		ouName=UnitName(unit)
-		if not HealBot_UnitDebuff[ouName] then
-           HealBot_CheckUnitDebuffs(unit)
-		   Ti=Ti+1
-		end
-        HealBot_DelayDebuffCheck[unit] = nil;
-        if Ti>9 then 
-	      do break end;
-	    end
-      end
-      for unit,_ in pairs(HealBot_DelayBuffCheck) do
-        if Ti>7 then 
-		  do break end;
-		end
-		ouName=UnitName(unit)
-		if not HealBot_UnitBuff[ouName] then
-		  HealBot_CheckUnitBuffs(unit)
-          Ti=Ti+1
-        end		
-		HealBot_DelayBuffCheck[unit] = nil;
-      end
       if HealBot_Reset_flag then
 		HealBot_Reset_flag=nil
         HealBot_Reset()
@@ -716,16 +672,9 @@ function HealBot_OnUpdate(this,arg1)
         end
       elseif HealBot_CheckZoneFlag>0 then
         HealBot_CheckZoneFlag=HealBot_CheckZoneFlag+1;
-        if HealBot_CheckZoneFlag>7 then
+        if HealBot_CheckZoneFlag>4 then
           HealBot_CheckZoneFlag=0; 
           HealBot_CheckZone();
-        end          
-      elseif HealBot_NeedEquipUpdate>0 then
-        HealBot_NeedEquipUpdate=HealBot_NeedEquipUpdate+1;
-        if HealBot_NeedEquipUpdate>3 then
-          HealBot_CalcEquipBonus=true;
-          HealBot_NeedEquipUpdate=0; 
-          HealBot_RecalcSpells();
         end          
       elseif HealBot_CheckForDivineSpirit then
         HealBot_CheckForDivineSpirit=false
@@ -745,8 +694,15 @@ function HealBot_OnUpdate(this,arg1)
         end
         if Tcnt~=HealBot_HasDivineSpirit then
           HealBot_HasDivineSpirit=Tcnt;
-          HealBot_NeedEquipUpdate=1;
+          HealBot_NeedEquipUpdate=3;
         end
+      elseif HealBot_NeedEquipUpdate>0 then
+        HealBot_NeedEquipUpdate=HealBot_NeedEquipUpdate+1;
+        if HealBot_NeedEquipUpdate>3 then
+          HealBot_CalcEquipBonus=true;
+          HealBot_NeedEquipUpdate=0; 
+          HealBot_RecalcSpells();
+        end          
       elseif HealBot_Config.TooltipUpdate==1 and HealBot_Action_TooltipUnit then
         HealBot_Action_RefreshTooltip(HealBot_Action_TooltipUnit);
       elseif HealBot_Config.TooltipUpdate==1 and HealBot_Action_DisableTooltipUnit then
@@ -833,6 +789,52 @@ function HealBot_OnUpdate(this,arg1)
 	  HealBot_StopCastTimer=HealBot_StopCastTimer-1
 	end
     HealBot_ThrottleCnt=0
+    if not HealBot_IsFighting then
+	  if HealBot_Loaded==1 then
+        HealBot_Action_ResetSkin()
+        HealBot_Buff_Spells_List=HealBot_Options_InitBuffList()
+        HealBot_Options_EmergencyFilter_Reset()
+	    HealBot_Options_Debuff_Reset()
+  	    HealBot_Options_Buff_Reset()
+        HealBot_Options_SetSkins();
+        HealBot_Options_CheckCombos()
+        if HealBot_Config.AutoClose==0 then HealBot_Config.ActionVisible=1; end
+        if HealBot_Config.DisableHealBot==0 and HealBot_Config.ActionVisible==1 then HealBot_Action:Show() end
+        HealBot_RecalcParty();
+        HealBot_Comms_SendAddonMsg("HealBot", ">> SendVersion <<=>> "..HealBot_PlayerName.." <<=>> Version="..HEALBOT_VERSION, HealBot_AddonMsgType, HealBot_PlayerName)	   
+        HealBot_Comms_SendAddonMsg("HealBot", ">> RequestVersion <<=>> "..HealBot_PlayerName.." <<=>> nil <<", HealBot_AddonMsgType, HealBot_PlayerName)
+        if HealBot_UnitSpec[HealBot_PlayerName] then
+          if HealBot_UnitSpec[HealBot_PlayerName] == " " then
+            HealBot_GetTalentInfo(HealBot_PlayerName)
+	      end
+        end
+	    HealBot_Loaded=true
+        HealBot_AddDebug(HEALBOT_ADDON .. HEALBOT_LOADED);
+	  end
+      Ti=0;
+      for unit,_ in pairs(HealBot_DelayDebuffCheck) do
+		ouName=UnitName(unit)
+		if not HealBot_UnitDebuff[ouName] then
+           HealBot_CheckUnitDebuffs(unit)
+		   Ti=Ti+1
+		end
+        HealBot_DelayDebuffCheck[unit] = nil;
+        if Ti>9 then 
+	      do break end;
+	    end
+      end
+      for unit,_ in pairs(HealBot_DelayBuffCheck) do
+        if Ti>7 then 
+		  do break end;
+		end
+		ouName=UnitName(unit)
+		if not HealBot_UnitBuff[ouName] then
+		  HealBot_CheckUnitBuffs(unit)
+          Ti=Ti+1
+        end		
+		HealBot_DelayBuffCheck[unit] = nil;
+      end
+	end
   end
 end
 
@@ -1348,7 +1350,7 @@ function HealBot_OnEvent_ModifierStateChange(this,arg1,arg2)
 end
 
 function HealBot_OnEvent_ZoneChanged(this)
-  HealBot_CheckZoneFlag=5
+  HealBot_CheckZoneFlag=2
   HealBot_Action_ResetUnitStatus(HealBot_UnitID[HealBot_PlayerName])
 end
 
@@ -1773,7 +1775,7 @@ function HealBot_OnEvent_PlayerRegenDisabled(this)
 end
 
 function HealBot_OnEvent_PlayerRegenEnabled(this)
-  HealBot_IsFighting = false;
+  HealBot_IsFighting = nil
 end
 
 local unUnit=nil
@@ -1942,7 +1944,7 @@ function HealBot_OnEvent_SystemMsg(this,msg)
     end
     if msg==HB_YOULEAVETHEGROUP or msg==HB_YOULEAVETHERAID or msg==HB_YOUJOINTHERAID or msg==HB_YOUJOINTHEGROUP then
         Delay_RecalcParty=3;
-		HealBot_CheckZoneFlag=5
+		HealBot_CheckZoneFlag=2
 --    else
       -- find other messges
     end
@@ -1992,7 +1994,7 @@ function HealBot_OnEvent_PlayerEnteringWorld(this)
     HealBot_Options_DisableTargetFrame()
   end
   HealBot_Register_Events()
-  HealBot_CheckZoneFlag=2
+  HealBot_CheckZoneFlag=3
 end
 
 function HealBot_OnEvent_PlayerLeavingWorld(this)
@@ -2462,7 +2464,7 @@ function HealBot_InitSpells()
   HealBot_AddDebug("Initiated HealBot_CurrentSpells with ".. z .." Spells");
   HealBot_Options_CheckCombos();
   HealBot_Init_SmartCast();
-  HealBot_NeedEquipUpdate=1
+  HealBot_NeedEquipUpdate=3
 end
 
 function HealBot_InitNewChar(PlayerClassEN)

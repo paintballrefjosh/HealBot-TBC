@@ -57,13 +57,14 @@ local raidID=nil
 local zone=nil;
 local Instant_check=false
 local top = nil
-local x, y = nil,nil
+local x, y, z = nil,nil,nil
 local format=format
 local strsub=strsub
 local strlen=strlen
 local HealBot_CheckBuffs = {}
 local d=nil
 local HealBot_Tooltip_DirtyLines={}
+local mins,secs=0,0
 
 function HealBot_Tooltip_Clear_CheckBuffs()
   for x,_ in pairs(HealBot_CheckBuffs) do
@@ -76,7 +77,14 @@ function HealBot_Tooltip_CheckBuffs(buff)
   d=HealBot_AltBuffNames(buff)
   if d then HealBot_CheckBuffs[d]=buff; end
 end
-  
+
+function HealBot_Tooltip_ReturnMinsSecs(s)
+  mins=floor(s/60)
+  secs=floor(s-(mins*60))
+  if secs<10 then secs="0"..secs end
+  return mins,secs
+end
+
 function HealBot_Action_RefreshTooltip(unit)
   if HealBot_Config.ShowTooltip==0 then return end
   if not unit then return end;
@@ -191,18 +199,17 @@ function HealBot_Action_RefreshTooltip(unit)
 	  if not HealBot_IsFighting and HealBot_Config.Tooltip_ShowTarget==1 and HealBot_Config.Tooltip_ShowMyBuffs==1 then
 	    d=false
         for x,y in pairs(HealBot_CheckBuffs) do
-		  ri,text=HealBot_HasMyBuff(x, unit)
+		  ri,z=HealBot_HasMyBuff(x, unit)
           if ri then
 		    d=true
             linenum=linenum+1
 		    br,bg,bb=HealBot_Options_RetBuffRGB(y)
-			if text>=60 then 
-			  text=ceil(text/60)
-              HealBot_Tooltip_SetLineLeft("  "..x.."  "..text.." mins",br,bg,bb,linenum,1)
+			mins,secs=HealBot_Tooltip_ReturnMinsSecs(z)
+			if mins>=1 then 
+              HealBot_Tooltip_SetLineLeft("  "..x.."  "..mins..":"..secs.." mins",br,bg,bb,linenum,1)
 			  HealBot_Tooltip_SetLineRight(" ",0,0,0,linenum,0)
 			else
-			  text=ceil(text)
-			  HealBot_Tooltip_SetLineLeft("  "..x.."  "..text.." secs",br,bg,bb,linenum,1)
+			  HealBot_Tooltip_SetLineLeft("  "..x.."  "..secs.." secs",br,bg,bb,linenum,1)
 			  HealBot_Tooltip_SetLineRight(" ",0,0,0,linenum,0)
 			end
 		  end
@@ -679,18 +686,17 @@ function HealBot_Tooltip_RefreshDisabledTooltip(unit)
 	  if not HealBot_IsFighting and HealBot_Config.Tooltip_ShowTarget==1 and HealBot_Config.Tooltip_ShowMyBuffs==1 then
 	    d=false
         for x,y in pairs(HealBot_CheckBuffs) do
-		  ri,text=HealBot_HasMyBuff(x, unit)
+		  ri,z=HealBot_HasMyBuff(x, unit)
           if ri then
 		    d=true
             linenum=linenum+1
 		    br,bg,bb=HealBot_Options_RetBuffRGB(y)
-			if text>=60 then 
-			  text=ceil(text/60)
-              HealBot_Tooltip_SetLineLeft("  "..x.."  "..text.." mins",br,bg,bb,linenum,1)
+			mins,secs=HealBot_Tooltip_ReturnMinsSecs(z)
+			if mins>=1 then 
+              HealBot_Tooltip_SetLineLeft("  "..x.."  "..mins..":"..secs.." mins",br,bg,bb,linenum,1)
 			  HealBot_Tooltip_SetLineRight(" ",0,0,0,linenum,0)
 			else
- 			  text=ceil(text)
-			  HealBot_Tooltip_SetLineLeft("  "..x.."  "..text.." secs",br,bg,bb,linenum,1)
+			  HealBot_Tooltip_SetLineLeft("  "..x.."  "..secs.." secs",br,bg,bb,linenum,1)
 			  HealBot_Tooltip_SetLineRight(" ",0,0,0,linenum,0)
 			end
 		  end
