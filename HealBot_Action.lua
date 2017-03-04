@@ -62,6 +62,7 @@ local HealBot_Unit_Bar1={}
 local HealBot_Unit_Bar2={}
 local HealBot_Unit_Bar3={}
 local HealBot_Unit_Bar4={}
+local HealBot_FrameMoving=nil
 
 function HealBot_Action_AddDebug(msg)
   HealBot_AddDebug("Action: " .. msg);
@@ -1201,7 +1202,7 @@ local uCnt=0
 local tName=nil
 function HealBot_Action_PartyChanged(HealBot_PreCombat)
   if HealBot_Config.DisableHealBot==1 then return end
-  if not HealBot_IsFighting then
+  if not HealBot_IsFighting and not HealBot_FrameMoving then
 
 	for unit,_ in pairs(HealBot_ResetBars) do
 	  if HealBot_Unit_Button[unit] then HealBot_Unit_Button[unit]=nil end
@@ -1274,7 +1275,7 @@ function HealBot_Action_PartyChanged(HealBot_PreCombat)
 	  HealBot_TrackBars[button]=nil
 	end
   else
-    Delay_RecalcParty=2
+    Delay_RecalcParty=3
   end
 end
 
@@ -1527,12 +1528,14 @@ end
 
 function HealBot_Action_OnDragStart(this,button)
   if HealBot_Config.ActionLocked==0 then
+    HealBot_FrameMoving=true
     HealBot_StartMoving(this);
   end
 end
 
 function HealBot_Action_OnDragStop(this)
   HealBot_StopMoving(this);
+  HealBot_FrameMoving=nil
 end
 
 local usedSmartCast=nil

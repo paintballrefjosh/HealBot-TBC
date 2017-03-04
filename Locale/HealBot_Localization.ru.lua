@@ -1,5 +1,5 @@
 ﻿------------
--- RUSSIAN BY StingerSoft --
+-- RUSSIAN --
 ------------
 
 
@@ -10,23 +10,21 @@ if (GetLocale() == "ruRU") then
 -------------------
 
 HEALBOT_DRUID   = "Друид";
-HEALBOT_HUNTER  = "Охотник" or "Охотница";
+HEALBOT_HUNTER  = "Охотник";
 HEALBOT_MAGE    = "Маг";
 HEALBOT_PALADIN = "Паладин";
-HEALBOT_PRIEST  = "Жрец" or "Жрица";
-HEALBOT_ROGUE   = "Разбойник" or "Разбойница";
-HEALBOT_SHAMAN  = "Шаман" or "Шаманка";
-HEALBOT_WARLOCK = "Чернокнижник" or "Чернокнижница";
+HEALBOT_PRIEST  = "Жрец";
+HEALBOT_ROGUE   = "Разбойник";
+HEALBOT_SHAMAN  = "Шаман";
+HEALBOT_WARLOCK = "Чернокнижник";
 HEALBOT_WARRIOR = "Воин";
 
-HEALBOT_HEAVY_NETHERWEAVE_BANDAGE = "Плотные бинты из ткани Пустоты";
 HEALBOT_HEAVY_RUNECLOTH_BANDAGE   = "Плотные бинты из рунной ткани";
 HEALBOT_MAJOR_HEALING_POTION      = "Хорошее лечебное зелье";
 HEALBOT_PURIFICATION_POTION       = "Зелье Очищения";
 HEALBOT_ANTI_VENOM                = "Противоядие";
 HEALBOT_POWERFUL_ANTI_VENOM       = "Мощное противоядие";
 HEALBOT_ELIXIR_OF_POISON_RES      = "Elixir of Poison Resistance";
-HEALBOT_STONEFORM                 = "Каменная форма";
 
 HEALBOT_FLASH_HEAL          = "Быстрое исцеление";
 HEALBOT_FLASH_OF_LIGHT      = "Вспышка Света";
@@ -42,7 +40,7 @@ HEALBOT_LESSER_HEALING_WAVE = "Малая волна исцеления";
 HEALBOT_POWER_WORD_SHIELD   = "Слово силы: Щит";
 HEALBOT_REGROWTH            = "Восстановление";
 HEALBOT_RENEW               = "Обновление";
-HEALBOT_REJUVENATION        = "Усиленное омоложение";
+HEALBOT_REJUVENATION        = "Омоложение";
 HEALBOT_LIFEBLOOM           = "Жизнецвет";
 HEALBOT_PRAYER_OF_HEALING   = "Молитва исцеления";
 HEALBOT_CHAIN_HEAL          = "Цепное исцеление";
@@ -109,8 +107,6 @@ HEALBOT_FIR_AURA                = "Аура сопротивления огню"
 HEALBOT_CRUSADER_AURA           = "Аура воина Света";
 HEALBOT_SANCTITY_AURA           = "Аура святости";
 
-HEALBOT_INTERVENE               = GetSpellInfo(3411);
-
 HEALBOT_A_MONKEY            = "Дух обезьяны";
 HEALBOT_A_HAWK              = "Дух ястреба";
 HEALBOT_A_CHEETAH           = "Дух гепарда";
@@ -165,7 +161,7 @@ HEALBOT_DEBUFF_CRIPPLE          = "Увечье";
 HEALBOT_DEBUFF_CHILLED          = "Окоченение";
 HEALBOT_DEBUFF_CONEOFCOLD       = "Конус холода";
 HEALBOT_DEBUFF_CONCUSSIVESHOT   = "Шокирующий выстрел";
-HEALBOT_DEBUFF_THUNDERCLAP      = "Удар грома";
+HEALBOT_DEBUFF_THUNDERCLAP      = "Раскат грома";
 HEALBOT_DEBUFF_HOWLINGSCREECH   = "Визгливый вой";
 HEALBOT_DEBUFF_DAZED            = "Замедление";
 HEALBOT_DEBUFF_FALTER           = "Шаткая поступь";
@@ -174,6 +170,7 @@ HEALBOT_DEBUFF_DREAMLESS_SLEEP  = "Мирный сон";
 HEALBOT_DEBUFF_GREATER_DREAMLESS = "Больший мирный сон";
 HEALBOT_DEBUFF_MAJOR_DREAMLESS  = "Старший мирный сон";
 HEALBOT_DEBUFF_FROST_SHOCK      = "Ледяной шок";
+HEALBOT_DEBUFF_WEAKENED_SOUL    = GetSpellInfo(6788)
 
 HEALBOT_RANK_1              = "(Уровень 1)";
 HEALBOT_RANK_2              = "(Уровень 2)";
@@ -210,19 +207,20 @@ HB_SPELL_PATTERN_REJUVENATION1   = "Излечение цели на (%d+)-(%d+)
 -- HB_SPELL_PATTERN_REJUVENATION2   = "Излечение цели на (%d+)-(%d+) ед. в течение (%d+) сек";
 HB_SPELL_PATTERN_MEND_PET        = "Восполнение здоровья питомца на (%d+)  ед. в течение (%d+) сек";
 
-HB_TOOLTIP_MANA          = "^(%d+) Маны$";
-HB_TOOLTIP_RANGE          = "(%d+) ярдов";
-HB_TOOLTIP_INSTANT_CAST      = "Мгновенное действие";
-HB_TOOLTIP_CAST_TIME        = "(%d+.?%d*) сек применения";
-HB_TOOLTIP_CHANNELED        = "Channeled";
-HB_OFFLINE                   = "В не сети"; -- has gone offline msg
-HB_ONLINE                   = "В сети"; -- has come online msg
-HB_HASLEFTRAID           = "^([^%s]+) покинул группу рейда$";
-HB_HASLEFTPARTY          = "^([^%s]+) покинул группу$";
-HB_YOULEAVETHEGROUP        = "Вы покинули группу.";
-HB_YOULEAVETHERAID         = "Вы покинули группу рейда";
-HB_YOUJOINTHERAID         = "Вы вступили в рейд";
-HB_YOUJOINTHEGROUP         = "Вы вступили в группу";
+HB_TOOLTIP_MANA                  = "^Мана (%d+)$";
+HB_TOOLTIP_RANGE                 = "Радиус действия (%d+) м";
+HB_TOOLTIP_INSTANT_CAST          = "Мгновенное действие";
+HB_TOOLTIP_CAST_TIME             = "Применение (%d+.?%d*) сек";
+HB_TOOLTIP_CHANNELED             = "Направляемое";
+HB_TOOLTIP_OFFLINE               = "В не сети";
+HB_OFFLINE                     = "В не сети"; -- has gone offline msg
+HB_ONLINE                      = "В сети"; -- has come online msg
+HB_HASLEFTRAID                 = "^([^%s]+) покидает рейдовую группу$";
+HB_HASLEFTPARTY                = "^([^%s]+) покидает группу$";
+HB_YOULEAVETHEGROUP            = "Вы покидаете группу.";
+HB_YOULEAVETHERAID             = "Вы покинули рейдовую группу";
+HB_YOUJOINTHERAID              = "Вы присоединились к рейдовой группе";
+HB_YOUJOINTHEGROUP             = "Вы присоединились к группе";
 
 -----------------
 -- Translation --
@@ -231,8 +229,8 @@ HB_YOUJOINTHEGROUP         = "Вы вступили в группу";
 HEALBOT_ADDON = "HealBot " .. HEALBOT_VERSION;
 HEALBOT_LOADED = " загружен.";
 
-HEALBOT_CASTINGSPELLONYOU = "Чтение заклинания %s на вас ...";
-HEALBOT_CASTINGSPELLONUNIT = "Чтение заклинания %s на %s'а...";
+HEALBOT_CASTINGSPELLONYOU = "Применение заклинания %s на вас ...";
+HEALBOT_CASTINGSPELLONUNIT = "Применение заклинания %s на %s'а...";
 
 HEALBOT_ACTION_OPTIONS  = "Настройки";
 
@@ -273,7 +271,7 @@ HEALBOT_OPTIONS_SKINBARS       = "Опции панели";
 HEALBOT_OPTIONS_SKINPANEL      = "Цвета панели";
 HEALBOT_SKIN_ENTEXT            = "Включить";
 HEALBOT_SKIN_DISTEXT           = "Выключить";
-HEALBOT_SKIN_DEBTEXT           = "Отриц.Эффект";
+HEALBOT_SKIN_DEBTEXT           = "Дебафф";
 HEALBOT_SKIN_BACKTEXT          = "Фон";
 HEALBOT_SKIN_BORDERTEXT        = "Края";
 HEALBOT_OPTIONS_SKINFHEIGHT    = "Размер шрифта";
@@ -300,9 +298,9 @@ HEALBOT_OPTIONS_TARGETWHISPER  = "Шепнуть цели при исцелен�
 
 HEALBOT_OPTIONS_CDCBARS        = "Цвета панелей здоровья";
 HEALBOT_OPTIONS_CDCCLASS       = "Монитор классов";
-HEALBOT_OPTIONS_CDCWARNINGS    = "Стандарт сообщения";
-HEALBOT_OPTIONS_SHOWDEBUFFWARNING   = "сообщения о отриц.эффектах";
-HEALBOT_OPTIONS_SOUNDDEBUFFWARNING  = "Звук при отриц.эффектах";
+HEALBOT_OPTIONS_CDCWARNINGS    = "Предупреждения о дебаффах";
+HEALBOT_OPTIONS_SHOWDEBUFFWARNING   = "Сообщения о дебаффах";
+HEALBOT_OPTIONS_SOUNDDEBUFFWARNING  = "Звук при дебаффе";
 HEALBOT_OPTIONS_SOUND1         = "Звук 1";
 HEALBOT_OPTIONS_SOUND2         = "Звук 2";
 HEALBOT_OPTIONS_SOUND3         = "Звук 3";
@@ -333,7 +331,7 @@ HEALBOT_CLASSES_CUSTOM         = "Клиентские";
 HEALBOT_OPTIONS_SHOWTOOLTIP     = "Показ тултипов";
 HEALBOT_OPTIONS_SHOWDETTOOLTIP  = "Показ инфо о заклинании";
 HEALBOT_OPTIONS_SHOWUNITTOOLTIP = "Показ инфо о цели";
-HEALBOT_OPTIONS_SHOWRECTOOLTIP  = "Показ Исцеление За Время";
+HEALBOT_OPTIONS_SHOWRECTOOLTIP  = "Показ рекомендации Исцеления За Время";
 HEALBOT_OPTIONS_SHOWPDCTOOLTIP  = "Показ назнач. клавиш";
 HEALBOT_TOOLTIP_POSDEFAULT      = "По умолчанию";
 HEALBOT_TOOLTIP_POSLEFT         = "Слева Healbotа";
@@ -341,7 +339,7 @@ HEALBOT_TOOLTIP_POSRIGHT        = "Справа Healbotа";
 HEALBOT_TOOLTIP_POSABOVE        = "Вверху Healbotа";
 HEALBOT_TOOLTIP_POSBELOW        = "Ввнизу Healbotа";
 HEALBOT_TOOLTIP_POSCURSOR       = "Под Курсором";
-HEALBOT_TOOLTIP_RECOMMENDTEXT   = "Исцеление За Время";
+HEALBOT_TOOLTIP_RECOMMENDTEXT   = "Рекомендации Исцеления За Время";
 HEALBOT_TOOLTIP_NONE            = "нет доступных";
 HEALBOT_TOOLTIP_ITEMBONUS       = "Бонус предметов";
 HEALBOT_TOOLTIP_ACTUALBONUS     = "Актуальный бонус";
@@ -350,7 +348,7 @@ HEALBOT_TOOLTIP_LOCATION        = "Локация";
 HEALBOT_WORDS_OVER              = "в течение";
 HEALBOT_WORDS_SEC               = "сек";
 HEALBOT_WORDS_TO                = "-";
-HEALBOT_WORDS_CAST              = "Чтение";
+HEALBOT_WORDS_CAST              = "Применение";
 HEALBOT_WORDS_FOR               = "для";
 HEALBOT_WORDS_UNKNOWN           = "неизвестно";
 HEALBOT_WORDS_YES               = "Да";
@@ -392,23 +390,23 @@ HEALBOT_SKIN_HEADERTEXTCOL      = "Цвета текста";
 HEALBOT_OPTIONS_BUFFSTEXT1      = "Заклинание";
 HEALBOT_OPTIONS_BUFFSTEXT2      = "Проверка";
 HEALBOT_OPTIONS_BUFFSTEXT3      = "Цвета панелей";
-HEALBOT_OPTIONS_BUFF            = "Полож.Эффект";
+HEALBOT_OPTIONS_BUFF            = "Бафф";
 HEALBOT_OPTIONS_BUFFSELF        = "на себя";
 HEALBOT_OPTIONS_BUFFPARTY       = "на группу";
 HEALBOT_OPTIONS_BUFFRAID        = "на рейд";
-HEALBOT_OPTIONS_MONITORBUFFS    = "Пропуск полож.эффектов";
+HEALBOT_OPTIONS_MONITORBUFFS    = "Монитор пропущенных баффов";
 HEALBOT_OPTIONS_MONITORBUFFSC   = "также в бою";
 HEALBOT_OPTIONS_ENABLESMARTCAST = "БыстроеЧтение когда в не боя";
 HEALBOT_OPTIONS_SMARTCASTSPELLS = "Заклинания";
-HEALBOT_OPTIONS_SMARTCASTDISPELL = "Расс-ть отр.эффект.";
-HEALBOT_OPTIONS_SMARTCASTBUFF   = "Полож.эффекты";
+HEALBOT_OPTIONS_SMARTCASTDISPELL = "Расс-ть дебафф";
+HEALBOT_OPTIONS_SMARTCASTBUFF   = "Добавить бафф";
 HEALBOT_OPTIONS_SMARTCASTHEAL   = "Исцеления";
-HEALBOT_OPTIONS_BAR2SIZE        = "размер панели маны";
+HEALBOT_OPTIONS_BAR2SIZE        = "Размер полосы маны";
 HEALBOT_OPTIONS_SETSPELLS       = "Заклинания";
 HEALBOT_OPTIONS_ENABLEDBARS     = "Включить панели";
 HEALBOT_OPTIONS_DISABLEDBARS    = "Отключить панели когда в не боя";
-HEALBOT_OPTIONS_MONITORDEBUFFS  = "Снятие отриц.эффектов";
-HEALBOT_OPTIONS_DEBUFFTEXT1     = "Зак-ние снимающее отр.эффектов";
+HEALBOT_OPTIONS_MONITORDEBUFFS  = "Монитор снятия дебаффов";
+HEALBOT_OPTIONS_DEBUFFTEXT1     = "Зак-ние снимающее дебаффы";
 
 HEALBOT_OPTIONS_IGNOREDEBUFF          = "Игнорировать:";
 HEALBOT_OPTIONS_IGNOREDEBUFFCLASS     = "Игнор. классов";
@@ -420,17 +418,17 @@ HEALBOT_OPTIONS_RANGECHECKFREQ     = "Проверка досягаемости"
 HEALBOT_OPTIONS_RANGECHECKUNITS    = "Макс. раненных целей за проверку досег-ти"
 
 HEALBOT_OPTIONS_HIDEPARTYFRAMES    = "Скрыть окна группы";
-HEALBOT_OPTIONS_HIDEPLAYERTARGET   = "Скрыть игрока и цель";
+HEALBOT_OPTIONS_HIDEPLAYERTARGET   = "Включая игрока и цель";
 HEALBOT_OPTIONS_DISABLEHEALBOT     = "Отключить HealBot";
 
 HEALBOT_OPTIONS_CHECKEDTARGET      = "Отмеченный";
 
-HEALBOT_ASSIST   = "Ассист";
-HEALBOT_FOCUS    = "Фокус";
+HEALBOT_ASSIST  = "Assist";
+HEALBOT_FOCUS   = "Focus";
 
 HEALBOT_TITAN_SMARTCAST       = "БыстроеЧтение";
-HEALBOT_TITAN_MONITORBUFFS    = "Монитор полож.эффектов";
-HEALBOT_TITAN_MONITORDEBUFFS  = "Монитор отриц.эффектов"
+HEALBOT_TITAN_MONITORBUFFS    = "Монитор баффов";
+HEALBOT_TITAN_MONITORDEBUFFS  = "Монитор дебаффов"
 HEALBOT_TITAN_SHOWBARS        = "Панели для";
 HEALBOT_TITAN_EXTRABARS       = "Доп. панели";
 HEALBOT_BUTTON_TOOLTIP        = "ЛКМ переключает окно настроек HealBotа";
@@ -456,7 +454,7 @@ HEALBOT_OPTION_USEFLUIDBARS  = "Исп текучие полосы";
 HEALBOT_OPTION_CPUPROFILE    = "Использовать профайлер CPU (Инфо о нагрузке CPU )";
 HEALBOT_OPTIONS_SETCPUPROFILERMSG = "Для того чтобы настройки вступилибы в силу необходима перезагрузка интерфейса, Готовы?";
 
-HEALBOT_SELF_PVP             = "Своё PvP";
+HEALBOT_SELF_PVP             = "Своё ИпИ";
 HEALBOT_OPTIONS_ANCHOR       = "Якорь";
 HEALBOT_OPTIONS_TOPLEFT      = "Вверху слева";
 HEALBOT_OPTIONS_BOTTOMLEFT   = "Внизу слева";
@@ -465,8 +463,8 @@ HEALBOT_OPTIONS_BOTTOMRIGHT  = "Внизу справа";
 
 HEALBOT_PANEL_BLACKLIST      = "Чёрный-Список";
 
-HEALBOT_WORDS_REMOVEFROM     = "Удалить с";
-HEALBOT_WORDS_ADDTO          = "Добавить в";
+HEALBOT_WORDS_REMOVEFROM     = "Снять с";
+HEALBOT_WORDS_ADDTO          = "Наложить на";
 HEALBOT_WORDS_INCLUDE        = "Включая";
 
 HEALBOT_OPTIONS_TTALPHA      = "Прозрачность";
@@ -474,5 +472,32 @@ HEALBOT_TOOLTIP_TARGETBAR    = "Панель цели";
 HEALBOT_OPTIONS_MYTARGET     = "Моя цель";
 
 HEALBOT_DISCONNECTED_TEXT    = "<DC>"
+HEALBOT_OPTIONS_SHOWUNITBUFFTIME = "Показ.мои баффы";
+HEALBOT_OPTIONS_TOOLTIPUPDATE = "Постоянно обновлять";
+
+HEALBOT_BALANCE       = "Баланс"
+HEALBOT_FERAL         = "Сила зверя"
+HEALBOT_RESTORATION   = "Исцеление"
+HEALBOT_ARCANE        = "Тайная магия"
+HEALBOT_FIRE          = "Огонь"
+HEALBOT_FROST         = "Лед"
+HEALBOT_DISCIPLINE    = "Послушание"
+HEALBOT_HOLY          = "Свет"
+HEALBOT_SHADOW        = "Темная магия"
+HEALBOT_ASSASSINATION = "Убийство"
+HEALBOT_COMBAT        = "Бой"
+HEALBOT_SUBTLETY      = "Скрытность"
+HEALBOT_ARMS          = "Оружие"
+HEALBOT_FURY          = "Неистовство"
+HEALBOT_PROTECTION    = "Защита"
+HEALBOT_BEASTMASTERY  = "Чувство зверя"
+HEALBOT_MARKSMANSHIP  = "Стрельба"
+HEALBOT_SURVIVAL      = "Выживание"
+HEALBOT_RETRIBUTION   = "Возмездие"
+HEALBOT_ELEMENTAL     = "Укрощение стихии"
+HEALBOT_ENHANCEMENT   = "Совершенствование"
+HEALBOT_AFFLICTION    = "Колдовство"
+HEALBOT_DEMONOLOGY    = "Демонология"
+HEALBOT_DESTRUCTION   = "Разрушение"
 
 end

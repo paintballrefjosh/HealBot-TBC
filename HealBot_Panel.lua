@@ -215,37 +215,37 @@ end
 
 function HealBot_Action_SetHeightWidth(width,height,bwidth,curcol)
     if HealBot_Config.Panel_Anchor==1 then
-      left,top = HealBot_Action:GetLeft(),HealBot_Action:GetTop();
-      if left and top then
-        if HealBot_Config.PanelAnchorY==-1 then HealBot_Config.PanelAnchorY=top; end
-        if HealBot_Config.PanelAnchorX==-1 then HealBot_Config.PanelAnchorX=left; end
-        HealBot_Action:ClearAllPoints();
-        HealBot_Action:SetPoint("TOPLEFT","UIParent","BOTTOMLEFT",HealBot_Config.PanelAnchorX,HealBot_Config.PanelAnchorY);
-      end
+ 	  if HealBot_Config.PanelAnchorY==-1 or HealBot_Config.PanelAnchorX==-1 then
+	    left,top = HealBot_Action:GetLeft(),HealBot_Action:GetTop();
+        HealBot_Config.PanelAnchorY=top;
+        HealBot_Config.PanelAnchorX=left; 
+	  end
+      HealBot_Action:ClearAllPoints();
+      HealBot_Action:SetPoint("TOPLEFT","UIParent","BOTTOMLEFT",HealBot_Config.PanelAnchorX,HealBot_Config.PanelAnchorY);
     elseif HealBot_Config.Panel_Anchor==2 then
-      left,bottom = HealBot_Action:GetLeft(),HealBot_Action:GetBottom();
-      if left and bottom then
-        if HealBot_Config.PanelAnchorY==-1 then HealBot_Config.PanelAnchorY=bottom; end
-        if HealBot_Config.PanelAnchorX==-1 then HealBot_Config.PanelAnchorX=left; end
-        HealBot_Action:ClearAllPoints();
-        HealBot_Action:SetPoint("BOTTOMLEFT","UIParent","BOTTOMLEFT",HealBot_Config.PanelAnchorX,HealBot_Config.PanelAnchorY);
-      end
+	  if HealBot_Config.PanelAnchorY==-1 or HealBot_Config.PanelAnchorX==-1 then
+	    left,bottom = HealBot_Action:GetLeft(),HealBot_Action:GetBottom();
+		HealBot_Config.PanelAnchorY=bottom
+		HealBot_Config.PanelAnchorX=left
+	  end
+      HealBot_Action:ClearAllPoints();
+      HealBot_Action:SetPoint("BOTTOMLEFT","UIParent","BOTTOMLEFT",HealBot_Config.PanelAnchorX,HealBot_Config.PanelAnchorY);
     elseif HealBot_Config.Panel_Anchor==3 then
-      right,top = HealBot_Action:GetLeft(),HealBot_Action:GetBottom();
-      if right and top then
-        if HealBot_Config.PanelAnchorY==-1 then HealBot_Config.PanelAnchorY=top; end
-        if HealBot_Config.PanelAnchorX==-1 then HealBot_Config.PanelAnchorX=right; end
-        HealBot_Action:ClearAllPoints();
-        HealBot_Action:SetPoint("TOPRIGHT","UIParent","BOTTOMLEFT",HealBot_Config.PanelAnchorX,HealBot_Config.PanelAnchorY);
-      end
+  	  if HealBot_Config.PanelAnchorY==-1 or HealBot_Config.PanelAnchorX==-1 then
+        right,top = HealBot_Action:GetLeft(),HealBot_Action:GetBottom();
+        HealBot_Config.PanelAnchorY=top;
+        HealBot_Config.PanelAnchorX=right; 
+	  end
+      HealBot_Action:ClearAllPoints();
+      HealBot_Action:SetPoint("TOPRIGHT","UIParent","BOTTOMLEFT",HealBot_Config.PanelAnchorX,HealBot_Config.PanelAnchorY);
     elseif HealBot_Config.Panel_Anchor==4 then
-      right,bottom = HealBot_Action:GetLeft(),HealBot_Action:GetBottom();
-      if right and bottom then
-        if HealBot_Config.PanelAnchorY==-1 then HealBot_Config.PanelAnchorY=bottom; end
-        if HealBot_Config.PanelAnchorX==-1 then HealBot_Config.PanelAnchorX=right; end
-        HealBot_Action:ClearAllPoints();
-        HealBot_Action:SetPoint("BOTTOMRIGHT","UIParent","BOTTOMLEFT",HealBot_Config.PanelAnchorX,HealBot_Config.PanelAnchorY);
-      end
+   	  if HealBot_Config.PanelAnchorY==-1 or HealBot_Config.PanelAnchorX==-1 then
+        right,bottom = HealBot_Action:GetLeft(),HealBot_Action:GetBottom();
+		HealBot_Config.PanelAnchorY=bottom;
+        HealBot_Config.PanelAnchorX=right; 
+	  end
+      HealBot_Action:ClearAllPoints();
+      HealBot_Action:SetPoint("BOTTOMRIGHT","UIParent","BOTTOMLEFT",HealBot_Config.PanelAnchorX,HealBot_Config.PanelAnchorY);
     end
   HealBot_Action:SetHeight(height);
   if HealBot_Config.HoTposBar==2 then curcol=curcol+1; end;
