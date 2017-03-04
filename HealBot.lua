@@ -15,21 +15,12 @@ local HealBot_RequestVer=nil;
 local HealBot_IamHealing = nil;
 local HealBot_Loaded=nil;
 local HealBot_InnerFocusTalent=false;
-local HealBot_HoT1={};
-local HealBot_HoT2={};
-local HealBot_HoT3={};
-local HealBot_HoT1_Spell={};
-local HealBot_HoT2_Spell={};
-local HealBot_HoT3_Spell={};
-local HealBot_HoT_iconTexture1={};
-local HealBot_HoT_iconTexture2={};
-local HealBot_HoT_iconTexture3={};
-local HealBot_HoT_Waiting={};
-local HealBot_HoT_WaitingSpell={};
-local HealBot_HoT_WaitingSpellName={};
+local HealBot_Player_HoT={};
+local HealBot_Player_HoT_Icons={};
+local HealBot_Watch_HoT={};
 local HealBot_HoT_Mending=0;
-local HealBot_HoT_MendingWith="nil";
-local HealBot_HoT_MendingWatch=0;
+local HealBot_HoT_MendingWith="niL";
+local HealBot_Lifebloom_Count={};
 local HealBot_CheckZoneFlag=0
 local HealBot_InCombatUpdate=false
 local HealBot_SmartCast_Spells={};
@@ -171,7 +162,7 @@ local ghid=nil
 local ghspell=nil
 local usable=nil
 local noMana=nil
-local HealBot_Timer1,HealBot_Timer2,HealBot_Timer3 = 0,0,0.24;
+local HealBot_Timer1,HealBot_Timer2,HealBot_Timer3 = 0,0,0.38;
 local HealBot_StopCastTimer=0
 local Ti=nil
 local Tcnt=nil
@@ -224,6 +215,8 @@ local uName=nil
 local hbUnit=nil
 local uClass=nil
 local QuickHealth = LibStub("LibQuickHealth-1.0");
+local huUnit,huHoTtime,huHoTicon=nil,nil,nil
+local HealBot_TrackWS={}
 
 function HealBot_AltBuffNames(buff)
   return HealBot_BuffNameSwap[buff]
@@ -729,40 +722,7 @@ function HealBot_OnUpdate(this,arg1)
       end
     end
 
-    for k in pairs(HealBot_HoT1) do
-      HealBot_HoT1[k]=HealBot_HoT1[k]-1; 
-      if HealBot_HoT1[k]<15 then
-         HealBot_HoT_Update(1, HealBot_HoT1[k], k)    
-      end
-    end
-    for k in pairs(HealBot_HoT2) do
-      HealBot_HoT2[k]=HealBot_HoT2[k]-1; 
-      if HealBot_HoT2[k]<15 then
-         HealBot_HoT_Update(2, HealBot_HoT2[k], k)    
-      end
-    end
-    for k in pairs(HealBot_HoT3) do
-      HealBot_HoT3[k]=HealBot_HoT3[k]-1; 
-      if HealBot_HoT3[k]<15 then
-         HealBot_HoT_Update(3, HealBot_HoT3[k], k)    
-      end
-    end
-
-    for k in pairs(HealBot_HoT_Waiting) do
-      HealBot_HoT_Waiting[k]=HealBot_HoT_Waiting[k]-1; 
-      if HealBot_HoT_Waiting[k]<=0 then
-         HealBot_HoT_Waiting[k]=nil   
-         HealBot_HoT_WaitingSpell[k]=nil         
-         HealBot_HoT_WaitingSpellName[k]=nil 
-       end
-    end
-
-    if HealBot_HoT_MendingWatch>0 then
-      HealBot_HoT_MendingWatch=HealBot_HoT_MendingWatch-1
-      if HealBot_HoT_MendingWatch==0 then
-        HealBot_HoT_Mending=0;
-      end
-    end
+	
 	
     for k in pairs(HealBot_HealersIncCnt) do
 	  HealBot_HealersIncCnt[k]=HealBot_HealersIncCnt[k]+1; 
@@ -782,11 +742,25 @@ function HealBot_OnUpdate(this,arg1)
       end
     end
 	
+	
+    for uName in pairs(HealBot_Player_HoT) do
+	  huHoTtime=HealBot_Player_HoT[uName]
+	  for spellName in pairs(huHoTtime) do
+	    huHoTtime[spellName]=huHoTtime[spellName]-1
+	    if huHoTtime[spellName]<40 then
+          HealBot_HoT_Update(uName, spellName)
+		elseif huHoTtime[spellName]<80 then
+          huHoTtime[spellName]=nil
+		end
+      end
+    end
+	
   elseif HealBot_Timer3>=0.4 then
     HealBot_Timer3=0
     if HealBot_StopCastTimer>0 then
 	  HealBot_StopCastTimer=HealBot_StopCastTimer-1
 	end
+
     HealBot_ThrottleCnt=0
     if not HealBot_IsFighting then
 	  if HealBot_Loaded==1 then
@@ -922,13 +896,6 @@ function HealBot_OnEvent_VariablesLoaded(this)
     if not HealBot_Config.CDCBarColour[HEALBOT_CUSTOM_en] then
     	HealBot_Config.CDCBarColour[HEALBOT_CUSTOM_en] = HealBot_ConfigDefaults.CDCBarColour[HEALBOT_CUSTOM_en]
     end	
-    HealBot_HoT_Texture[HEALBOT_REJUVENATION]      = "Interface\\Icons\\Spell_Nature_Rejuvenation";
-    HealBot_HoT_Texture[HEALBOT_REGROWTH]          = "Interface\\Icons\\Spell_Nature_ResistNature";
-    HealBot_HoT_Texture[HEALBOT_LIFEBLOOM]         = "Interface\\Icons\\INV_Misc_Herb_Felblossom.jpg";
-    HealBot_HoT_Texture[HEALBOT_RENEW]             = "Interface\\Icons\\Spell_Holy_Renew";
-    HealBot_HoT_Texture[HEALBOT_POWER_WORD_SHIELD] = "Interface\\Icons\\Spell_Holy_PowerWordShield";
-    HealBot_HoT_Texture[HEALBOT_PRAYER_OF_MENDING] = "Interface\\Icons\\Spell_Holy_PrayerOfMendingtga.jpg";
-    HealBot_HoT_Texture[HEALBOT_MENDPET]           = "Interface\\Icons\\Ability_Hunter_MendPet.jpg";
     HealBot_Class_En[HEALBOT_DRUID]="DRUI"
     HealBot_Class_En[HEALBOT_HUNTER]="HUNT"
     HealBot_Class_En[HEALBOT_MAGE]="MAGE"
@@ -938,7 +905,35 @@ function HealBot_OnEvent_VariablesLoaded(this)
     HealBot_Class_En[HEALBOT_SHAMAN]="SHAM"
     HealBot_Class_En[HEALBOT_WARLOCK]="WARL"
     HealBot_Class_En[HEALBOT_WARRIOR]="WARR"
-    if strsub(HealBot_PlayerClassEN,1,4)=="PRIE" then HealBot_HasInnerFocus(); end
+	if strsub(HealBot_PlayerClassEN,1,4)==HealBot_Class_En[HEALBOT_PRIEST] then
+      HealBot_HoT_Texture[HEALBOT_RENEW]             = "Interface\\Icons\\Spell_Holy_Renew";
+      HealBot_HoT_Texture[HEALBOT_POWER_WORD_SHIELD] = "Interface\\Icons\\Spell_Holy_PowerWordShield";
+      HealBot_HoT_Texture[HEALBOT_PRAYER_OF_MENDING] = "Interface\\Icons\\Spell_Holy_PrayerOfMendingtga.jpg";
+	  HealBot_Watch_HoT[HEALBOT_RENEW]="C"
+	  HealBot_Watch_HoT[HEALBOT_POWER_WORD_SHIELD]="C"
+	  HealBot_Watch_HoT[HEALBOT_PRAYER_OF_MENDING]="A"
+	  HealBot_HasInnerFocus();
+	elseif strsub(HealBot_PlayerClassEN,1,4)==HealBot_Class_En[HEALBOT_DRUID] then
+      HealBot_HoT_Texture[HEALBOT_REJUVENATION]      = "Interface\\Icons\\Spell_Nature_Rejuvenation";
+      HealBot_HoT_Texture[HEALBOT_REGROWTH]          = "Interface\\Icons\\Spell_Nature_ResistNature";
+      HealBot_HoT_Texture[HEALBOT_LIFEBLOOM]         = "Interface\\Icons\\INV_Misc_Herb_Felblossom.jpg";
+	  HealBot_Watch_HoT[HEALBOT_REJUVENATION]="C"
+	  HealBot_Watch_HoT[HEALBOT_REGROWTH]="C"
+	  HealBot_Watch_HoT[HEALBOT_LIFEBLOOM]="C"
+	elseif strsub(HealBot_PlayerClassEN,1,4)==HealBot_Class_En[HEALBOT_PALADIN] then
+      HealBot_ShortBuffs[HEALBOT_BLESSING_OF_MIGHT]=true
+	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_WISDOM]=true
+	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_SALVATION]=true
+	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_SANCTUARY]=true
+	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_LIGHT]=true
+	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_PROTECTION]=true
+	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_FREEDOM]=true
+	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_SACRIFICE]=true
+	  HealBot_ShortBuffs[HEALBOT_BLESSING_OF_KINGS]=true
+	elseif strsub(HealBot_PlayerClassEN,1,4)==HealBot_Class_En[HEALBOT_HUNTER] then
+	  HealBot_HoT_Texture[HEALBOT_MENDPET]           = "Interface\\Icons\\Ability_Hunter_MendPet.jpg";
+	  HealBot_Watch_HoT[HEALBOT_MENDPET]="C"
+	end
     HealBot_CheckForDivineSpirit=true;
 	QuickHealth.RegisterCallback(this, "HealthUpdated", function(event, GUID, newHealth)
 	    HealBot_OnEvent(this, "HealthUpdated", GUID, newHealth)
@@ -1103,7 +1098,7 @@ function HealBot_OnEvent_AddonMsg(this,addon_id,msg,distribution,sender_id,inter
 --  inc_msg = gsub(msg, "%$", "s");
 --  inc_msg = gsub(inc_msg, "§", "S");
   inc_msg=msg
-  sender_id = string.match(sender_id, "^[^-]*")
+  if HealBot_InBG then sender_id = string.match(sender_id, "^[^-]*") end
   heal_val=nil
   if not HealBotAddonSummary[addon_id] then
     HealBotAddonSummary[addon_id]=1
@@ -1182,11 +1177,11 @@ function HealBot_OnEvent_AddonMsg(this,addon_id,msg,distribution,sender_id,inter
     if unitname and heal_val then
       if (type(unitname) == "table") then
         table.foreach(unitname, function (index,unitn)
-		  unitn = string.match(unitn, "^[^-]*");
+		  if HealBot_InBG then unitn = string.match(unitn, "^[^-]*") end
           HealBot_HealsInUpdate(unitn,heal_val)
         end)
       else
-	    unitname = string.match(unitname, "^[^-]*")
+	    if HealBot_InBG then unitname = string.match(unitname, "^[^-]*") end
         HealBot_HealsInUpdate(unitname,heal_val)
 --		if addon_id~=HEALBOT_ADDON_ID then HealBot_AddDebug(addon_id..":IncHeal from "..sender_id.."  heal:"..unitname..":"..heal_val) end
       end 
@@ -1402,52 +1397,8 @@ function HealBot_OnEvent_UnitAura(this,unit)
   elseif unit==HealBot_Action_DisableTooltipUnit then
     HealBot_Tooltip_RefreshDisabledTooltip(HealBot_Action_DisableTooltipUnit);
   end
-  
-  if HealBot_HoT1[uName] then
-    HoTActive=HealBot_HasMyBuff(HealBot_HoT1_Spell[uName], unit)
-    if not HoTActive then 
-      HealBot_HoT1[uName]=0 
-      HealBot_HoT_Update(1, HealBot_HoT1[uName], uName)    
-    end
-  end
 
-  if HealBot_HoT2[uName] then
-    HoTActive=HealBot_HasMyBuff(HealBot_HoT2_Spell[uName], unit)
-    if not HoTActive then 
-      HealBot_HoT2[uName]=0 
-      HealBot_HoT_Update(2, HealBot_HoT2[uName], uName)    
-    end
-  end
-
-  if HealBot_HoT3[uName] then
-    HoTActive=HealBot_HasMyBuff(HealBot_HoT3_Spell[uName], unit)
-    if not HoTActive then 
-      HealBot_HoT3[uName]=0 
-      HealBot_HoT_Update(3, HealBot_HoT3[uName], uName)    
-    end
-  end  
-  
-  if HealBot_HoT_Waiting[uName] then
-    HoTActive=HealBot_HasMyBuff(HealBot_HoT_WaitingSpellName[uName], unit)
-    if HoTActive then
-      HealBot_HoT_Update(nil, HealBot_Spells[HealBot_HoT_WaitingSpell[uName]].Duration, uName, HealBot_HoT_WaitingSpellName[uName])
-      if HealBot_HoT_WaitingSpellName[uName]==HEALBOT_PRAYER_OF_MENDING then
-        HealBot_HoT_MendingWith=uName;
-      end
-      HealBot_HoT_Waiting[uName]=nil   
-      HealBot_HoT_WaitingSpell[uName]=nil         
-      HealBot_HoT_WaitingSpellName[uName]=nil 
-    end
-  end  
-
-  if HealBot_HoT_Mending>0 and HealBot_HoT_MendingWith~=uName then
-    HoTActive=HealBot_HasMyBuff(HEALBOT_PRAYER_OF_MENDING, unit)
-    if HoTActive then
-        HealBot_HoT_Update(nil, HealBot_Spells[HEALBOT_PRAYER_OF_MENDING..HEALBOT_RANK_1].Duration, uName, HEALBOT_PRAYER_OF_MENDING)
-        HealBot_HoT_MendingWith=uName;
-        HealBot_HoT_MendingWatch=40;
-    end
-  end
+  HealBot_HasMyBuffs(unit,uName)
   
 end
 
@@ -1455,14 +1406,15 @@ function HealBot_CheckForInnerFocus()
   HealBot_InnerFocus=HealBot_HasBuff(HEALBOT_INNER_FOCUS,"player")
 end
 
+local bCount, timeLeft=nil,nil
 function HealBot_HasBuff(buffName, unit)
   hbi=1;
   while true do
-    hbName,_,_,_,_,_ = UnitBuff(unit,hbi)
+    hbName,_,_,bCount,_,timeLeft = UnitBuff(unit,hbi)
     hbi=hbi+1
     if hbName then
       if hbName==buffName then
-        return true;
+        return true,bCount,timeLeft;
       end
     else
       do break end;
@@ -1471,14 +1423,53 @@ function HealBot_HasBuff(buffName, unit)
   return false;
 end
 
+function HealBot_HasMyBuffs(unit,unitName)
+  for x,y in pairs(HealBot_Watch_HoT) do
+    if y=="A" then
+	  if x==HEALBOT_PRAYER_OF_MENDING then
+	    HoTActive, bCount, timeLeft=HealBot_HasBuff(x, unit)
+	    if HoTActive then
+		  if not HealBot_Player_HoT[unitName] then HealBot_Player_HoT[unitName]={} end
+          if not HealBot_Player_HoT_Icons[unitName] then HealBot_Player_HoT_Icons[unitName]={} end
+          if not HealBot_Player_HoT_Icons[unitName][x] then HealBot_Player_HoT_Icons[unitName][x]=0 end
+	      if timeLeft then
+			HealBot_Player_HoT[unitName][x]=floor(timeLeft)
+		    HealBot_HoT_MendingWith=unitName
+		    HealBot_HoT_Mending=bCount
+		  elseif not HealBot_Player_HoT[unitName][x] then
+		    HealBot_Player_HoT[unitName][x]=30
+		  end
+          HealBot_HoT_Update(unitName, x)
+        elseif HealBot_Player_HoT[unitName] and HealBot_Player_HoT_Icons[unitName] and HealBot_Player_HoT[unitName][x] and HealBot_Player_HoT_Icons[unitName][x]>0 then
+		  HealBot_Player_HoT[unitName][x]=-1
+          HealBot_HoT_Update(unitName, x)
+		end
+	  end
+	elseif HealBot_Player_HoT[unitName] and HealBot_Player_HoT[unitName][x] then
+      HoTActive, bCount, timeLeft=HealBot_HasMyBuff(x, unit)
+      if HoTActive then
+        if x==HEALBOT_LIFEBLOOM then
+		  HealBot_Lifebloom_Count[unitName]=bCount
+		end	
+        HealBot_Player_HoT[unitName][x]=floor(timeLeft)
+        HealBot_HoT_Update(unitName, x)
+	  elseif HealBot_Player_HoT_Icons[unitName][x]>0 and HealBot_Player_HoT_Icons[unitName][x]<40 then
+	    if x==HEALBOT_POWER_WORD_SHIELD and HealBot_TrackWS[unitName] then return end
+        HealBot_Player_HoT[unitName][x]=-1
+        HealBot_HoT_Update(unitName, x)
+	  end
+	end
+  end
+end
+
 function HealBot_HasMyBuff(buffName, unit)
   hbi=1;
   while true do
-    hbName,_,_,_,_,tl = UnitBuff(unit,hbi)
+    hbName,_,_,bCount,_,timeLeft = UnitBuff(unit,hbi)
     hbi=hbi+1
     if hbName then
-      if hbName==buffName and tl then
-        return true,tl;
+      if hbName==buffName and timeLeft then
+        return true,bCount,timeLeft;
       end
     else
       do break end;
@@ -1532,9 +1523,10 @@ end
 local DebuffIn=nil
 local DebuffClass=nil
 local myhTargets=nil
+local checkWS=nil
 function HealBot_CheckUnitDebuffs(unit)
   unit=HealBot_RaidUnit(unit,UnitName(unit))
-  if not HealBot_Unit_Button[unit] then
+  if not unit or not HealBot_Unit_Button[unit] then
     return;
   end
   uName=UnitName(unit);
@@ -1543,6 +1535,7 @@ function HealBot_CheckUnitDebuffs(unit)
   DebuffType=nil;
   icd = 1;
   DebuffIn=HealBot_UnitDebuff[uName] or "x"
+  checkWS=nil
   while true do
     dName,_,_,_,debuff_type = UnitDebuff(unit,icd)
     if dName then
@@ -1553,7 +1546,10 @@ function HealBot_CheckUnitDebuffs(unit)
     		debuff_type = HEALBOT_CUSTOM_en;
     		WatchTarget={["Raid"]=true,};
       end
-      
+	  if dName==HEALBOT_DEBUFF_WEAKENED_SOUL then
+	    HealBot_TrackWS[uName]=true
+		checkWS=true
+	  end
       if WatchTarget then 
         if WatchTarget["Raid"] then
           checkthis=true;
@@ -1645,12 +1641,16 @@ function HealBot_CheckUnitDebuffs(unit)
 	  HealBot_Action_ResetUnitStatus(unit)
     end
   end
+  if HealBot_TrackWS[uName] and not checkWS then
+    HealBot_TrackWS[uName]=nil
+	HealBot_HasMyBuffs(unit,uName)
+  end
 end
 
 local BuffClass=nil
 function HealBot_CheckUnitBuffs(unit)
   unit=HealBot_RaidUnit(unit,UnitName(unit))
-  if not HealBot_Unit_Button[unit] then
+  if not unit or not HealBot_Unit_Button[unit] then
       return;
   end
     uName=UnitName(unit);
@@ -2025,7 +2025,7 @@ function HealBot_OnEvent_UnitSpellcastSent(this,caster,spellname,rank,target)
 	  target=UnitName("pet")
 	end
   end
-  target = string.match(target, "^[^-]*");
+  if HealBot_InBG then target = string.match(target, "^[^-]*"); end
   tUnit = HealBot_UnitID[target];
   if not tUnit then
     if UnitName("target") and UnitName("target")==target then
@@ -2090,19 +2090,21 @@ function HealBot_OnEvent_UnitSpellcastSent(this,caster,spellname,rank,target)
       end
       if HealBot_Spells[scsspell].Duration>0 and HealBot_Config.ShowHoTicons==1 and HealBot_Unit_Button[HealBot_UnitID[target]] then
 
-        if HealBot_HoT1_Spell[target]==spellname then
-          HealBot_HoT_Update(nil, HealBot_Spells[scsspell].Duration, target, spellname)
-        elseif HealBot_HoT2_Spell[target]==spellname then
-          HealBot_HoT_Update(nil, HealBot_Spells[scsspell].Duration, target, spellname)
-        elseif HealBot_HoT3_Spell[target]==spellname then
-          HealBot_HoT_Update(nil, HealBot_Spells[scsspell].Duration, target, spellname)
-        end
-        HealBot_HoT_Waiting[target]=HealBot_Spells[scsspell].CastTime+5;
-        HealBot_HoT_WaitingSpell[target]=scsspell;
-        HealBot_HoT_WaitingSpellName[target]=spellname;
+        if not HealBot_Player_HoT[target] then HealBot_Player_HoT[target]={} end
+		if not HealBot_Player_HoT_Icons[target] then HealBot_Player_HoT_Icons[target]={} end
+		HealBot_Player_HoT[target][spellname]=97
+		if not HealBot_Player_HoT_Icons[target][spellname] then HealBot_Player_HoT_Icons[target][spellname]=0 end
+
         if spellname==HEALBOT_PRAYER_OF_MENDING then
-          HealBot_HoT_Mending=5;
-        end;
+		  HealBot_HoT_MendingWith="niL"
+        elseif spellname==HEALBOT_LIFEBLOOM then
+		  if not HealBot_Lifebloom_Count[target] then
+		    HealBot_Lifebloom_Count[target]=0
+		  end
+		elseif spellname==HEALBOT_REGROWTH then 
+		  HealBot_Player_HoT[target][spellname]=105
+		end	  
+	  
       end
       HealBot_CastingSpell  = scsspell;
       HealBot_CastingTarget = tUnit;
@@ -2209,121 +2211,102 @@ function HealBot_OnEvent_UnitSpellcastFail(this,unit)
 end
 
 
-local huUnit=nil
-function HealBot_HoT_Update(index, secLeft, memberName, spellName)
-  huUnit=HealBot_UnitID[memberName]
-  if index then
-    if secLeft==0 then
-      HealBot_HoT_UpdateIcon(HealBot_Unit_Button[huUnit], index, 0)
-      if index==1 then     
-        if HealBot_HoT2[memberName] then
-          HealBot_HoT1[memberName]=HealBot_HoT2[memberName];
-          HealBot_HoT2[memberName]=nil;
-          HealBot_HoT_iconTexture1[memberName]=HealBot_HoT_iconTexture2[memberName];
-          HealBot_HoT1_Spell[memberName]=HealBot_HoT2_Spell[memberName];
-          HealBot_HoT2_Spell[memberName]=nil;
-          HealBot_HoT_ChangeIcon(HealBot_Unit_Button[huUnit], 1, HealBot_HoT_AlphaValue(HealBot_HoT1[memberName]), HealBot_HoT_iconTexture1[memberName])
-          if HealBot_HoT3[memberName] then
-            HealBot_HoT2[memberName]=HealBot_HoT3[memberName];
-            HealBot_HoT3[memberName]=nil;
-            HealBot_HoT_iconTexture2[memberName]=HealBot_HoT_iconTexture3[memberName];
-            HealBot_HoT2_Spell[memberName]=HealBot_HoT3_Spell[memberName];
-            HealBot_HoT3_Spell[memberName]=nil;
-            HealBot_HoT_ChangeIcon(HealBot_Unit_Button[huUnit], 2, HealBot_HoT_AlphaValue(HealBot_HoT2[memberName]), HealBot_HoT_iconTexture2[memberName])
-            HealBot_HoT_UpdateIcon(HealBot_Unit_Button[huUnit], 3, 0)
-          else
-            HealBot_HoT_UpdateIcon(HealBot_Unit_Button[huUnit], 2, 0)
-          end
-        else
-          HealBot_HoT1[memberName]=nil;
-          HealBot_HoT1_Spell[memberName]=nil;
-          HealBot_HoT_Active_Button[memberName]=nil;
-        end
-      elseif index==2 then
-        if HealBot_HoT3[memberName] then
-          HealBot_HoT2[memberName]=HealBot_HoT3[memberName];
-          HealBot_HoT3[memberName]=nil;
-          HealBot_HoT_iconTexture2[memberName]=HealBot_HoT_iconTexture3[memberName];
-          HealBot_HoT2_Spell[memberName]=HealBot_HoT3_Spell[memberName];
-          HealBot_HoT3_Spell[memberName]=nil;
-          HealBot_HoT_ChangeIcon(HealBot_Unit_Button[huUnit], 2, HealBot_HoT_AlphaValue(HealBot_HoT2[memberName]), HealBot_HoT_iconTexture2[memberName])
-          HealBot_HoT_UpdateIcon(HealBot_Unit_Button[huUnit], 3, 0)
-        else
-          HealBot_HoT2[memberName]=nil;
-          HealBot_HoT2_Spell[memberName]=nil;
-        end
-      else
-        HealBot_HoT3[memberName]=nil;
-        HealBot_HoT3_Spell[memberName]=nil;
-      end           
-    else
-      HealBot_HoT_UpdateIcon(HealBot_Unit_Button[huUnit], index, HealBot_HoT_AlphaValue(secLeft))
-    end
+local HoTtxt2=nil
+function HealBot_HoT_Update(unitName, spellName)
+  huUnit=HealBot_UnitID[unitName]
+  huHoTtime=HealBot_Player_HoT[unitName]
+  huHoTicon=HealBot_Player_HoT_Icons[unitName]
+  secLeft=huHoTtime[spellName] or -1
+  if spellName==HEALBOT_PRAYER_OF_MENDING then
+    if HealBot_HoT_MendingWith~=unitName then
+	  HoTtxt2=nil
+	else
+	  HoTtxt2=HealBot_HoT_Mending
+	end
+  elseif spellName==HEALBOT_LIFEBLOOM then
+    HoTtxt2=HealBot_Lifebloom_Count[unitName]
+  elseif spellName==HEALBOT_POWER_WORD_SHIELD and HealBot_TrackWS[unitName] then
+    HoTtxt2="+"
   else
-    addIcon=true
-    secLeft=secLeft+4;
-    if HealBot_HoT1[memberName] and HealBot_HoT_iconTexture1[memberName]==HealBot_HoT_Texture[spellName] then
-        HealBot_HoT1[memberName]=secLeft;
-        addIcon=false;
-        HealBot_HoT_UpdateIcon(HealBot_Unit_Button[huUnit], 1, 1)
-    elseif HealBot_HoT2[memberName] and HealBot_HoT_iconTexture2[memberName]==HealBot_HoT_Texture[spellName] then
-        HealBot_HoT2[memberName]=secLeft;
-        addIcon=false;
-        HealBot_HoT_UpdateIcon(HealBot_Unit_Button[huUnit], 2, 1)
-    elseif HealBot_HoT3[memberName] and HealBot_HoT_iconTexture3[memberName]==HealBot_HoT_Texture[spellName] then
-        HealBot_HoT3[memberName]=secLeft;
-        addIcon=false;
-        HealBot_HoT_UpdateIcon(HealBot_Unit_Button[huUnit], 3, 1)
-    end
-    if addIcon then
-      if not HealBot_HoT1[memberName] then
-        HealBot_HoT1[memberName]=secLeft;
-        HealBot_HoT_iconTexture1[memberName]=HealBot_HoT_Texture[spellName];
-        HealBot_HoT1_Spell[memberName]=spellName;
-        HealBot_HoT_ChangeIcon(HealBot_Unit_Button[huUnit], 1, HealBot_HoT_AlphaValue(HealBot_HoT1[memberName]), HealBot_HoT_iconTexture1[memberName])
-        HealBot_HoT_Active_Button[memberName]=HealBot_Unit_Button[huUnit];
-      elseif not HealBot_HoT2[memberName] then
-        HealBot_HoT2[memberName]=secLeft;
-        HealBot_HoT_iconTexture2[memberName]=HealBot_HoT_Texture[spellName];
-        HealBot_HoT2_Spell[memberName]=spellName;
-        HealBot_HoT_ChangeIcon(HealBot_Unit_Button[huUnit], 2, HealBot_HoT_AlphaValue(HealBot_HoT2[memberName]), HealBot_HoT_iconTexture2[memberName])
-      elseif not HealBot_HoT3[memberName] then
-        HealBot_HoT3[memberName]=secLeft;
-        HealBot_HoT3_Spell[memberName]=spellName;
-        HealBot_HoT_iconTexture3[memberName]=HealBot_HoT_Texture[spellName];
-        HealBot_HoT_ChangeIcon(HealBot_Unit_Button[huUnit], 3, HealBot_HoT_AlphaValue(HealBot_HoT3[memberName]), HealBot_HoT_iconTexture3[memberName])
-      end
-    end
+    HoTtxt2=nil
+  end
+
+  if huHoTicon[spellName]>0 then
+    if secLeft<0 then
+	  HealBot_HoT_UpdateIcon(HealBot_Unit_Button[huUnit], huHoTicon[spellName], 0)
+      huHoTtime[spellName]=nil
+	  i=huHoTicon[spellName]
+  	  huHoTicon[spellName]=0
+	  HealBot_HoT_RefreshIcons(unitName,HealBot_Unit_Button[huUnit])
+	  if spellName==HEALBOT_LIFEBLOOM then
+	    HealBot_Lifebloom_Count[unitName]=nil
+	  end
+	else
+	  HealBot_HoT_UpdateIcon(HealBot_Unit_Button[huUnit], huHoTicon[spellName], HealBot_HoT_AlphaValue(secLeft+1),secLeft, HoTtxt2)
+	end
+  else
+    i=0
+	for _,k in pairs(huHoTtime) do if k<40 then i=i+1 end end
+	huHoTicon[spellName]=i
+	HealBot_HoT_ChangeIcon(HealBot_Unit_Button[huUnit], i, HealBot_HoT_AlphaValue(secLeft), HealBot_HoT_Texture[spellName] , secLeft, HoTtxt2)
+	HealBot_HoT_Active_Button[unitName]=HealBot_Unit_Button[huUnit]
   end
 end
 
-function HealBot_HoT_MoveIcon(oldButton, newButton, memberName)
-  if HealBot_HoT1[memberName] then
-    HealBot_HoT_UpdateIcon(oldButton, 1, 0)
-    HealBot_HoT_ChangeIcon(newButton, 1, HealBot_HoT_AlphaValue(HealBot_HoT1[memberName]), HealBot_HoT_iconTexture1[memberName])
+local temp_icons={}
+function HealBot_HoT_RefreshIcons(unitName,button)
+  huUnit=HealBot_UnitID[unitName]
+  huHoTtime=HealBot_Player_HoT[unitName]
+  huHoTicon=HealBot_Player_HoT_Icons[unitName]
+  for k,i in pairs(huHoTicon) do
+    if i>0 then temp_icons[i]=k end
   end
-  if HealBot_HoT2[memberName] then
-    HealBot_HoT_UpdateIcon(oldButton, 2, 0)
-    HealBot_HoT_ChangeIcon(newButton, 2, HealBot_HoT_AlphaValue(HealBot_HoT2[memberName]), HealBot_HoT_iconTexture2[memberName])
-  end
-  if HealBot_HoT3[memberName] then
-    HealBot_HoT_UpdateIcon(oldButton, 3, 0)
-    HealBot_HoT_ChangeIcon(newButton, 3, HealBot_HoT_AlphaValue(HealBot_HoT3[memberName]), HealBot_HoT_iconTexture3[memberName])
+  for i=1,3 do
+    if not temp_icons[i] then
+	  if temp_icons[i+1] then
+		HealBot_HoT_UpdateIcon(button, i+1, 0)
+	    huHoTicon[temp_icons[i+1]]=i
+	    secLeft=huHoTtime[temp_icons[i+1]]
+		if secLeft then 
+		  HealBot_HoT_ChangeIcon(button, i, HealBot_HoT_AlphaValue(secLeft), HealBot_HoT_Texture[temp_icons[i+1]] , secLeft) 
+		else
+		  HealBot_AddDebug("found a nil in HealBot_HoT_RefreshIcons - spell="..temp_icons[i+1])
+		end
+	--	HealBot_HoT_Update(unitName, temp_icons[i+1])
+	    huHoTicon[temp_icons[i+1]]=i
+		temp_icons[i+1]=nil
+	  end
+	end
+    temp_icons[i]=nil
   end
 end
 
-function HealBot_HoT_RemoveIcon(memberName)
-  button=HealBot_HoT_Active_Button[memberName];
-  if HealBot_HoT1[memberName] then
-    HealBot_HoT_UpdateIcon(button, 1, 0)
+function HealBot_HoT_MoveIcon(oldButton, newButton, unitName)
+  huUnit=HealBot_UnitID[unitName]
+  huHoTtime=HealBot_Player_HoT[unitName]
+  huHoTicon=HealBot_Player_HoT_Icons[unitName]
+  for k,i in pairs(huHoTicon) do
+    if i>0 then
+      HealBot_HoT_UpdateIcon(oldButton, i, 0)
+	  secLeft=huHoTtime[k]
+	  if secLeft then 
+	    HealBot_HoT_ChangeIcon(newButton, i, HealBot_HoT_AlphaValue(secLeft), HealBot_HoT_Texture[k], secLeft) 
+	  else
+	    HealBot_AddDebug("found a nil in HealBot_HoT_MoveIcon - spell="..k)
+	  end
+	end
   end
-  if HealBot_HoT2[memberName] then
-    HealBot_HoT_UpdateIcon(button, 2, 0)
+end
+
+function HealBot_HoT_RemoveIcon(unitName)
+  button=HealBot_HoT_Active_Button[unitName];
+  huHoTicon=HealBot_Player_HoT_Icons[unitName]
+  for _,i in pairs(huHoTicon) do
+    if i>0 then
+      HealBot_HoT_UpdateIcon(button, i, 0)
+	end
   end
-  if HealBot_HoT3[memberName] then
-    HealBot_HoT_UpdateIcon(button, 3, 0)
-  end
-  HealBot_HoT_Active_Button[memberName]=nil;
+  HealBot_HoT_Active_Button[unitName]=nil;
 end
 
 function HealBot_HoT_RemoveIconButton(button)
@@ -2334,15 +2317,26 @@ end
 
 local Texture=nil
 local hbiconcount=nil
-function HealBot_HoT_ChangeIcon(name, index, a, Texture)
-  if not name then return; end;
-  bar = HealBot_Action_HealthBar(name);
+local hbiconcount2=nil
+function HealBot_HoT_ChangeIcon(button, index, a, Texture, txt1, txt2)
+  if not button then return; end;
+  bar = HealBot_Action_HealthBar(button);
   iconName = getglobal(bar:GetName().."Icon"..index);
   iconName:SetTexture(Texture);
   iconName:SetAlpha(a);
   hbiconcount = getglobal(bar:GetName().."Count"..index);
-  hbiconcount:SetText(HealBot_HoT_timer(a));
-  if a>0 and a<0.5 then
+  hbiconcount2 = getglobal(bar:GetName().."Count"..index.."a");
+  hbiconcount:SetText(txt1);
+  if txt2 then
+	hbiconcount2:SetText(txt2);
+	hbiconcount2:SetTextColor(1,1,1,1);
+  else
+    hbiconcount2:SetText(" ");
+	hbiconcount2:SetTextColor(1,1,1,0);
+  end
+  if txt1<0 or txt1>9 then
+    hbiconcount:SetTextColor(1,1,1,0);
+  elseif txt1<4 then
     if (Texture==HealBot_HoT_Texture[HEALBOT_REJUVENATION] or Texture==HealBot_HoT_Texture[HEALBOT_REGROWTH]) then
       y, x, _ = GetSpellCooldown("Swiftmend");
       if x and y and (x+y)==0 then
@@ -2358,15 +2352,29 @@ function HealBot_HoT_ChangeIcon(name, index, a, Texture)
   end    
 end
 
-function HealBot_HoT_UpdateIcon(name, index, a)
-  if not name then return; end;
-  bar = HealBot_Action_HealthBar(name);
+function HealBot_HoT_UpdateIcon(button, index, a, txt1, txt2)
+  if not button then return; end;
+  if not txt1 then txt1=10 end;
+  bar = HealBot_Action_HealthBar(button);
   iconName = getglobal(bar:GetName().."Icon"..index);
+  if not iconName then
+    HealBot_AddDebug("Icon is nil..  button="..button.." index="..index)
+  end
   iconName:SetAlpha(a);
   Texture=iconName:GetTexture();
   hbiconcount = getglobal(bar:GetName().."Count"..index);
-  hbiconcount:SetText(HealBot_HoT_timer(a));
-  if a>0 and a<0.5 then
+  hbiconcount2 = getglobal(bar:GetName().."Count"..index.."a");
+  hbiconcount:SetText(txt1);
+  if txt2 then
+	hbiconcount2:SetText(txt2);
+	hbiconcount2:SetTextColor(1,1,1,1);
+  else
+    hbiconcount2:SetText(" ");
+	hbiconcount2:SetTextColor(1,1,1,0);
+  end
+  if txt1<0 or txt1>9 then
+    hbiconcount:SetTextColor(1,1,1,0);
+  elseif txt1<4 then
     if (Texture==HealBot_HoT_Texture[HEALBOT_REJUVENATION] or Texture==HealBot_HoT_Texture[HEALBOT_REGROWTH]) then
       y, x, _ = GetSpellCooldown("Swiftmend");
       if x and y and (x+y)==0 then
@@ -2383,8 +2391,8 @@ function HealBot_HoT_UpdateIcon(name, index, a)
 end 
 
 function HealBot_HoT_AlphaValue(secLeft)
-  if secLeft>0 and secLeft<15 then
-    return secLeft/15
+  if secLeft>0 and secLeft<8 then
+    return secLeft/8
   else
     return 1
   end

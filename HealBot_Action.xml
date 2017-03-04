@@ -48,6 +48,15 @@
                         </Anchor>
                     </Anchors>
                 </FontString>
+                <FontString name="$parentCount1a" inherits="NumberFontNormalSmall">
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="-1" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
             <Texture name="$parentIcon2">
               <Size> <AbsDimension x="16" y="16"/> </Size>					
               <Anchors>
@@ -65,6 +74,15 @@
                         </Anchor>
                     </Anchors>
                 </FontString> 
+                <FontString name="$parentCount2a" inherits="NumberFontNormalSmall">
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="-18" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString> 
             <Texture name="$parentIcon3">
               <Size> <AbsDimension x="16" y="16"/> </Size>					
               <Anchors>
@@ -76,6 +94,15 @@
                 <FontString name="$parentCount3" inherits="NumberFontNormalSmall">
                     <Anchors>
                         <Anchor point="BOTTOMRIGHT">
+                            <Offset>
+                                <AbsDimension x="-35" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString> 
+                <FontString name="$parentCount3a" inherits="NumberFontNormalSmall">
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
                             <Offset>
                                 <AbsDimension x="-35" y="0"/>
                             </Offset>

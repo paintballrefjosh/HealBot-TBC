@@ -655,8 +655,11 @@ local b,bar,bar2,bar3,bar4,icon1,icon2,icon3,icon1t,icon2t,icon3t,barScale,h,hwi
     icon2 = getglobal(bar:GetName().."Icon2");
     icon3 = getglobal(bar:GetName().."Icon3");
     icon1t = getglobal(bar:GetName().."Count1");
+    icon1ta = getglobal(bar:GetName().."Count1a");
     icon2t = getglobal(bar:GetName().."Count2");
+    icon2ta = getglobal(bar:GetName().."Count2a");
     icon3t = getglobal(bar:GetName().."Count3"); 
+    icon3ta = getglobal(bar:GetName().."Count3a");
     HealBot_Panel_SetBarArrays(b)
     bar.txt = getglobal(bar:GetName().."_text");
     bar:SetHeight(bheight);
@@ -704,11 +707,17 @@ local b,bar,bar2,bar3,bar4,icon1,icon2,icon3,icon1t,icon2t,icon3t,barScale,h,hwi
         icon3:ClearAllPoints();
         icon3:SetPoint("LEFT",icon2,"RIGHT",1,0);
         icon1t:ClearAllPoints();
-        icon1t:SetPoint("BOTTOMLEFT",b,"BOTTOMLEFT",1,0);
+        icon1t:SetPoint("BOTTOMLEFT",icon1,"BOTTOMLEFT",0,0);
+        icon1ta:ClearAllPoints();
+        icon1ta:SetPoint("TOPRIGHT",icon1,"TOPRIGHT",5,0);
         icon2t:ClearAllPoints();
-        icon2t:SetPoint("BOTTOMLEFT",icon1,"BOTTOMRIGHT",1,0);
+        icon2t:SetPoint("BOTTOMLEFT",icon2,"BOTTOMLEFT",0,0);
+        icon2ta:ClearAllPoints();
+        icon2ta:SetPoint("TOPRIGHT",icon2,"TOPRIGHT",5,0);
         icon3t:ClearAllPoints();
-        icon3t:SetPoint("BOTTOMLEFT",icon2,"BOTTOMRIGHT",1,0); 
+        icon3t:SetPoint("BOTTOMLEFT",icon3,"BOTTOMLEFT",0,0); 
+        icon3ta:ClearAllPoints();
+        icon3ta:SetPoint("TOPRIGHT",icon3,"TOPRIGHT",5,0);
       else
         icon1:ClearAllPoints();
         icon1:SetPoint("RIGHT",b,"RIGHT",-1,0);
@@ -717,11 +726,17 @@ local b,bar,bar2,bar3,bar4,icon1,icon2,icon3,icon1t,icon2t,icon3t,barScale,h,hwi
         icon3:ClearAllPoints();
         icon3:SetPoint("RIGHT",icon2,"LEFT",-1,0);
         icon1t:ClearAllPoints();
-        icon1t:SetPoint("BOTTOMRIGHT",b,"BOTTOMRIGHT",-1,0);
+        icon1t:SetPoint("BOTTOMRIGHT",icon1,"BOTTOMRIGHT",5,0);
+        icon1ta:ClearAllPoints();
+        icon1ta:SetPoint("TOPLEFT",icon1,"TOPLEFT",0,0);
         icon2t:ClearAllPoints();
-        icon2t:SetPoint("BOTTOMRIGHT",icon1,"BOTTOMLEFT",-1,0);
+        icon2t:SetPoint("BOTTOMRIGHT",icon2,"BOTTOMRIGHT",5,0);
+        icon2ta:ClearAllPoints();
+        icon2ta:SetPoint("TOPLEFT",icon2,"TOPLEFT",0,0);
         icon3t:ClearAllPoints();
-        icon3t:SetPoint("BOTTOMRIGHT",icon2,"BOTTOMLEFT",-1,0); 
+        icon3t:SetPoint("BOTTOMRIGHT",icon3,"BOTTOMRIGHT",5,0); 
+        icon3ta:ClearAllPoints();
+        icon3ta:SetPoint("TOPLEFT",icon3,"TOPLEFT",0,0);
       end
     else
       HealBot_Panel_SetMultiColHoToffset(bheight*3)
@@ -733,11 +748,17 @@ local b,bar,bar2,bar3,bar4,icon1,icon2,icon3,icon1t,icon2t,icon3t,barScale,h,hwi
         icon3:ClearAllPoints();
         icon3:SetPoint("RIGHT",icon2,"LEFT",-2,0);
         icon1t:ClearAllPoints();
-        icon1t:SetPoint("BOTTOMRIGHT",b,"BOTTOMLEFT",-1,0);
+        icon1t:SetPoint("BOTTOMRIGHT",icon1,"BOTTOMRIGHT",5,0);
+        icon1ta:ClearAllPoints();
+        icon1ta:SetPoint("TOPLEFT",icon1,"TOPLEFT",0,0);
         icon2t:ClearAllPoints();
-        icon2t:SetPoint("BOTTOMRIGHT",icon1,"BOTTOMLEFT",-2,0);
+        icon2t:SetPoint("BOTTOMRIGHT",icon2,"BOTTOMRIGHT",5,0);
+        icon2ta:ClearAllPoints();
+        icon2ta:SetPoint("TOPLEFT",icon2,"TOPLEFT",0,0);
         icon3t:ClearAllPoints();
-        icon3t:SetPoint("BOTTOMRIGHT",icon2,"BOTTOMLEFT",-2,0); 
+        icon3t:SetPoint("BOTTOMRIGHT",icon3,"BOTTOMRIGHT",5,0); 
+        icon3ta:ClearAllPoints();
+        icon3ta:SetPoint("TOPLEFT",icon3,"TOPLEFT",0,0);
       else
         icon1:ClearAllPoints();
         icon1:SetPoint("LEFT",b,"RIGHT",2,0);
@@ -746,11 +767,17 @@ local b,bar,bar2,bar3,bar4,icon1,icon2,icon3,icon1t,icon2t,icon3t,barScale,h,hwi
         icon3:ClearAllPoints();
         icon3:SetPoint("LEFT",icon2,"RIGHT",2,0);
         icon1t:ClearAllPoints();
-        icon1t:SetPoint("BOTTOMLEFT",b,"BOTTOMRIGHT",2,0);
+        icon1t:SetPoint("BOTTOMLEFT",icon1,"BOTTOMLEFT",0,0);
+        icon1ta:ClearAllPoints();
+        icon1ta:SetPoint("TOPRIGHT",icon1,"TOPRIGHT",5,0);
         icon2t:ClearAllPoints();
-        icon2t:SetPoint("BOTTOMLEFT",icon1,"BOTTOMRIGHT",2,0);
+        icon2t:SetPoint("BOTTOMLEFT",icon2,"BOTTOMLEFT",0,0);
+        icon2ta:ClearAllPoints();
+        icon2ta:SetPoint("TOPRIGHT",icon2,"TOPRIGHT",5,0);
         icon3t:ClearAllPoints();
-        icon3t:SetPoint("BOTTOMLEFT",icon2,"BOTTOMRIGHT",2,0); 
+        icon3t:SetPoint("BOTTOMLEFT",icon3,"BOTTOMLEFT",0,0); 
+        icon3ta:ClearAllPoints();
+        icon3ta:SetPoint("TOPRIGHT",icon3,"TOPRIGHT",5,0);
       end
     end
 

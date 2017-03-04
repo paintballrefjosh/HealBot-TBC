@@ -1,4 +1,4 @@
-HEALBOT_VERSION = "2.4.3.10";
+HEALBOT_VERSION = "2.4.3.11";
 
 -------------
 -- ENGLISH --
@@ -173,6 +173,7 @@ HEALBOT_DEBUFF_DREAMLESS_SLEEP  = "Dreamless Sleep";
 HEALBOT_DEBUFF_GREATER_DREAMLESS = "Greater Dreamless Sleep";
 HEALBOT_DEBUFF_MAJOR_DREAMLESS  = "Major Dreamless Sleep";
 HEALBOT_DEBUFF_FROST_SHOCK      = "Frost Shock"
+HEALBOT_DEBUFF_WEAKENED_SOUL    = GetSpellInfo(6788)
 
 HEALBOT_RANK_1              = "(Rank 1)";
 HEALBOT_RANK_2              = "(Rank 2)";

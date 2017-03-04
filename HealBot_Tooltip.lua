@@ -173,16 +173,17 @@ function HealBot_Action_RefreshTooltip(unit)
 		end
 	    r,g,b=HealBot_Action_RetHealBot_ClassCol(Member_Name)
 		text = HealBot_UnitSpec[Member_Name] or " "
-        HealBot_Tooltip_SetLineLeft(Member_Name.." (Level "..UnitLevel(unit)..text..UnitClass(unit)..")",r,g,b,linenum,1)   
+        HealBot_Tooltip_SetLineLeft(Member_Name,r,g,b,linenum,1)
+        HealBot_Tooltip_SetLineRight("Level "..UnitLevel(unit)..text..UnitClass(unit),r,g,b,linenum,1)   		
       else 
         HealBot_Tooltip_SetLineLeft(Member_Name,1,1,1,linenum,1)   
       end      
+      linenum=linenum+1
       if hlth and maxhlth then
         r,g,b,a=HealBot_HealthColor(unit,hlth,maxhlth,true,Member_Name,false,Member_Buff,DebuffType,HealBot_RetHealsIn(ebuName));
         HealBot_Tooltip_SetLineRight(hlth.."/"..maxhlth.." (-"..maxhlth-hlth..")",r,g,b,linenum,1) 
       end
       if UnitOffline then -- added by Diacono
-    		linenum=linenum+1
     		HealBot_Tooltip_SetLineLeft(HB_TOOLTIP_OFFLINE..": "..UnitOffline,1,1,1,linenum,1)
     	end
       if DebuffType then
@@ -204,7 +205,7 @@ function HealBot_Action_RefreshTooltip(unit)
 	  if not HealBot_IsFighting and HealBot_Config.Tooltip_ShowTarget==1 and HealBot_Config.Tooltip_ShowMyBuffs==1 then
 	    d=false
         for x,y in pairs(HealBot_CheckBuffs) do
-		  ri,z=HealBot_HasMyBuff(x, unit)
+		  ri,_,z=HealBot_HasMyBuff(x, unit)
           if ri then
 		    d=true
             linenum=linenum+1
@@ -623,6 +624,8 @@ function HealBot_Tooltip_RefreshDisabledTooltip(unit)
     
   HealBot_Tooltip_ClearLines();
   
+  UnitOffline=HealBot_Action_GetTimeOffline(unit)
+  
   if HealBot_Config.Tooltip_ShowTarget==1 then
     raidID=nil
     zone=nil;
@@ -664,7 +667,11 @@ function HealBot_Tooltip_RefreshDisabledTooltip(unit)
       if zone and not strfind(zone,"Level") then
         linenum=linenum+1
         HealBot_Tooltip_SetLineLeft(HEALBOT_TOOLTIP_LOCATION..":",1,1,0.5,linenum,1);
-        HealBot_Tooltip_SetLineRight(zone,1,1,1,linenum,1);
+	    if UnitOffline then -- added by Diacono
+          HealBot_Tooltip_SetLineRight(HB_TOOLTIP_OFFLINE..": "..UnitOffline,1,1,1,linenum,1)
+    	else
+          HealBot_Tooltip_SetLineRight(zone,1,1,1,linenum,1);
+		end
       end
       if HealBot_Config.ProtectPvP==1 and UnitIsPVP(unit) and not UnitIsPVP("player") then 
         HealBot_Tooltip_SetLineLeft("    ----- PVP -----",1,0.5,0.5,linenum,1);
@@ -691,7 +698,7 @@ function HealBot_Tooltip_RefreshDisabledTooltip(unit)
 	  if not HealBot_IsFighting and HealBot_Config.Tooltip_ShowTarget==1 and HealBot_Config.Tooltip_ShowMyBuffs==1 then
 	    d=false
         for x,y in pairs(HealBot_CheckBuffs) do
-		  ri,z=HealBot_HasMyBuff(x, unit)
+		  ri,_,z=HealBot_HasMyBuff(x, unit)
           if ri then
 		    d=true
             linenum=linenum+1
