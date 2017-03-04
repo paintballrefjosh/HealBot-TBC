@@ -780,6 +780,11 @@ function HealBot_Options_TargetBar_OnClick(this)
   Delay_RecalcParty=3;
 end
 
+function HealBot_Options_VisibleRange_OnClick(this)
+  HealBot_Config.NotVisibleDisable = this:GetChecked() or 0;
+  HealBot_Action_ResetUnitStatus()
+end
+
 function HealBot_Options_TargetIncSelf_OnClick(this)
   HealBot_Config.TargetIncSelf = this:GetChecked() or 0;
   Delay_RecalcParty=3;
@@ -3692,6 +3697,7 @@ function HealBot_Options_Init(tabNo)
 	HealBot_Options_TargetIncPet:SetChecked(HealBot_Config.TargetIncPet)
 	HealBot_Options_AlertLevel:SetValue(HealBot_Config.AlertLevel)
 	HealBot_Options_RangeCheckFreq:SetValue((HealBot_Config.RangeCheckFreq or 0.2)*10)
+    HealBot_Options_VisibleRange:SetChecked(HealBot_Config.NotVisibleDisable)
     HealBot_Options_EmergencyFilter_Refresh()
     HealBot_Options_EmergencyFClass_Refresh()
     HealBot_Options_EFClass_Reset()

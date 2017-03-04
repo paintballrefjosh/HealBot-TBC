@@ -1,4 +1,4 @@
-HEALBOT_VERSION = "2.4.3.12";
+HEALBOT_VERSION = "2.4.3.13";
 
 -------------
 -- ENGLISH --
@@ -512,3 +512,5 @@ HEALBOT_ENHANCEMENT   = "Enhancement"
 HEALBOT_AFFLICTION    = "Affliction"
 HEALBOT_DEMONOLOGY    = "Demonology"
 HEALBOT_DESTRUCTION   = "Destruction"
+
+HEALBOT_OPTIONS_VISIBLERANGE = "Disable bar when range over 100 yards"

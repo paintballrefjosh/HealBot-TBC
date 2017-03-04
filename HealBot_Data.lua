@@ -76,6 +76,7 @@ HealBot_ConfigDefaults = {
   TargetIncGroup=0,
   TargetIncRaid=1,
   TargetIncPet=0,
+  NotVisibleDisable=1,
   CDCBarColour = {
     [HEALBOT_DISEASE_en] = { R = 0.1, G = 0.05, B = 0.2, },
     [HEALBOT_MAGIC_en] = { R = 0.05, G = 0.05, B = 0.1, },

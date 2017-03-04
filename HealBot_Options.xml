@@ -841,7 +841,7 @@
 				<Frames>
 					<Frame name="HealBot_Options_HealTargetFrame" inherits="OptionFrameBoxTemplate">
 						<Size>
-							<AbsDimension y="170"/>
+							<AbsDimension y="150"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT">
@@ -874,7 +874,7 @@
 									<Anchors>
 										<Anchor point="TOPLEFT">
 											<Offset>
-												<AbsDimension x="168" y="-133" />
+												<AbsDimension x="168" y="-115" />
 											</Offset>
 										</Anchor>
 									</Anchors>
@@ -886,7 +886,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT">
 										<Offset>
-											<AbsDimension x="65" y="-18" />
+											<AbsDimension x="65" y="-17" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -899,7 +899,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="HealBot_Options_SelfHeals" relativePoint="TOPLEFT">
 										<Offset>
-											<AbsDimension x="0" y="-28" />
+											<AbsDimension x="0" y="-25" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -912,7 +912,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="HealBot_Options_GroupHeals" relativePoint="TOPLEFT">
 										<Offset>
-											<AbsDimension x="0" y="-28" />
+											<AbsDimension x="0" y="-25" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -938,7 +938,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="HealBot_Options_SelfPet" relativePoint="TOPLEFT">
 										<Offset>
-											<AbsDimension x="0" y="-28" />
+											<AbsDimension x="0" y="-25" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -951,7 +951,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="HealBot_Options_EmergencyHeals" relativePoint="TOPLEFT">
 										<Offset>
-											<AbsDimension x="0" y="-28" />
+											<AbsDimension x="0" y="-25" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -964,7 +964,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="HealBot_Options_TankHeals" relativePoint="TOPLEFT">
 										<Offset>
-											<AbsDimension x="0" y="-48" />
+											<AbsDimension x="0" y="-38" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1034,7 +1034,7 @@
 						<Anchors>
 							<Anchor point="TOPLEFT">
 								<Offset>
-									<AbsDimension x="40" y="-225" />
+									<AbsDimension x="40" y="-195" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -1059,6 +1059,19 @@
 							<OnValueChanged>HealBot_Options_RangeCheckFreq_OnValueChanged(this)</OnValueChanged>
 						</Scripts>
 					</Slider>
+					<CheckButton name="HealBot_Options_VisibleRange" inherits="OptionsCheckButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="HealBot_Options_AlertLevel" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="58" y="-28" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>HealBot_Options_SetText(this,HEALBOT_OPTIONS_VISIBLERANGE)</OnLoad>
+							<OnClick>HealBot_Options_VisibleRange_OnClick(this)</OnClick>
+						</Scripts>
+					</CheckButton>
 					<Frame name="HealBot_Options_ExtraOptFrame" inherits="OptionFrameBoxTemplate">
 						<Size>
 							<AbsDimension y="135"/>

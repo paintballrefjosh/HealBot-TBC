@@ -2732,14 +2732,17 @@ function HealBot_SmartCast(unit,hdelta)
   return retSpell;
 end
 
-function HealBot_UnitInRange(spell, unit) -- added by Diacono of Ursin
+function HealBot_UnitInRange(spellName, unit) -- added by Diacono of Ursin
    x=0
-   if IsSpellInRange(spell, unit) ~= nil then
-      x = IsSpellInRange(spell, unit)
-   elseif IsItemInRange(spell, unit) ~= nil then
-      x = IsItemInRange(spell, unit)
+   if IsSpellInRange(spellName, unit) ~= nil then
+      x = IsSpellInRange(spellName, unit)
+   elseif IsItemInRange(spellName, unit) ~= nil then
+      x = IsItemInRange(spellName, unit)
    elseif UnitInRange(unit) == 1 then
       x = 1
+   end
+   if x==0 then
+     if not UnitIsVisible(unit) then x=-1 end
    end
    return x
 end
